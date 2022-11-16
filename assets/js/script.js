@@ -2,7 +2,12 @@ console.log('script.js loaded');
 
 //fetch from datamuse api and return the results
 
-var datamuseAPI = "https://api.datamuse.com/words?ml=";
+var datamuseAPI0 = "https://api.datamuse.com/words?ml="; //meaning like  
+var datamuseAPI1 = "https://api.datamuse.com/words?rel_rhy=";  //rhymes
+var datamuseAPI2 = "https://api.datamuse.com/words?rel_jjb=";  //adjectives
+var datamuseAPI3 = "https://api.datamuse.com/words?rel_ant=";  //antonyms
+var datamuseAPI4 = "https://api.datamuse.com/words?rel_hom="; //homophones
+var datamuseAPI5 = "https://api.datamuse.com/words?rel_syn="; //synonyms
 var word = "happy";
 var url = datamuseAPI + word;
 
@@ -34,7 +39,9 @@ const options = {
 
 var wordsAPI = 'https://wordsapiv1.p.rapidapi.com/words/';
 var word = 'happy';
-var url = wordsAPI + word + '/synonyms';
+var url0 = wordsAPI + word + '/pronunciation';
+var url1 = wordsAPI + word + '/frequency';
+var url2 = wordsAPI + word + '/syllables';
 console.log("words api response: ")
 fetch(url, options)
 	.then(function(response) {
