@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
-    />
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Word Search</title>
-  </head>
-  <body>
-    <header>
-        <nav class="navbar is-large" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand is-large">
-              <h1 class="navbar-item title is-1" >Word Search</h1>
-          
-              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-              </a>
-            </div>
-          </nav>
-    </header>
-    <section>
-    <div >
-      <div class="notification is-primary">  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
-    </svg>
-         Type to search
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Word Search</title>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar is-large" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand is-large">
+        <h1 class="navbar-item title is-1">Word Search</h1>
+
+
+      </div>
+    </nav>
+  </header>
+  <section>
+    <div>
+      <div class="notification is-primary"> <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="currentColor"
+            d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+        </svg>
+        Type to search
         <div class="control has-icons-left has-icons-right">
           <div class="container is-centered is-primary">
             <div class="field has-addons">
@@ -46,104 +42,106 @@
               </div>
             </div>
           </div>
-            </svg>
+          </svg>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <section>
+    <div class="column is-full is-primary">
+      <div class="columns ">
+        <div class="column is-one-quarter is-primary">
+          <article class="panel is-primary">
+            <article class="message is-primary">
+              <div class="message-header">
+                <p id="mainWord">Word in focus</p>
+                <button class="delete" aria-label="delete"></button>
+              </div>
+              <div class="content is-normal">
+                <h1 id="wordInFocus">Word in focus</h1>
+                <p id="definitionMain">This is where the definition of main word will be</p>
+                <ul>
+                  <li id="mainPro">Pronunciation.</li>
+                  <li id="mainSyl">Syllable.</li>
+                  <li id="mainFreq">Frequency.</li>
+                </ul>
+              </div>
+            </article>
+        </div>
+        <div class="column is-primary">
+          <div class="card">
+            <div class="card-content">
+              <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+                <canvas id="myChart"></canvas>
+              </div>
+              <p class="subtitle">
+                Frequency Chart
+              </p>
+            </div>
+            <footer class="card-footer">
+          </div>
+
+          </footer>
+
+          <div class="columns">
+            <div class="column">
+              <div class="box">
+                Synonyms <div class="content is-small">
+                  <h1 id="altSyn">This will be alternate word</h1>
+                  <ul>
+                    <li>Pronunciation</li>
+                    <li>Syllable</li>
+                    <li>Frequency</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="box">
+                Rhyming <div class="content is-small">
+                  <h1 id="altRhym">This will be an alternate word.</h1>
+                  <ul>
+                    <li>Pronunciation</li>
+                    <li>Syllable</li>
+                    <li>Frequency</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="box">
+                Sound-a-like <div class="content is-small">
+                  <h1 id="altSound">This will be alternate word.</h1>
+                  <ul>
+                    <li>Pronunciation</li>
+                    <li>Syllable</li>
+                    <li>Frequency</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="box">
+                Antonyms <div class="content is-small">
+                  <h1 id="altAnt">This will be an alternate word.</h1>
+                  <ul>
+                    <li>Pronunciation</li>
+                    <li>Syllable</li>
+                    <li>Frequency</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </section>
-    <section>
-    <div class ="column is-full is-primary">
-      <div class="columns ">
-        <div class="column is-one-quarter is-primary"><article class="panel is-primary">
-          <article class="message is-primary">
-            <div class="message-header">
-              <p id="mainWord" >Word in focus</p>
-              <button class="delete" aria-label="delete"></button>
-            </div>
-            <div class="content is-normal">
-              <h1 id="wordInFocus">Word in focus</h1>
-              <p id="definitionMain" >This is where the definition of main word will be</p>
-              <ul>
-                <li id="mainPro" >Pronunciation.</li>
-                <li id="mainSyl" >Syllable.</li>
-                <li id="mainFreq" >Frequency.</li>
-              </ul>
-            </div>
-          </article></div>
-        <div class="column is-primary"><div class="card">
-          <div class="card-content">
-            <p id="frequencyChart" class="title">
-              “This is where the frequency chart will be.”
-            </p>
-            <p class="subtitle">
-              subtitle
-            </p>
-          </div>
-          <footer class="card-footer">
-          </div>
-           
-          </footer>
-          
-          <div class="columns">
-            <div class="column">
-              <div class="box">
-                Synonyms   <div class="content is-small">
-                  <h1 id="altSyn" >This will be alternate word</h1>
-                  <ul>
-                    <li>Pronunciation</li>
-                    <li>Syllable</li>
-                    <li>Frequency</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="box">
-                Rhyming   <div class="content is-small">
-                  <h1 id="altRhym" >This will be an alternate word.</h1>
-                  <ul>
-                    <li>Pronunciation</li>
-                    <li>Syllable</li>
-                    <li>Frequency</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="box">
-                Sound-a-like   <div class="content is-small">
-                  <h1 id="altSound" >This will be alternate word.</h1>
-                  <ul>
-                    <li>Pronunciation</li>
-                    <li>Syllable</li>
-                    <li>Frequency</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="box">
-                Antonyms   <div class="content is-small">
-                  <h1 id="altAnt" >This will be an alternate word.</h1>
-                  <ul>
-                    <li>Pronunciation</li>
-                    <li>Syllable</li>
-                    <li>Frequency</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </section>
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.js"
-      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-      crossorigin="anonymous"
-    ></script>
-    <script src="./assets/js/script.js"></script>
-  </body>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+  <script src="./assets/js/script.js"></script>
+</body>
+
 </html>
