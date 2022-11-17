@@ -1,0 +1,14 @@
+/* this is the css to size the bar chart
+#myChart {
+  width: 50% !important;
+  height: 25% !important;
+}
+
+/* media query to make the bar chart smaller on mobile */
+/* @media (max-width: 768px) {
+  #myChart {
+    font-size: small !important;
+    width: 10% !important;
+    height: 10% !important;
+  }
+} */
