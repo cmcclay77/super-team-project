@@ -40,7 +40,7 @@ const options = {
 // varibles showing the urls you will need for the words  api
 var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
 
-var url0 = wordsAPI + word + "/pronunciation";
+var url0 = wordsAPI + word; // + "/pronunciation";
 var url1 = wordsAPI + word + "/syllables";
 var url2 = wordsAPI + word + "/frequency";
 
