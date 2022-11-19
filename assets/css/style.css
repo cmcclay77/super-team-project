@@ -12,3 +12,7 @@
     height: 10% !important;
   }
 } */
+
+.content p:not(:last-child) {
+  margin-bottom: 0px;
+}

@@ -5,11 +5,6 @@ var mainPro = document.getElementById('mainPro');
 var mainSyl = document.getElementById('mainSyl');
 var mainFreq = document.getElementById('mainFreq');
 
-var synCont = document.getElementById('synonyms-container');
-var listCont = document.createElement('ul');
-var singleSynContEl = document.createElement('div');
-
-
 // varibles showing the urls you will need for the datamuse api
 var datamuseAPI0 = "https://api.datamuse.com/words?ml="; //meaning like
 
@@ -22,42 +17,85 @@ var datamuseAPI5 = "https://api.datamuse.com/words?rel_jjb="; //adjectives - thi
 // varible holding the word you want to search for
 var word = "happy";
 // varible showing you how to search for the word
-var url = datamuseAPI0 + word;
+var url = datamuseAPI1 + word;
+
+var synonyms = [];
+var synonymsData = [];
 
 // write word to DOM in id="wordInFocus"
 document.getElementById("wordInFocus").innerHTML = word;
 
 //fetch from datamuse api and return the results
 
-function fetchSyn() {
+fetch(url) //fetch the data 
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (json) {
+    for (var i = 0; i < json.length; i++) {
+      savedWord = json[i].word;
+      synonyms.push(savedWord);
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+url = datamuseAPI2 + word
+
+var rhymes = [];
 
 fetch(url) //fetch the data
   .then(function (response) {
     return response.json();
   })
   .then(function (json) {
-    console.log("Datamuse API response: ");
-    console.log(json);
-    for ( var i = 0; i < 5; i++) {
-      word = json[i].word;
-
-      
-      singleSynContEl.setAttribute('class', 'content is-small');
-      synCont.appendChild(singleSynContEl);
-
-      var altSynEl = document.createElement('h1');
-      altSynEl.setAttribute('class', 'altSyn');
-      altSynEl.textContent = word;
-      singleSynContEl.appendChild(altSynEl);
-
-      renderSynonyms();
+    for (var i = 0; i < json.length; i++) {
+      savedWord = json[i].word;
+      rhymes.push(savedWord);
     }
-    
   })
   .catch(function (error) {
     console.log(error);
   });
-}
+
+url = datamuseAPI3 + word
+
+var homophones = [];
+
+fetch(url) //fetch the data
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (json) {
+    for (var i = 0; i < json.length; i++) {
+      savedWord = json[i].word;
+      homophones.push(savedWord);
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+url = datamuseAPI4 + word
+
+var antonyms = [];
+
+fetch(url) //fetch the data
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (json) {
+    console.log(json);
+
+    // for (var i = 0; i < json.length; i++) {
+    //   savedWord = json[i].word;
+    //   homophones.push(savedWord);
+    // }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 
 const options = {
   method: "GET",
@@ -66,7 +104,7 @@ const options = {
     "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
   },
 };
-// varibles showing the urls you will need for the words  api
+// varibles showing the urls you will need for the words api
 var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
 
 var url0 = wordsAPI + word;
@@ -79,55 +117,96 @@ fetch(url0, options)
   .then(function (json) {
     for (var i = 0; i < json.results.length; i++) {
       var newDefEl = document.createElement('p');
-      newDefEl.textContent = json.results[i].definition;
+      newDefEl.textContent = json.results[i].definition + '.';
       definitionMain.appendChild(newDefEl);
     }
-    mainPro.textContent = json.pronunciation.all;
-    mainFreq.textContent = json.frequency;
-    mainSyl.textContent = '- ';
+    mainPro.textContent = 'Pronunciation: ' + json.pronunciation.all;
+    mainFreq.textContent = 'Frequency: ' + json.frequency;
+    mainSyl.textContent = 'Syllable(s): - ';
     for (var i = 0; i < json.syllables.list.length; i++) {
       var newSylEl = document.createElement('span');
       newSylEl.textContent = json.syllables.list[i] + ' - ';
       mainSyl.appendChild(newSylEl);
-
-      fetchSyn();
     }
   })
   .catch(function (error) {
     console.log(error);
   });
 
-  function renderSynonyms() {
-    
-  fetch(url0, options)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (json) {
-    
-    var proEl = document.createElement('li');
-    proEl.textContent = json.pronunciation.all;
-    listCont.appendChild('proEl');
+var synColEl = document.getElementById('synonym-column');
 
-    var sylEl = document.createElement('li');
-    sylEl.textContent = '- ';
-
-    for (var i = 0; i < json.syllables.list.length; i++) {
-      var newSylEl = document.createElement('span');
-      newSylEl.textContent = json.syllables.list[i] + ' - ';
-      sylEl.appendChild(newSylEl);
-    }
-
-    var freqEl = document.createElement('li');
-    freqEl.textContent = json.frequency;
-    listCont.appendChild('freqEl');
-
-
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+function getSynonymsData() {
+  for (var i = 0; i < synonyms.length; i++) {
+    word = synonyms[i];
+    url0 = wordsAPI + word;
+    fetch(url0, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        synonymsData.push(json);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+}
+
+function renderSynonyms() {
+  for (var i = 0; i < 5; i++) {
+    if (synonymsData[i].word !== undefined) {
+      var synContEl = document.createElement('div');
+      synContEl.setAttribute('class', 'box synonyms-container');
+      synColEl.appendChild(synContEl);
+
+      var singleSynContEl = document.createElement('div');
+      singleSynContEl.setAttribute('class', 'content is-small');
+      synContEl.appendChild(singleSynContEl);
+
+      var synHeader = document.createElement('h1');
+      synHeader.setAttribute('class', 'altSyn');
+      synHeader.textContent = synonymsData[i].word;
+      singleSynContEl.appendChild(synHeader);
+
+      var definitionsCont = document.createElement('div');
+      definitionsCont.setAttribute('class', 'definitions');
+      singleSynContEl.appendChild(definitionsCont);
+
+      for (var x = 0; x < synonymsData[i].results.length; x++) {
+        var defEl = document.createElement('p');
+        defEl.setAttribute('class', 'definitions');
+        defEl.textContent = synonymsData[i].results[x].definition + '.';
+        definitionsCont.appendChild(defEl);
+      }
+
+      var ulEl = document.createElement('ul');
+      singleSynContEl.appendChild(ulEl);
+
+      if (synonymsData[i].pronunciation.all !== undefined) {
+        var proEl = document.createElement('li');
+        proEl.textContent = 'Pronunciation: ' + synonymsData[i].pronunciation.all;
+        ulEl.appendChild(proEl);
+      }
+
+      if (synonymsData[i].syllables !== undefined) {
+
+        var sylContEl = document.createElement('li');
+        sylContEl.textContent = 'Syllable(s): - ';
+        ulEl.appendChild(sylContEl);
+
+        for (var y = 0; y < synonymsData[i].syllables.list.length; y++) {
+          var sylEl = document.createElement('span');
+          sylEl.textContent = synonymsData[i].syllables.list[y] + ' - ';
+          sylContEl.appendChild(sylEl);
+        }
+      }
+
+      var freqEl = document.createElement('li');
+      freqEl.textContent = 'Frequency: ' + synonymsData[i].frequency;
+      ulEl.appendChild(freqEl);
+    }
+  }
+}
 
 //-----------------------------//
 // chart.js content  this is the code for the chart
