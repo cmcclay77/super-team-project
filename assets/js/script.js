@@ -49,7 +49,6 @@ function searchCats() {
       console.log(synonymsData);
 
       renderSynonyms();
-
     })
     .catch(function (error) {
       console.log(error);
@@ -461,51 +460,61 @@ function renderLists() {
 // note: if you want to change the size of the chart then you do that in the style.css file
 const ctx = document.getElementById("myChart");
 
-new Chart(ctx, {
-  type: "bar",
-  data: {
-    // these are the labels for the chart
-    labels: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"],
-    datasets: [
-      {
-        label: "Frequency of words",
-        // this data array is where you will store the frequency of the words
-        data: [12, 19, 3, 5, 2, 3],
+function renderChart() {
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      // these are the labels for the chart
+      labels: [
+        synonymsData[0].word,
+        synonymsData[1].word,
+        synonymsData[2].word,
+        synonymsData[3].word,
+        synonymsData[4].word,
+      ],
+      datasets: [
+        {
+          label: "Frequency of words",
+          // this data array is where you will store the frequency of the words
+          data: [
+            synonymsData[0].frequency,
+            synonymsData[1].frequency,
+            synonymsData[2].frequency,
+            synonymsData[3].frequency,
+            synonymsData[4].frequency,
+          ],
 
-        // these colors are the background colors for the chart bars
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(201, 203, 207, 0.2)",
-        ],
+          // these colors are the background colors for the chart bars
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 205, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+          ],
 
-        // these colors are the border colors for the chart bars
-        borderColor: [
-          "rgb(255, 99, 132)",
-          "rgb(255, 159, 64)",
-          "rgb(255, 205, 86)",
-          "rgb(75, 192, 192)",
-          "rgb(54, 162, 235)",
-          "rgb(153, 102, 255)",
-          "rgb(201, 203, 207)",
-        ],
-        // this is the width of the border on the chart
-        borderWidth: 1,
-      },
-    ],
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
+          // these colors are the border colors for the chart bars
+          borderColor: [
+            "rgb(255, 99, 132)",
+            "rgb(255, 159, 64)",
+            "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)",
+            "rgb(54, 162, 235)",
+          ],
+          // this is the width of the border on the chart
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
       },
     },
-  },
-});
+  });
+}
 
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
