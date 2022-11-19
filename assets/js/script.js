@@ -6,24 +6,28 @@ var mainSyl = document.getElementById('mainSyl');
 var mainFreq = document.getElementById('mainFreq');
 
 // varibles showing the urls you will need for the datamuse api
-var datamuseAPI0 = "https://api.datamuse.com/words?ml="; //meaning like
-
-var datamuseAPI1 = "https://api.datamuse.com/words?rel_syn="; //synonyms
-var datamuseAPI2 = "https://api.datamuse.com/words?rel_rhy="; //rhymes
-var datamuseAPI3 = "https://api.datamuse.com/words?rel_hom="; //homophones
-var datamuseAPI4 = "https://api.datamuse.com/words?rel_ant="; //antonyms
-var datamuseAPI5 = "https://api.datamuse.com/words?rel_jjb="; //adjectives - this may be extra
+var datamuseAPI0 = "https://api.datamuse.com/words?rel_syn="; //synonyms
+var datamuseAPI1 = "https://api.datamuse.com/words?rel_rhy="; //rhymes
+var datamuseAPI2 = "https://api.datamuse.com/words?rel_hom="; //homophones
+var datamuseAPI3 = "https://api.datamuse.com/words?rel_ant="; //antonyms
 
 // varible holding the word you want to search for
 var word = "happy";
-// varible showing you how to search for the word
-var url = datamuseAPI1 + word;
 
-var synonyms = [];
-var synonymsData = [];
+// varible showing you how to search for the word
+var url = datamuseAPI0 + word;
 
 // write word to DOM in id="wordInFocus"
 document.getElementById("wordInFocus").innerHTML = word;
+
+var synonyms = [];
+var rhymes = [];
+var homophones = [];
+var antonyms = [];
+var synonymsData = [];
+var rhymesData = [];
+var homophonesData = [];
+var antonymsData = [];
 
 //fetch from datamuse api and return the results
 
@@ -34,17 +38,17 @@ fetch(url) //fetch the data
   .then(function (json) {
     for (var i = 0; i < json.length; i++) {
       savedWord = json[i].word;
-      synonyms.push(savedWord);
+      if (savedWord !== undefined) {
+        synonyms.push(savedWord);
+      }
     }
   })
   .catch(function (error) {
     console.log(error);
   });
 
-url = datamuseAPI2 + word
 
-var rhymes = [];
-
+url = datamuseAPI1 + word
 fetch(url) //fetch the data
   .then(function (response) {
     return response.json();
@@ -59,10 +63,7 @@ fetch(url) //fetch the data
     console.log(error);
   });
 
-url = datamuseAPI3 + word
-
-var homophones = [];
-
+url = datamuseAPI2 + word
 fetch(url) //fetch the data
   .then(function (response) {
     return response.json();
@@ -77,21 +78,16 @@ fetch(url) //fetch the data
     console.log(error);
   });
 
-url = datamuseAPI4 + word
-
-var antonyms = [];
-
+url = datamuseAPI3 + word
 fetch(url) //fetch the data
   .then(function (response) {
     return response.json();
   })
   .then(function (json) {
-    console.log(json);
-
-    // for (var i = 0; i < json.length; i++) {
-    //   savedWord = json[i].word;
-    //   homophones.push(savedWord);
-    // }
+    for (var i = 0; i < json.length; i++) {
+      savedWord = json[i].word;
+      antonyms.push(savedWord);
+    }
   })
   .catch(function (error) {
     console.log(error);
@@ -134,6 +130,9 @@ fetch(url0, options)
   });
 
 var synColEl = document.getElementById('synonym-column');
+var rhymesColEl = document.getElementById('rhymes-column');
+var hpColEl = document.getElementById('homophones-column');
+var antColEl = document.getElementById('antonym-column');
 
 function getSynonymsData() {
   for (var i = 0; i < synonyms.length; i++) {
@@ -150,6 +149,64 @@ function getSynonymsData() {
         console.log(error);
       });
   }
+}
+
+function getRhymesData() {
+  for (var i = 0; i < rhymes.length; i++) {
+    word = rhymes[i];
+    url0 = wordsAPI + word;
+    fetch(url0, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        rhymesData.push(json);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+}
+
+function getHomophonesData() {
+  for (var i = 0; i < homophones.length; i++) {
+    word = homophones[i];
+    url0 = wordsAPI + word;
+    fetch(url0, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        homophonesData.push(json);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+}
+
+function getAntonymsData() {
+  for (var i = 0; i < antonyms.length; i++) {
+    word = antonyms[i];
+    url0 = wordsAPI + word;
+    fetch(url0, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        antonymsData.push(json);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+}
+
+function getData() {
+  getSynonymsData();
+  getRhymesData();
+  getHomophonesData();
+  getAntonymsData();
 }
 
 function renderSynonyms() {
@@ -172,12 +229,13 @@ function renderSynonyms() {
       definitionsCont.setAttribute('class', 'definitions');
       singleSynContEl.appendChild(definitionsCont);
 
+      if (synonymsData[i].results !== undefined) {
       for (var x = 0; x < synonymsData[i].results.length; x++) {
         var defEl = document.createElement('p');
         defEl.setAttribute('class', 'definitions');
         defEl.textContent = synonymsData[i].results[x].definition + '.';
         definitionsCont.appendChild(defEl);
-      }
+      }}
 
       var ulEl = document.createElement('ul');
       singleSynContEl.appendChild(ulEl);
@@ -206,6 +264,182 @@ function renderSynonyms() {
       ulEl.appendChild(freqEl);
     }
   }
+}
+
+function renderRhymes() {
+  for (var i = 0; i < 5; i++) {
+    if (rhymesData[i].word !== undefined) {
+      var rhymesContEl = document.createElement('div');
+      rhymesContEl.setAttribute('class', 'box rhymes-container');
+      rhymesColEl.appendChild(rhymesContEl);
+
+      var singleRhymesContEl = document.createElement('div');
+      singleRhymesContEl.setAttribute('class', 'content is-small');
+      rhymesContEl.appendChild(singleRhymesContEl);
+
+      var rhymesHeader = document.createElement('h1');
+      rhymesHeader.setAttribute('class', 'altRhym');
+      rhymesHeader.textContent = rhymesData[i].word;
+      singleRhymesContEl.appendChild(rhymesHeader);
+
+      var definitionsCont = document.createElement('div');
+      definitionsCont.setAttribute('class', 'definitions');
+      singleRhymesContEl.appendChild(definitionsCont);
+
+      if (rhymesData[i].results !== undefined) {
+      for (var x = 0; x < rhymesData[i].results.length; x++) {
+        var defEl = document.createElement('p');
+        defEl.setAttribute('class', 'definitions');
+        defEl.textContent = rhymesData[i].results[x].definition + '.';
+        definitionsCont.appendChild(defEl);
+      }}
+
+      var ulEl = document.createElement('ul');
+      singleRhymesContEl.appendChild(ulEl);
+
+      if (rhymesData[i].pronunciation !== undefined) {
+        var proEl = document.createElement('li');
+        proEl.textContent = 'Pronunciation: ' + rhymesData[i].pronunciation.all;
+        ulEl.appendChild(proEl);
+      }
+
+      if (rhymesData[i].syllables !== undefined) {
+
+        var sylContEl = document.createElement('li');
+        sylContEl.textContent = 'Syllable(s): - ';
+        ulEl.appendChild(sylContEl);
+
+        for (var y = 0; y < rhymesData[i].syllables.list.length; y++) {
+          var sylEl = document.createElement('span');
+          sylEl.textContent = rhymesData[i].syllables.list[y] + ' - ';
+          sylContEl.appendChild(sylEl);
+        }
+      }
+
+      var freqEl = document.createElement('li');
+      freqEl.textContent = 'Frequency: ' + rhymesData[i].frequency;
+      ulEl.appendChild(freqEl);
+    }
+  }
+}
+
+function renderHomophones() {
+  for (var i = 0; i < 5; i++) {
+    if (homophonesData[i] !== undefined) {
+      var hpContEl = document.createElement('div');
+      hpContEl.setAttribute('class', 'box homophones-container');
+      hpColEl.appendChild(hpContEl);
+
+      var singleHpContEl = document.createElement('div');
+      singleHpContEl.setAttribute('class', 'content is-small');
+      HpContEl.appendChild(singleHpContEl);
+
+      var hpHeader = document.createElement('h1');
+      hpHeader.setAttribute('class', 'altSound');
+      hpHeader.textContent = homophonesData[i].word;
+      singleHpContEl.appendChild(hpHeader);
+
+      var definitionsCont = document.createElement('div');
+      definitionsCont.setAttribute('class', 'definitions');
+      singleHpContEl.appendChild(definitionsCont);
+
+      for (var x = 0; x < homophonesData[i].results.length; x++) {
+        var defEl = document.createElement('p');
+        defEl.setAttribute('class', 'definitions');
+        defEl.textContent = homophonesData[i].results[x].definition + '.';
+        definitionsCont.appendChild(defEl);
+      }
+
+      var ulEl = document.createElement('ul');
+      hpSynContEl.appendChild(ulEl);
+
+      if (homophonesData[i].pronunciation.all !== undefined) {
+        var proEl = document.createElement('li');
+        proEl.textContent = 'Pronunciation: ' + homophonesData[i].pronunciation.all;
+        ulEl.appendChild(proEl);
+      }
+
+      if (homophonesData[i].syllables !== undefined) {
+
+        var sylContEl = document.createElement('li');
+        sylContEl.textContent = 'Syllable(s): - ';
+        ulEl.appendChild(sylContEl);
+
+        for (var y = 0; y < homophonesData[i].syllables.list.length; y++) {
+          var sylEl = document.createElement('span');
+          sylEl.textContent = homophonesData[i].syllables.list[y] + ' - ';
+          sylContEl.appendChild(sylEl);
+        }
+      }
+
+      var freqEl = document.createElement('li');
+      freqEl.textContent = 'Frequency: ' + homophonesData[i].frequency;
+      ulEl.appendChild(freqEl);
+    }
+  }
+}
+
+function renderAntonyms() {
+  for (var i = 0; i < 5; i++) {
+    if (antonymsData[i] !== undefined) {
+      var antContEl = document.createElement('div');
+      antContEl.setAttribute('class', 'box antonyms-container');
+      antColEl.appendChild(antContEl);
+
+      var singleAntContEl = document.createElement('div');
+      singleAntContEl.setAttribute('class', 'content is-small');
+      antContEl.appendChild(singleAntContEl);
+
+      var antHeader = document.createElement('h1');
+      antHeader.setAttribute('class', 'altAnt');
+      antHeader.textContent = antonymsData[i].word;
+      singleAntContEl.appendChild(antHeader);
+
+      var definitionsCont = document.createElement('div');
+      definitionsCont.setAttribute('class', 'definitions');
+      singleAntContEl.appendChild(definitionsCont);
+
+      for (var x = 0; x < antonymsData[i].results.length; x++) {
+        var defEl = document.createElement('p');
+        defEl.setAttribute('class', 'definitions');
+        defEl.textContent = antonymsData[i].results[x].definition + '.';
+        definitionsCont.appendChild(defEl);
+      }
+
+      var ulEl = document.createElement('ul');
+      singleAntContEl.appendChild(ulEl);
+
+      if (antonymsData[i].pronunciation.all !== undefined) {
+        var proEl = document.createElement('li');
+        proEl.textContent = 'Pronunciation: ' + antonymsData[i].pronunciation.all;
+        ulEl.appendChild(proEl);
+      }
+
+      if (antonymsData[i].syllables !== undefined) {
+
+        var sylContEl = document.createElement('li');
+        sylContEl.textContent = 'Syllable(s): - ';
+        ulEl.appendChild(sylContEl);
+
+        for (var y = 0; y < antonymsData[i].syllables.list.length; y++) {
+          var sylEl = document.createElement('span');
+          sylEl.textContent = antonymsData[i].syllables.list[y] + ' - ';
+          sylContEl.appendChild(sylEl);
+        }
+      }
+
+      var freqEl = document.createElement('li');
+      freqEl.textContent = 'Frequency: ' + antonymsData[i].frequency;
+      ulEl.appendChild(freqEl);
+    }
+  }
+}
+
+function renderLists() {
+  renderSynonyms();
+  renderRhymes();
+  renderHomophones();
+  renderAntonyms();
 }
 
 //-----------------------------//
