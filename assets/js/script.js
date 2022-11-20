@@ -445,8 +445,9 @@ function saveWord() {
         if (searchHistory[i].word === userWord) {
           userCount = searchHistory[i].count + 1
           console.log(userCount)
-          searchHistory[i].count = userCount
-          console.log(searchHistory[i].count)
+          storedWord = { word: userWord, count: userCount }
+          searchHistory.splice(i, 1);
+          searchHistory.unshift(storedWord)
           setSearchHistory();
           return;
         }
