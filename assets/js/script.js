@@ -34,6 +34,53 @@ var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
 
 var wordsUrl0 = wordsAPI + word;
 
+// function to get the pronunciation of the word and show it in mainPro
+function getPronunciation() {
+  fetch(wordsUrl0, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var pronunciation = data.pronunciation.all;
+      document.getElementById("mainPro").innerHTML = pronunciation;
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("mainPro").innerHTML = "No pronunciation found";
+    });
+}
+
+// function to get the syllables of the word and show it in mainSyl
+function getSyllables() {
+  fetch(wordsUrl0, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var syllables = data.syllables.count;
+      document.getElementById("mainSyl").innerHTML = syllables;
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("mainSyl").innerHTML = "No syllables found";
+    });
+}
+
+// function to get the frequency of the word and show it in mainFreq
+function getFrequency() {
+  fetch(wordsUrl0, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var frequency = data.frequency;
+      if (frequency === undefined) {
+        document.getElementById("mainFreq").innerHTML = "No frequency found";
+      } else {
+        document.getElementById("mainFreq").innerHTML = frequency;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("mainFreq").innerHTML = "No frequency found";
+    });
+}
+
+
 function modalListener() {
   // document.addEventListener("DOMContentLoaded", () => {
     // Functions to open and close a modal
@@ -63,7 +110,65 @@ function modalListener() {
           console.log($trigger.innerHTML);
           // change the innerHTML of modalContent to the innerHTML of the button
           document.getElementById("modalContent").innerHTML = $trigger.innerHTML;
+          var word1 = $trigger.innerHTML
+          const options = {
+            method: "GET",
+            headers: {
+              "X-RapidAPI-Key": "2d56f060f5msh38af9a8aa84bc68p1b4603jsn2583833b279c",
+              "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
+            },
+          };
+          // varibles showing the urls you will need for the words api
+          var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
           
+          var word1Url0 = wordsAPI + word1;
+          // function to get the pronunciation of the word and add it to the modalContent
+          function getPronunciation1() {
+            fetch(word1Url0, options)
+              .then((response) => response.json())
+              .then((data) => {
+                var pronunciation = data.pronunciation.all;
+                document.getElementById("modalContent").innerHTML += " Pronunciation: " + pronunciation;
+              })
+              .catch((err) => {
+                console.error(err);
+                document.getElementById("modalContent").innerHTML += " Pronunciation: No pronunciation found";
+              });
+          }
+          getPronunciation1();
+          // function to get the syllables of the word and add it to the modalContent
+          function getSyllables1() {
+            fetch(word1Url0, options)
+              .then((response) => response.json())
+              .then((data) => {
+                var syllables = data.syllables.count;
+                document.getElementById("modalContent").innerHTML += " Syllables: " + syllables;
+              })
+              .catch((err) => {
+                console.error(err);
+                document.getElementById("modalContent").innerHTML += " Syllables: No syllables found";
+              });
+          }
+          getSyllables1();
+          // function to get the frequency of the word and add it to the modalContent
+          function getFrequency1() {
+            fetch(word1Url0, options)
+              .then((response) => response.json())
+              .then((data) => {
+                var frequency = data.frequency;
+                if (frequency === undefined) {
+                  document.getElementById("modalContent").innerHTML += " Frequency: No frequency found";
+                } else {
+                  document.getElementById("modalContent").innerHTML += " Frequency: " + frequency;
+                }
+              })
+              .catch((err) => {
+                console.error(err);
+                document.getElementById("modalContent").innerHTML += " Frequency: No frequency found";
+              });
+          }
+          getFrequency1();
+
         });
       }
     );
@@ -292,51 +397,7 @@ function getDefinition() {
     });
 }
 
-// function to get the pronunciation of the word and show it in mainPro
-function getPronunciation() {
-  fetch(wordsUrl0, options)
-    .then((response) => response.json())
-    .then((data) => {
-      var pronunciation = data.pronunciation.all;
-      document.getElementById("mainPro").innerHTML = pronunciation;
-    })
-    .catch((err) => {
-      console.error(err);
-      document.getElementById("mainPro").innerHTML = "No pronunciation found";
-    });
-}
 
-// function to get the syllables of the word and show it in mainSyl
-function getSyllables() {
-  fetch(wordsUrl0, options)
-    .then((response) => response.json())
-    .then((data) => {
-      var syllables = data.syllables.count;
-      document.getElementById("mainSyl").innerHTML = syllables;
-    })
-    .catch((err) => {
-      console.error(err);
-      document.getElementById("mainSyl").innerHTML = "No syllables found";
-    });
-}
-
-// function to get the frequency of the word and show it in mainFreq
-function getFrequency() {
-  fetch(wordsUrl0, options)
-    .then((response) => response.json())
-    .then((data) => {
-      var frequency = data.frequency;
-      if (frequency === undefined) {
-        document.getElementById("mainFreq").innerHTML = "No frequency found";
-      } else {
-        document.getElementById("mainFreq").innerHTML = frequency;
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      document.getElementById("mainFreq").innerHTML = "No frequency found";
-    });
-}
 
 // the search button is clicked
 searchButton.addEventListener("click", function () {
