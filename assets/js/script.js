@@ -51,7 +51,7 @@ function modalListener() {
       });
     }
 
-    // Add a click event on buttons to open a specific modal
+    // Add a click event on buttons to open a specific modal and console.log the innerHTML of the button
     (document.querySelectorAll(".js-modal-trigger") || []).forEach(
       ($trigger) => {
         const modal = $trigger.dataset.target;
@@ -59,6 +59,11 @@ function modalListener() {
 
         $trigger.addEventListener("click", () => {
           openModal($target);
+
+          console.log($trigger.innerHTML);
+          // change the innerHTML of modalContent to the innerHTML of the button
+          document.getElementById("modalContent").innerHTML = $trigger.innerHTML;
+          
         });
       }
     );
