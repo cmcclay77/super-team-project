@@ -35,7 +35,7 @@ var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
 var wordsUrl0 = wordsAPI + word;
 
 function modalListener() {
-  document.addEventListener("DOMContentLoaded", () => {
+  // document.addEventListener("DOMContentLoaded", () => {
     // Functions to open and close a modal
     function openModal($el) {
       $el.classList.add("is-active");
@@ -85,8 +85,9 @@ function modalListener() {
         closeAllModals();
       }
     });
-  });
-}
+  }
+//   );
+// }
 
 //function to get 5 synonyms of the word
 function getSynonyms() {
@@ -125,58 +126,8 @@ function getSynonyms() {
         // add event listener to the button with the id of the synonym to alert the id of the synonym
         document
           .getElementById(synonymsArray[i])
-          .addEventListener("click", function () {
-            
-            // Functions to open and close a modal
-            function openModal($el) {
-              $el.classList.add("is-active");
-            }
+          modalListener()
 
-            function closeModal($el) {
-              $el.classList.remove("is-active");
-            }
-
-            function closeAllModals() {
-              (document.querySelectorAll(".modal") || []).forEach(($modal) => {
-                closeModal($modal);
-              });
-            }
-
-            // Add a click event on buttons to open a specific modal
-            (document.querySelectorAll(".js-modal-trigger") || []).forEach(
-              ($trigger) => {
-                const modal = $trigger.dataset.target;
-                const $target = document.getElementById(modal);
-
-                $trigger.addEventListener("click", () => {
-                  openModal($target);
-                });
-              }
-            );
-
-            // Add a click event on various child elements to close the parent modal
-            (
-              document.querySelectorAll(
-                ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
-              ) || []
-            ).forEach(($close) => {
-              const $target = $close.closest(".modal");
-
-              $close.addEventListener("click", () => {
-                closeModal($target);
-              });
-            });
-
-            // Add a keyboard event to close all modals
-            document.addEventListener("keydown", (event) => {
-              const e = event || window.event;
-
-              if (e.keyCode === 27) {
-                // Escape key
-                closeAllModals();
-              }
-            });
-          });
       }
     })
     .catch((err) => {
@@ -214,62 +165,14 @@ function getAntonyms() {
         var button = document.createElement("button");
         button.innerHTML = antonymsArray[i];
         button.id = antonymsArray[i];
-        button.className = "antonym-button js-modal-trigger";
+        button.className = "js-modal-trigger";
+        // add attribute data-target to the button with value of modal-js-example
+        button.setAttribute("data-target", "modal-js-example");
         document.getElementById("antonym-column").appendChild(button);
         // add event listener to the button with the id of the antonym to alert the id of the antonym
         document
           .getElementById(antonymsArray[i])
-          .addEventListener("click", function () {
-            // Functions to open and close a modal
-            function openModal($el) {
-              $el.classList.add("is-active");
-            }
-
-            function closeModal($el) {
-              $el.classList.remove("is-active");
-            }
-
-            function closeAllModals() {
-              (document.querySelectorAll(".modal") || []).forEach(($modal) => {
-                closeModal($modal);
-              });
-            }
-
-            // Add a click event on buttons to open a specific modal
-            (document.querySelectorAll(".js-modal-trigger") || []).forEach(
-              ($trigger) => {
-                const modal = $trigger.dataset.target;
-                const $target = document.getElementById(modal);
-
-                $trigger.addEventListener("click", () => {
-                  openModal($target);
-                });
-              }
-            );
-
-            // Add a click event on various child elements to close the parent modal
-            (
-              document.querySelectorAll(
-                ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
-              ) || []
-            ).forEach(($close) => {
-              const $target = $close.closest(".modal");
-
-              $close.addEventListener("click", () => {
-                closeModal($target);
-              });
-            });
-
-            // Add a keyboard event to close all modals
-            document.addEventListener("keydown", (event) => {
-              const e = event || window.event;
-
-              if (e.keyCode === 27) {
-                // Escape key
-                closeAllModals();
-              }
-            });
-          });
+          modalListener()
       }
     })
     .catch((err) => {
@@ -308,62 +211,14 @@ function getRhymes() {
         var button = document.createElement("button");
         button.innerHTML = rhymesArray[i];
         button.id = rhymesArray[i];
-        button.className = "rhyme-button js-modal-trigger";
+        button.className = "js-modal-trigger";
+        // add attribute data-target to the button with value of modal-js-example
+        button.setAttribute("data-target", "modal-js-example");
         document.getElementById("rhymes-column").appendChild(button);
         // add event listener to the button with the id of the rhyme to alert the id of the rhyme
         document
           .getElementById(rhymesArray[i])
-          .addEventListener("click", function () {
-            // Functions to open and close a modal
-            function openModal($el) {
-              $el.classList.add("is-active");
-            }
-
-            function closeModal($el) {
-              $el.classList.remove("is-active");
-            }
-
-            function closeAllModals() {
-              (document.querySelectorAll(".modal") || []).forEach(($modal) => {
-                closeModal($modal);
-              });
-            }
-
-            // Add a click event on buttons to open a specific modal
-            (document.querySelectorAll(".js-modal-trigger") || []).forEach(
-              ($trigger) => {
-                const modal = $trigger.dataset.target;
-                const $target = document.getElementById(modal);
-
-                $trigger.addEventListener("click", () => {
-                  openModal($target);
-                });
-              }
-            );
-
-            // Add a click event on various child elements to close the parent modal
-            (
-              document.querySelectorAll(
-                ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
-              ) || []
-            ).forEach(($close) => {
-              const $target = $close.closest(".modal");
-
-              $close.addEventListener("click", () => {
-                closeModal($target);
-              });
-            });
-
-            // Add a keyboard event to close all modals
-            document.addEventListener("keydown", (event) => {
-              const e = event || window.event;
-
-              if (e.keyCode === 27) {
-                // Escape key
-                closeAllModals();
-              }
-            });
-          });
+          modalListener()
       }
     })
     .catch((err) => {
@@ -402,63 +257,14 @@ function getHomophones() {
         var button = document.createElement("button");
         button.innerHTML = homophonesArray[i];
         button.id = homophonesArray[i];
-        button.className = "homophone-button js-modal-trigger";
+        button.className = "js-modal-trigger";
+        // add attribute data-target to the button with value of modal-js-example
+        button.setAttribute("data-target", "modal-js-example");
         document.getElementById("homophones-column").appendChild(button);
         // add event listener to the button with the id of the homophone to alert the id of the homophone
         document
           .getElementById(homophonesArray[i])
-          .addEventListener("click", function () {
-            
-            // Functions to open and close a modal
-            function openModal($el) {
-              $el.classList.add("is-active");
-            }
-
-            function closeModal($el) {
-              $el.classList.remove("is-active");
-            }
-
-            function closeAllModals() {
-              (document.querySelectorAll(".modal") || []).forEach(($modal) => {
-                closeModal($modal);
-              });
-            }
-
-            // Add a click event on buttons to open a specific modal
-            (document.querySelectorAll(".js-modal-trigger") || []).forEach(
-              ($trigger) => {
-                const modal = $trigger.dataset.target;
-                const $target = document.getElementById(modal);
-
-                $trigger.addEventListener("click", () => {
-                  openModal($target);
-                });
-              }
-            );
-
-            // Add a click event on various child elements to close the parent modal
-            (
-              document.querySelectorAll(
-                ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
-              ) || []
-            ).forEach(($close) => {
-              const $target = $close.closest(".modal");
-
-              $close.addEventListener("click", () => {
-                closeModal($target);
-              });
-            });
-
-            // Add a keyboard event to close all modals
-            document.addEventListener("keydown", (event) => {
-              const e = event || window.event;
-
-              if (e.keyCode === 27) {
-                // Escape key
-                closeAllModals();
-              }
-            });
-          });
+          modalListener()
       }
     })
     .catch((err) => {
@@ -551,7 +357,7 @@ searchButton.addEventListener("click", function () {
   getPronunciation();
   getSyllables();
   getFrequency();
-  modalListener();
+ 
 
   // the input box is cleared
   inputBox.value = "";
