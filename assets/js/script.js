@@ -439,7 +439,7 @@ function saveWord() {
 
     if (searchHistory.length === 0) {
       storedWord = { word: userWord, count: userCount }
-      searchHistory.push(storedWord)
+      searchHistory.unshift(storedWord)
     } else {
       for (var i = 0; i < searchHistory.length; i++) {
         if (searchHistory[i].word === userWord) {
@@ -454,14 +454,87 @@ function saveWord() {
       console.log(userCount)
       storedWord = { word: userWord, count: userCount }
       console.log(storedWord)
-      searchHistory.push(storedWord)
+      searchHistory.unshift(storedWord)
       console.log(searchHistory)
       setSearchHistory();
     }
   }
 }
 
-// the search button is clicked
+// chart.js content  this is the code for the chart
+//-----------------------------//
+// note: if you want to change the size of the chart then you do that in the style.css file
+const ctx = document.getElementById("myChart");
+
+function renderChart() {
+  var labelsWords = []
+  var dataCount = []
+  var bgColorsArray = [
+    "rgba(255, 99, 132, 0.2)",
+    "rgba(255, 159, 64, 0.2)",
+    "rgba(255, 205, 86, 0.2)",
+    "rgba(75, 192, 192, 0.2)",
+    "rgba(54, 162, 235, 0.2)",
+    "rgba(153, 102, 255, 0.2)",
+    "rgba(201, 203, 207, 0.2)",
+  ];
+  var borderColorsArray = [
+    "rgb(255, 99, 132)",
+    "rgb(255, 159, 64)",
+    "rgb(255, 205, 86)",
+    "rgb(75, 192, 192)",
+    "rgb(54, 162, 235)",
+    "rgb(153, 102, 255)",
+    "rgb(201, 203, 207)",
+  ];
+
+  if (searchHistory.length < 7) {
+    for (var i = 0; i < searchHistory.length; i++) {
+      labelsWords.push(searchHistory[i].word);
+      dataCount.push(searchHistory[i].count);
+    }
+    bgColorsArray.length = labelsWords.length;
+    borderColorsArray.length = labelsWords.length;
+  } else {
+    for (var i = 0; i < 7; i++) {
+      labelsWords.push(searchHistory[i].word);
+      dataCount.push(searchHistory[i].count);
+    }
+  }
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      // these are the labels for the chart
+      labels: labelsWords,
+      datasets: [
+        {
+          label: "Number of Times Searched",
+          // this data array is where you will store the number of times a word is searched
+          data: dataCount,
+
+          // these colors are the background colors for the chart bars
+          backgroundColor: bgColorsArray,
+
+          borderColor: borderColorsArray,
+          // these colors are the border colors for the chart bars
+          // this is the width of the border on the chart
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+
+
+// the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault()
   // the word in the input box is stored in the variable word
@@ -490,10 +563,10 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   getPronunciation();
   getSyllables();
   getFrequency();
-  
+
   // the input box is cleared
   inputBox.value = "";
-  
+
   document.getElementById("synonym-column").style.display = "block";
   document.getElementById("antonym-column").style.display = "block";
   document.getElementById("rhymes-column").style.display = "block";
@@ -502,3 +575,4 @@ document.getElementById('submit-form').addEventListener("submit", function (even
 });
 
 getSearchHistory();
+renderChart();
