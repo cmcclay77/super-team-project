@@ -128,11 +128,11 @@ function modalListener() {
               .then((response) => response.json())
               .then((data) => {
                 var pronunciation = data.pronunciation.all;
-                document.getElementById("modalContent").innerHTML += " Pronunciation: " + pronunciation;
+                document.getElementById("modalPro").innerHTML = " Pronunciation: " + pronunciation;
               })
               .catch((err) => {
                 console.error(err);
-                document.getElementById("modalContent").innerHTML += " Pronunciation: No pronunciation found";
+                document.getElementById("modalPro").innerHTML = " Pronunciation: No pronunciation found";
               });
           }
           getPronunciation1();
@@ -142,11 +142,11 @@ function modalListener() {
               .then((response) => response.json())
               .then((data) => {
                 var syllables = data.syllables.count;
-                document.getElementById("modalContent").innerHTML += " Syllables: " + syllables;
+                document.getElementById("modalSyl").innerHTML = " Syllables: " + syllables;
               })
               .catch((err) => {
                 console.error(err);
-                document.getElementById("modalContent").innerHTML += " Syllables: No syllables found";
+                document.getElementById("modalSyl").innerHTML = " Syllables: No syllables found";
               });
           }
           getSyllables1();
@@ -157,14 +157,14 @@ function modalListener() {
               .then((data) => {
                 var frequency = data.frequency;
                 if (frequency === undefined) {
-                  document.getElementById("modalContent").innerHTML += " Frequency: No frequency found";
+                  document.getElementById("modalFreq").innerHTML = " Frequency: No frequency found";
                 } else {
-                  document.getElementById("modalContent").innerHTML += " Frequency: " + frequency;
+                  document.getElementById("modalFreq").innerHTML = " Frequency: " + frequency;
                 }
               })
               .catch((err) => {
                 console.error(err);
-                document.getElementById("modalContent").innerHTML += " Frequency: No frequency found";
+                document.getElementById("modalContent").innerHTML = " Frequency: No frequency found";
               });
           }
           getFrequency1();
