@@ -40,7 +40,7 @@ function getPronunciation() {
     .then((response) => response.json())
     .then((data) => {
       var pronunciation = data.pronunciation.all;
-      document.getElementById("mainPro").innerHTML = pronunciation;
+      document.getElementById("mainPro").innerHTML = 'Pronounciation: ' + pronunciation;
     })
     .catch((err) => {
       console.error(err);
@@ -54,7 +54,7 @@ function getSyllables() {
     .then((response) => response.json())
     .then((data) => {
       var syllables = data.syllables.count;
-      document.getElementById("mainSyl").innerHTML = syllables;
+      document.getElementById("mainSyl").innerHTML = 'Syllables: ' + syllables;
     })
     .catch((err) => {
       console.error(err);
@@ -71,7 +71,7 @@ function getFrequency() {
       if (frequency === undefined) {
         document.getElementById("mainFreq").innerHTML = "No frequency found";
       } else {
-        document.getElementById("mainFreq").innerHTML = frequency;
+        document.getElementById("mainFreq").innerHTML = 'Frequency: ' + frequency;
       }
     })
     .catch((err) => {
@@ -83,119 +83,119 @@ function getFrequency() {
 
 function modalListener() {
   // document.addEventListener("DOMContentLoaded", () => {
-    // Functions to open and close a modal
-    function openModal($el) {
-      $el.classList.add("is-active");
-    }
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add("is-active");
+  }
 
-    function closeModal($el) {
-      $el.classList.remove("is-active");
-    }
+  function closeModal($el) {
+    $el.classList.remove("is-active");
+  }
 
-    function closeAllModals() {
-      (document.querySelectorAll(".modal") || []).forEach(($modal) => {
-        closeModal($modal);
-      });
-    }
-
-    // Add a click event on buttons to open a specific modal and console.log the innerHTML of the button
-    (document.querySelectorAll(".js-modal-trigger") || []).forEach(
-      ($trigger) => {
-        const modal = $trigger.dataset.target;
-        const $target = document.getElementById(modal);
-
-        $trigger.addEventListener("click", () => {
-          openModal($target);
-
-          console.log($trigger.innerHTML);
-          // change the innerHTML of modalContent to the innerHTML of the button
-          document.getElementById("modalContent").innerHTML = $trigger.innerHTML;
-          var word1 = $trigger.innerHTML
-          const options = {
-            method: "GET",
-            headers: {
-              "X-RapidAPI-Key": "2d56f060f5msh38af9a8aa84bc68p1b4603jsn2583833b279c",
-              "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
-            },
-          };
-          // varibles showing the urls you will need for the words api
-          var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
-          
-          var word1Url0 = wordsAPI + word1;
-          // function to get the pronunciation of the word and add it to the modalContent
-          function getPronunciation1() {
-            fetch(word1Url0, options)
-              .then((response) => response.json())
-              .then((data) => {
-                var pronunciation = data.pronunciation.all;
-                document.getElementById("modalPro").innerHTML = " Pronunciation: " + pronunciation;
-              })
-              .catch((err) => {
-                console.error(err);
-                document.getElementById("modalPro").innerHTML = " Pronunciation: No pronunciation found";
-              });
-          }
-          getPronunciation1();
-          // function to get the syllables of the word and add it to the modalContent
-          function getSyllables1() {
-            fetch(word1Url0, options)
-              .then((response) => response.json())
-              .then((data) => {
-                var syllables = data.syllables.count;
-                document.getElementById("modalSyl").innerHTML = " Syllables: " + syllables;
-              })
-              .catch((err) => {
-                console.error(err);
-                document.getElementById("modalSyl").innerHTML = " Syllables: No syllables found";
-              });
-          }
-          getSyllables1();
-          // function to get the frequency of the word and add it to the modalContent
-          function getFrequency1() {
-            fetch(word1Url0, options)
-              .then((response) => response.json())
-              .then((data) => {
-                var frequency = data.frequency;
-                if (frequency === undefined) {
-                  document.getElementById("modalFreq").innerHTML = " Frequency: No frequency found";
-                } else {
-                  document.getElementById("modalFreq").innerHTML = " Frequency: " + frequency;
-                }
-              })
-              .catch((err) => {
-                console.error(err);
-                document.getElementById("modalContent").innerHTML = " Frequency: No frequency found";
-              });
-          }
-          getFrequency1();
-
-        });
-      }
-    );
-
-    // Add a click event on various child elements to close the parent modal
-    (
-      document.querySelectorAll(
-        ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
-      ) || []
-    ).forEach(($close) => {
-      const $target = $close.closest(".modal");
-
-      $close.addEventListener("click", () => {
-        closeModal($target);
-      });
-    });
-
-    // Add a keyboard event to close all modals
-    document.addEventListener("keydown", (event) => {
-      const e = event || window.event;
-
-      if (e.keyCode === 27) {
-        // Escape key
-        closeAllModals();
-      }
+  function closeAllModals() {
+    (document.querySelectorAll(".modal") || []).forEach(($modal) => {
+      closeModal($modal);
     });
   }
+
+  // Add a click event on buttons to open a specific modal and console.log the innerHTML of the button
+  (document.querySelectorAll(".js-modal-trigger") || []).forEach(
+    ($trigger) => {
+      const modal = $trigger.dataset.target;
+      const $target = document.getElementById(modal);
+
+      $trigger.addEventListener("click", () => {
+        openModal($target);
+
+        console.log($trigger.innerHTML);
+        // change the innerHTML of modalContent to the innerHTML of the button
+        document.getElementById("modalContent").innerHTML = $trigger.innerHTML;
+        var word1 = $trigger.innerHTML
+        const options = {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": "2d56f060f5msh38af9a8aa84bc68p1b4603jsn2583833b279c",
+            "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
+          },
+        };
+        // varibles showing the urls you will need for the words api
+        var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
+
+        var word1Url0 = wordsAPI + word1;
+        // function to get the pronunciation of the word and add it to the modalContent
+        function getPronunciation1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var pronunciation = data.pronunciation.all;
+              document.getElementById("modalPro").innerHTML = " Pronunciation: " + pronunciation;
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalPro").innerHTML = " Pronunciation: No pronunciation found";
+            });
+        }
+        getPronunciation1();
+        // function to get the syllables of the word and add it to the modalContent
+        function getSyllables1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var syllables = data.syllables.count;
+              document.getElementById("modalSyl").innerHTML = " Syllables: " + syllables;
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalSyl").innerHTML = " Syllables: No syllables found";
+            });
+        }
+        getSyllables1();
+        // function to get the frequency of the word and add it to the modalContent
+        function getFrequency1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var frequency = data.frequency;
+              if (frequency === undefined) {
+                document.getElementById("modalFreq").innerHTML = " Frequency: No frequency found";
+              } else {
+                document.getElementById("modalFreq").innerHTML = " Frequency: " + frequency;
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalContent").innerHTML = " Frequency: No frequency found";
+            });
+        }
+        getFrequency1();
+
+      });
+    }
+  );
+
+  // Add a click event on various child elements to close the parent modal
+  (
+    document.querySelectorAll(
+      ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
+    ) || []
+  ).forEach(($close) => {
+    const $target = $close.closest(".modal");
+
+    $close.addEventListener("click", () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener("keydown", (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) {
+      // Escape key
+      closeAllModals();
+    }
+  });
+}
 //   );
 // }
 
@@ -239,7 +239,7 @@ function getSynonyms() {
         // add event listener to the button with the id of the synonym to alert the id of the synonym
         document
           .getElementById(synonymsArray[i])
-          modalListener()
+        modalListener()
 
       }
     })
@@ -277,7 +277,7 @@ function getAntonyms() {
       var antonymContainer = document.createElement('div');
       antonymContainer.setAttribute('class', 'box antonym-container')
       document.getElementById("antonym-column").appendChild(antonymContainer)
-      
+
       for (var i = 0; i < antonymsArray.length; i++) {
         var h3El = document.createElement("h3");
         h3El.innerHTML = antonymsArray[i];
@@ -289,7 +289,7 @@ function getAntonyms() {
         // add event listener to the button with the id of the antonym to alert the id of the antonym
         document
           .getElementById(antonymsArray[i])
-          modalListener()
+        modalListener()
       }
     })
     .catch((err) => {
@@ -324,7 +324,7 @@ function getRhymes() {
       }
       // document.getElementById("rhymes-column").innerHTML = rhymesArray;
       // for each rhyme in the array create a button and add it to the rhymes column with the id of the rhyme
-      
+
       var rhymeContainer = document.createElement('div');
       rhymeContainer.setAttribute('class', 'box rhyme-container')
       document.getElementById("rhyme-column").appendChild(rhymeContainer)
@@ -340,7 +340,7 @@ function getRhymes() {
         // add event listener to the button with the id of the rhyme to alert the id of the rhyme
         document
           .getElementById(rhymesArray[i])
-          modalListener()
+        modalListener()
       }
     })
     .catch((err) => {
@@ -399,8 +399,15 @@ function getDefinition() {
   fetch(wordsUrl0, options)
     .then((response) => response.json())
     .then((data) => {
-      var definition = data.results[0].definition;
-      document.getElementById("definitionMain").innerHTML = definition;
+      console.log(data.results)
+      for (var i = 0; i < data.results.length; i++) {
+        var definition = data.results[i].definition;
+        var definitionEl = document.createElement('p')
+        // document.getElementById("definitionMain").innerHTML = definition;
+        definitionEl.innerHTML = definition + ';';
+        console.log(definitionEl.innerHTML)
+        document.getElementById("definitionMain").appendChild(definitionEl)
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -409,12 +416,60 @@ function getDefinition() {
     });
 }
 
+var searchHistory = [];
 
+function getSearchHistory() {
+  var storedSearches = JSON.parse(localStorage.getItem('search-history'));
+  if (storedSearches !== null) {
+    searchHistory = storedSearches;
+  } return;
+}
+
+function setSearchHistory() {
+  localStorage.setItem('search-history', JSON.stringify(searchHistory));
+  return;
+}
+
+function saveWord() {
+  var userWord = inputBox.value;
+  if (userWord !== undefined || userWord !== '') {
+    console.log(userWord)
+    var userCount = 1;
+    var storedWord = {};
+
+    if (searchHistory.length === 0) {
+      storedWord = { word: userWord, count: userCount }
+      searchHistory.push(storedWord)
+    } else {
+      for (var i = 0; i < searchHistory.length; i++) {
+        if (searchHistory[i].word === userWord) {
+          userCount = searchHistory[i].count + 1
+          console.log(userCount)
+          searchHistory[i].count = userCount
+          console.log(searchHistory[i].count)
+          setSearchHistory();
+          return;
+        }
+      }
+      console.log(userCount)
+      storedWord = { word: userWord, count: userCount }
+      console.log(storedWord)
+      searchHistory.push(storedWord)
+      console.log(searchHistory)
+      setSearchHistory();
+    }
+  }
+}
 
 // the search button is clicked
-searchButton.addEventListener("click", function () {
+document.getElementById('submit-form').addEventListener("submit", function (event) {
+  event.preventDefault()
   // the word in the input box is stored in the variable word
   var word = inputBox.value;
+
+  // saves the search history for each unique search
+  saveWord();
+
   // the word is shown in the element named mainWord and wordInFocus
   mainWord.innerHTML = word;
   wordInFocus.innerHTML = word;
@@ -435,14 +490,15 @@ searchButton.addEventListener("click", function () {
   getPronunciation();
   getSyllables();
   getFrequency();
- 
-
+  
   // the input box is cleared
   inputBox.value = "";
-
+  
   document.getElementById("synonym-column").style.display = "block";
   document.getElementById("antonym-column").style.display = "block";
   document.getElementById("rhymes-column").style.display = "block";
   document.getElementById("homophones-column").style.display = "block";
   document.getElementById("definitionMain").style.display = "block";
 });
+
+getSearchHistory();
