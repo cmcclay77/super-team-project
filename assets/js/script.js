@@ -212,7 +212,7 @@ function getSynonyms() {
       console.log(synonymsList);
       var synonymsArray = [];
       try {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < synonyms.length; i++) {
           // create a variable to hold the array of 5 synonyms and add the synonyms to it
           synonymsArray.push(synonyms[i].word);
           console.log(synonyms[i].word);
@@ -225,14 +225,17 @@ function getSynonyms() {
       }
       // document.getElementById("synonym-column").innerHTML = synonymsArray;
       // for each synonym in the array create a button and add it to the synonyms column with the id of the synonym
+      var synonymContainer = document.createElement('div');
+      synonymContainer.setAttribute('class', 'box synonym-container')
+      document.getElementById("synonym-column").appendChild(synonymContainer)
       for (var i = 0; i < synonymsArray.length; i++) {
-        var button = document.createElement("button");
-        button.innerHTML = synonymsArray[i];
-        button.id = synonymsArray[i];
-        button.className = "js-modal-trigger";
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = synonymsArray[i];
+        h3El.id = synonymsArray[i];
+        h3El.className = "js-modal-trigger";
         // add attribute data-target to the button with value of modal-js-example
-        button.setAttribute("data-target", "modal-js-example");
-        document.getElementById("synonym-column").appendChild(button);
+        h3El.setAttribute("data-target", "modal-js-example");
+        synonymContainer.appendChild(h3El);
         // add event listener to the button with the id of the synonym to alert the id of the synonym
         document
           .getElementById(synonymsArray[i])
@@ -259,7 +262,7 @@ function getAntonyms() {
       // create a variable to hold the array of 5 antonyms and add the antonyms to it
       var antonymsArray = [];
       try {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < antonyms.length; i++) {
           antonymsArray.push(antonyms[i].word);
           console.log(antonyms[i].word);
           console.log(antonymsArray);
@@ -271,14 +274,18 @@ function getAntonyms() {
       }
       // document.getElementById("antonym-column").innerHTML = antonymsArray;
       // for each antonym in the array create a button and add it to the antonyms column with the id of the antonym
+      var antonymContainer = document.createElement('div');
+      antonymContainer.setAttribute('class', 'box antonym-container')
+      document.getElementById("antonym-column").appendChild(antonymContainer)
+      
       for (var i = 0; i < antonymsArray.length; i++) {
-        var button = document.createElement("button");
-        button.innerHTML = antonymsArray[i];
-        button.id = antonymsArray[i];
-        button.className = "js-modal-trigger";
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = antonymsArray[i];
+        h3El.id = antonymsArray[i];
+        h3El.className = "js-modal-trigger";
         // add attribute data-target to the button with value of modal-js-example
-        button.setAttribute("data-target", "modal-js-example");
-        document.getElementById("antonym-column").appendChild(button);
+        h3El.setAttribute("data-target", "modal-js-example");
+        antonymContainer.appendChild(h3El);
         // add event listener to the button with the id of the antonym to alert the id of the antonym
         document
           .getElementById(antonymsArray[i])
@@ -305,7 +312,7 @@ function getRhymes() {
       // create a variable to hold the array of 5 rhymes and add the rhymes to it
       var rhymesArray = [];
       try {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < rhymes.length; i++) {
           rhymesArray.push(rhymes[i].word);
           console.log(rhymes[i].word);
           console.log(rhymesArray);
@@ -317,14 +324,19 @@ function getRhymes() {
       }
       // document.getElementById("rhymes-column").innerHTML = rhymesArray;
       // for each rhyme in the array create a button and add it to the rhymes column with the id of the rhyme
+      
+      var rhymeContainer = document.createElement('div');
+      rhymeContainer.setAttribute('class', 'box rhyme-container')
+      document.getElementById("rhyme-column").appendChild(rhymeContainer)
+
       for (var i = 0; i < rhymesArray.length; i++) {
-        var button = document.createElement("button");
-        button.innerHTML = rhymesArray[i];
-        button.id = rhymesArray[i];
-        button.className = "js-modal-trigger";
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = rhymesArray[i];
+        h3El.id = rhymesArray[i];
+        h3El.className = "js-modal-trigger";
         // add attribute data-target to the button with value of modal-js-example
-        button.setAttribute("data-target", "modal-js-example");
-        document.getElementById("rhymes-column").appendChild(button);
+        h3El.setAttribute("data-target", "modal-js-example");
+        rhymeContainer.appendChild(h3El);
         // add event listener to the button with the id of the rhyme to alert the id of the rhyme
         document
           .getElementById(rhymesArray[i])
@@ -336,51 +348,51 @@ function getRhymes() {
     });
 }
 
-//function to get the homophones of the word
-function getHomophones() {
-  fetch(datamuseUrl2)
-    .then((response) => response.json())
-    .then((data) => {
-      var homophones = data;
-      var homophonesList = "";
-      for (var i = 0; i < homophones.length; i++) {
-        homophonesList += homophones[i].word + ", ";
-      }
-      console.log(homophonesList);
+// //function to get the homophones of the word
+// function getHomophones() {
+//   fetch(datamuseUrl2)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       var homophones = data;
+//       var homophonesList = "";
+//       for (var i = 0; i < homophones.length; i++) {
+//         homophonesList += homophones[i].word + ", ";
+//       }
+//       console.log(homophonesList);
 
-      // create a variable to hold the array of 5 homophones and add the homophones to it
-      var homophonesArray = [];
-      try {
-        for (var i = 0; i < 5; i++) {
-          homophonesArray.push(homophones[i].word);
-          console.log(homophones[i].word);
-          console.log(homophonesArray);
-        }
-      } catch (error) {
-        console.log("No homophones found");
-        document.getElementById("homophones-column").innerHTML =
-          "Less than 5 homophones found";
-      }
-      // document.getElementById("homophones-column").innerHTML = homophonesArray;
-      // for each homophone in the array create a button and add it to the homophones column with the id of the homophone
-      for (var i = 0; i < homophonesArray.length; i++) {
-        var button = document.createElement("button");
-        button.innerHTML = homophonesArray[i];
-        button.id = homophonesArray[i];
-        button.className = "js-modal-trigger";
-        // add attribute data-target to the button with value of modal-js-example
-        button.setAttribute("data-target", "modal-js-example");
-        document.getElementById("homophones-column").appendChild(button);
-        // add event listener to the button with the id of the homophone to alert the id of the homophone
-        document
-          .getElementById(homophonesArray[i])
-          modalListener()
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
+//       // create a variable to hold the array of 5 homophones and add the homophones to it
+//       var homophonesArray = [];
+//       try {
+//         for (var i = 0; i < 5; i++) {
+//           homophonesArray.push(homophones[i].word);
+//           console.log(homophones[i].word);
+//           console.log(homophonesArray);
+//         }
+//       } catch (error) {
+//         console.log("No homophones found");
+//         document.getElementById("homophones-column").innerHTML =
+//           "Less than 5 homophones found";
+//       }
+//       // document.getElementById("homophones-column").innerHTML = homophonesArray;
+//       // for each homophone in the array create a button and add it to the homophones column with the id of the homophone
+//       for (var i = 0; i < homophonesArray.length; i++) {
+//         var button = document.createElement("button");
+//         button.innerHTML = homophonesArray[i];
+//         button.id = homophonesArray[i];
+//         button.className = "js-modal-trigger";
+//         // add attribute data-target to the button with value of modal-js-example
+//         button.setAttribute("data-target", "modal-js-example");
+//         document.getElementById("homophones-column").appendChild(button);
+//         // add event listener to the button with the id of the homophone to alert the id of the homophone
+//         document
+//           .getElementById(homophonesArray[i])
+//           modalListener()
+//       }
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     });
+// }
 
 //function to get the definition of the word
 function getDefinition() {
@@ -418,7 +430,7 @@ searchButton.addEventListener("click", function () {
   getSynonyms();
   getAntonyms();
   getRhymes();
-  getHomophones();
+  // getHomophones();
   getDefinition();
   getPronunciation();
   getSyllables();
