@@ -16,3 +16,15 @@
 .content p:not(:last-child) {
   margin-bottom: 0px;
 }
+
+.js-modal-trigger {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.js-modal-trigger:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
+} 
