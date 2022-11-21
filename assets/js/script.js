@@ -108,8 +108,8 @@ function modalListener() {
         openModal($target);
 
         console.log($trigger.innerHTML);
-        // change the innerHTML of modalContent to the innerHTML of the button
-        document.getElementById("modalContent").innerHTML = $trigger.innerHTML;
+        // change the innerHTML of modalContent to the innerHTML of the button but make first letter uppercase
+        document.getElementById("modalContent").innerHTML = $trigger.innerHTML.charAt(0).toUpperCase() + $trigger.innerHTML.slice(1);
         var word1 = $trigger.innerHTML
         const options = {
           method: "GET",
