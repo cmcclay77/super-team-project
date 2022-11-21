@@ -581,6 +581,46 @@ function renderChart() {
   });
 }
 
+// function to render the search history to the dropdown menu
+// each word in the search history will be an h4 that will be added to a div with class of dropdown-item
+// the div with class of dropdown-item will be added to the div with class of dropdown-menu
+function renderSearchHistory() {
+  console.log("renderSearchHistory was called");
+  var dropDownItemEl = document.createElement("div");
+  dropDownItemEl.classList.add("dropdown-item");
+  var dropDownMenuEl = document.querySelector(".dropdown-menu");
+  dropDownMenuEl.innerHTML = "";
+  for (var i = 0; i < searchHistory.length; i++) {
+    var dropDownItemEl = document.createElement("div");
+    dropDownItemEl.classList.add("dropdown-content");
+    var dropDownh4El = document.createElement("h4");
+    dropDownh4El.classList.add("dropdown-item");
+    dropDownh4El.setAttribute("type", "button");
+    dropDownh4El.setAttribute("data-word", searchHistory[i].word);
+    dropDownh4El.textContent = searchHistory[i].word;
+    // only append the h4 to the div if the word is not undefined or null or empty
+    if (searchHistory[i].word !== undefined || searchHistory[i].word !== null || searchHistory[i].word !== '') {
+
+    dropDownItemEl.appendChild(dropDownh4El);
+    dropDownMenuEl.appendChild(dropDownItemEl);
+    }
+    // event listener for the dropdown menu items that will put the word in the inputBox
+    dropDownh4El.addEventListener("click", function (event) {
+      event.preventDefault();
+      var word = event.target.getAttribute("data-word");
+      inputBox.value = word;
+    }); // end of event listener
+  }
+}
+
+// function to clear the search history
+function clearSearchHistory() {
+  console.log("clearSearchHistory was called");
+  searchHistory = [];
+  localStorage.removeItem('search-history');
+  renderSearchHistory();
+  renderChart();
+}
 
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
@@ -633,3 +673,4 @@ document.getElementById('submit-form').addEventListener("submit", function (even
 
 getSearchHistory();
 renderChart();
+renderSearchHistory();
