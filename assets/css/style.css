@@ -25,3 +25,17 @@
   transition-duration: 400ms;
   cursor: pointer;
 }
+
+.dropdown-item {
+  font-size: 1.2em;
+  font-weight: 500;
+  background-color: aliceblue;
+  border: 1px solid lightseagreen;
+}
+
+.dropdown-item:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
+}
