@@ -584,6 +584,15 @@ function renderChart() {
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault()
+  document.getElementById("synonym-column").innerHTML = "";
+  document.getElementById("rhyme-column").innerHTML = "";
+  document.getElementById("antonym-column").innerHTML = "";
+  document.getElementById("wordInFocus").innerHTML = "";
+  document.getElementById("mainWord").innerHTML = "";
+  document.getElementById("mainPro").innerHTML = "";
+  document.getElementById("mainSyl").innerHTML = "";
+  document.getElementById("mainFreq").innerHTML = "";
+  document.getElementById("definitionMain").innerHTML = "";
   // the word in the input box is stored in the variable word
   var word = inputBox.value;
 
