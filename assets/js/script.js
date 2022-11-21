@@ -169,6 +169,29 @@ function modalListener() {
         }
         getFrequency1();
 
+        // function to get the definition of the word and add it to the modalContent
+        function getDefinition1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var definition = data.results[0].definition;
+              document.getElementById("modalDef").innerHTML = " Definition: " + definition;
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalDef").innerHTML = " Definition: No definition found";
+            });
+        }
+        getDefinition1();
+
+        // event listener to close the modal when the modalContent is clicked and put the innerHTML of the modalContent into the inputBox
+        document.getElementById("modalContent").addEventListener("click", () => {
+          closeModal($target);
+          document.getElementById("inputBox").value = $trigger.innerHTML;
+        });
+
+        
+
       });
     }
   );
@@ -416,21 +439,31 @@ function getDefinition() {
     });
 }
 
+// variable to hold an array of the search history
 var searchHistory = [];
 
+// function to get the search history from local storage
 function getSearchHistory() {
-  var storedSearches = JSON.parse(localStorage.getItem('search-history'));
-  if (storedSearches !== null) {
-    searchHistory = storedSearches;
-  } return;
+  console.log("getSearchHistory was called");
+  try {
+    var storedSearches = JSON.parse(localStorage.getItem('search-history'));
+    if (storedSearches !== null) {
+      searchHistory = storedSearches;
+    } return;
+  } catch (error) {
+    console.log("No search history found");
+  }
 }
-
+// function to save the search history to local storage
 function setSearchHistory() {
+  console.log("setSearchHistory was called");
   localStorage.setItem('search-history', JSON.stringify(searchHistory));
   return;
 }
 
+// function to save a word to the search history
 function saveWord() {
+  console.log("saveWord was called");
   var userWord = inputBox.value;
   if (userWord !== undefined || userWord !== '') {
     console.log(userWord)
@@ -467,8 +500,11 @@ function saveWord() {
 const ctx = document.getElementById("myChart");
 
 function renderChart() {
+  // labelsWords is an array of the words in the search history
   var labelsWords = []
+  //dataCount is the array that holds the count of how many times each word has been searched
   var dataCount = []
+  // bgColorsArray is the array that holds the background colors for the chart
   var bgColorsArray = [
     "rgba(255, 99, 132, 0.2)",
     "rgba(255, 159, 64, 0.2)",
@@ -569,8 +605,8 @@ document.getElementById('submit-form').addEventListener("submit", function (even
 
   document.getElementById("synonym-column").style.display = "block";
   document.getElementById("antonym-column").style.display = "block";
-  document.getElementById("rhymes-column").style.display = "block";
-  document.getElementById("homophones-column").style.display = "block";
+  document.getElementById("rhyme-column").style.display = "block";
+  // document.getElementById("homophones-column").style.display = "block";
   document.getElementById("definitionMain").style.display = "block";
 });
 

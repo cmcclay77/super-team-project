@@ -13,3 +13,15 @@
   transition-duration: 400ms;
   cursor: pointer;
 } 
+
+.modal-card-title {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.modal-card-title:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
+}
