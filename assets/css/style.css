@@ -1,18 +1,3 @@
-/* this is the css to size the bar chart
-#myChart {
-  width: 50% !important;
-  height: 25% !important;
-}
-
-/* media query to make the bar chart smaller on mobile */
-/* @media (max-width: 768px) {
-  #myChart {
-    font-size: small !important;
-    width: 10% !important;
-    height: 10% !important;
-  }
-} */
-
 .content p:not(:last-child) {
   margin-bottom: 0px;
 }
@@ -28,3 +13,15 @@
   transition-duration: 400ms;
   cursor: pointer;
 } 
+
+.modal-card-title {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.modal-card-title:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
+}
