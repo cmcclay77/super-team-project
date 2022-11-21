@@ -187,10 +187,21 @@ function modalListener() {
         // event listener to close the modal when the modalContent is clicked and put the innerHTML of the modalContent into the inputBox
         document.getElementById("modalContent").addEventListener("click", () => {
           closeModal($target);
+          
           document.getElementById("inputBox").value = $trigger.innerHTML;
+          // clear the innerHTML of synonym-column, rhyme-column and antonym-column wordInFocus mainWord mainPro mainSyl mainFreq
+          document.getElementById("synonym-column").innerHTML = "";
+          document.getElementById("rhyme-column").innerHTML = "";
+          document.getElementById("antonym-column").innerHTML = "";
+          document.getElementById("wordInFocus").innerHTML = "";
+          document.getElementById("mainWord").innerHTML = "";
+          document.getElementById("mainPro").innerHTML = "";
+          document.getElementById("mainSyl").innerHTML = "";
+          document.getElementById("mainFreq").innerHTML = "";
+          document.getElementById("definitionMain").innerHTML = "";
         });
 
-        
+
 
       });
     }
@@ -574,6 +585,15 @@ function renderChart() {
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault()
+  document.getElementById("synonym-column").innerHTML = "";
+  document.getElementById("rhyme-column").innerHTML = "";
+  document.getElementById("antonym-column").innerHTML = "";
+  document.getElementById("wordInFocus").innerHTML = "";
+  document.getElementById("mainWord").innerHTML = "";
+  document.getElementById("mainPro").innerHTML = "";
+  document.getElementById("mainSyl").innerHTML = "";
+  document.getElementById("mainFreq").innerHTML = "";
+  document.getElementById("definitionMain").innerHTML = "";
   // the word in the input box is stored in the variable word
   var word = inputBox.value;
 
