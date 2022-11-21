@@ -239,9 +239,9 @@ function getSynonyms() {
         // add event listener to the button with the id of the synonym to alert the id of the synonym
         document
           .getElementById(synonymsArray[i])
+          
+        }
         modalListener()
-
-      }
     })
     .catch((err) => {
       console.error(err);
@@ -289,8 +289,8 @@ function getAntonyms() {
         // add event listener to the button with the id of the antonym to alert the id of the antonym
         document
           .getElementById(antonymsArray[i])
+        }
         modalListener()
-      }
     })
     .catch((err) => {
       console.error(err);
@@ -340,8 +340,8 @@ function getRhymes() {
         // add event listener to the button with the id of the rhyme to alert the id of the rhyme
         document
           .getElementById(rhymesArray[i])
+        }
         modalListener()
-      }
     })
     .catch((err) => {
       console.error(err);
