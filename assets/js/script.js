@@ -643,6 +643,8 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   event.preventDefault()
   var resultsContainer = document.getElementById("results-container");
   resultsContainer.classList.remove("hidden");
+  document.getElementById("body").classList.remove("on-load");
+
   document.getElementById("synonym-column").innerHTML = "Synonyms";
   document.getElementById("rhyme-column").innerHTML = "Rhymes";
   document.getElementById("antonym-column").innerHTML = "Antonyms";
