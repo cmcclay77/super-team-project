@@ -694,3 +694,11 @@ document.getElementById('submit-form').addEventListener("submit", function (even
 getSearchHistory();
 renderChart();
 renderSearchHistory();
+
+document.getElementById('delete-button').addEventListener('click', function(event){
+  event.preventDefault()
+  var resultsContainer = document.getElementById("results-container");
+  resultsContainer.classList.add("hidden");
+  document.getElementById("body").classList.add("on-load");
+
+})
