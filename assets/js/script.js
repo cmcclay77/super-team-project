@@ -625,9 +625,9 @@ function clearSearchHistory() {
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault()
-  document.getElementById("synonym-column").innerHTML = "";
-  document.getElementById("rhyme-column").innerHTML = "";
-  document.getElementById("antonym-column").innerHTML = "";
+  document.getElementById("synonym-column").innerHTML = "Synonyms";
+  document.getElementById("rhyme-column").innerHTML = "Rhymes";
+  document.getElementById("antonym-column").innerHTML = "Antonyms";
   document.getElementById("wordInFocus").innerHTML = "";
   document.getElementById("mainWord").innerHTML = "";
   document.getElementById("mainPro").innerHTML = "";
