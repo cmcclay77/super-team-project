@@ -39,3 +39,7 @@
   transition-duration: 400ms;
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}

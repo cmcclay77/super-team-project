@@ -641,6 +641,8 @@ function clearSearchHistory() {
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault()
+  var resultsContainer = document.getElementById("results-container");
+  resultsContainer.classList.remove("hidden");
   document.getElementById("synonym-column").innerHTML = "Synonyms";
   document.getElementById("rhyme-column").innerHTML = "Rhymes";
   document.getElementById("antonym-column").innerHTML = "Antonyms";
