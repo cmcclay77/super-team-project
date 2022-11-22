@@ -260,7 +260,12 @@ function getSynonyms() {
       // document.getElementById("synonym-column").innerHTML = synonymsArray;
       // for each synonym in the array create a button and add it to the synonyms column with the id of the synonym
       var synonymContainer = document.createElement('div');
+      if (synonymsArray.length >0) {
       synonymContainer.setAttribute('class', 'box synonym-container')
+      } else {     
+        synonymContainer.setAttribute('class', 'synonym-container')
+      }
+
       document.getElementById("synonym-column").appendChild(synonymContainer)
       for (var i = 0; i < synonymsArray.length; i++) {
         var h3El = document.createElement("h3");
@@ -299,6 +304,7 @@ function getAntonyms() {
         for (var i = 0; i < antonyms.length; i++) {
           antonymsArray.push(antonyms[i].word);
           console.log(antonyms[i].word);
+          console.log('---------------------');
           console.log(antonymsArray);
         }
       } catch (error) {
@@ -309,7 +315,12 @@ function getAntonyms() {
       // document.getElementById("antonym-column").innerHTML = antonymsArray;
       // for each antonym in the array create a button and add it to the antonyms column with the id of the antonym
       var antonymContainer = document.createElement('div');
+      if (antonymsArray.length > 0) {
       antonymContainer.setAttribute('class', 'box antonym-container')
+      } else {
+        antonymContainer.setAttribute('class', 'antonym-container')
+
+      }
       document.getElementById("antonym-column").appendChild(antonymContainer)
 
       for (var i = 0; i < antonymsArray.length; i++) {
@@ -360,7 +371,12 @@ function getRhymes() {
       // for each rhyme in the array create a button and add it to the rhymes column with the id of the rhyme
 
       var rhymeContainer = document.createElement('div');
+      if (rhymesArray.length > 0) {
       rhymeContainer.setAttribute('class', 'box rhyme-container')
+      } else {
+        rhymeContainer.setAttribute('class', 'rhyme-container')
+
+      }
       document.getElementById("rhyme-column").appendChild(rhymeContainer)
 
       for (var i = 0; i < rhymesArray.length; i++) {
