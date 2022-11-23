@@ -560,12 +560,12 @@ function clearSearchHistory() {
   searchHistory = [];
   localStorage.removeItem('search-history');
   renderSearchHistory();
-  renderChart();
 }
 
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault()
+  if (inputBox.value !== "") {
   var resultsContainer = document.getElementById("results-container");
   resultsContainer.classList.remove("hidden");
   document.getElementById("body").classList.remove("on-load");
@@ -632,10 +632,11 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   document.getElementById("rhyme-column").style.display = "block";
   // document.getElementById("homophones-column").style.display = "block";
   document.getElementById("definitionMain").style.display = "block";
-});
+} else {
+document.getElementById("inputBox").placeholder = "Please enter a word"
+}});
 
 getSearchHistory();
-renderChart();
 renderSearchHistory();
 
 document.getElementById('delete-button').addEventListener('click', function (event) {
