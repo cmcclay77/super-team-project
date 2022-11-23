@@ -187,7 +187,7 @@ function modalListener() {
         // event listener to close the modal when the modalContent is clicked and put the innerHTML of the modalContent into the inputBox
         document.getElementById("modalContent").addEventListener("click", () => {
           closeModal($target);
-          
+
           document.getElementById("inputBox").value = $trigger.innerHTML;
           // clear the innerHTML of synonym-column, rhyme-column and antonym-column wordInFocus mainWord mainPro mainSyl mainFreq
           document.getElementById("synonym-column").innerHTML = "";
@@ -260,9 +260,9 @@ function getSynonyms() {
       // document.getElementById("synonym-column").innerHTML = synonymsArray;
       // for each synonym in the array create a button and add it to the synonyms column with the id of the synonym
       var synonymContainer = document.createElement('div');
-      if (synonymsArray.length >0) {
-      synonymContainer.setAttribute('class', 'box synonym-container')
-      } else {     
+      if (synonymsArray.length > 0) {
+        synonymContainer.setAttribute('class', 'box synonym-container')
+      } else {
         synonymContainer.setAttribute('class', 'synonym-container')
       }
 
@@ -278,9 +278,9 @@ function getSynonyms() {
         // add event listener to the button with the id of the synonym to alert the id of the synonym
         document
           .getElementById(synonymsArray[i])
-          
-        }
-        modalListener()
+
+      }
+      modalListener()
     })
     .catch((err) => {
       console.error(err);
@@ -316,7 +316,7 @@ function getAntonyms() {
       // for each antonym in the array create a button and add it to the antonyms column with the id of the antonym
       var antonymContainer = document.createElement('div');
       if (antonymsArray.length > 0) {
-      antonymContainer.setAttribute('class', 'box antonym-container')
+        antonymContainer.setAttribute('class', 'box antonym-container')
       } else {
         antonymContainer.setAttribute('class', 'antonym-container')
 
@@ -334,8 +334,8 @@ function getAntonyms() {
         // add event listener to the button with the id of the antonym to alert the id of the antonym
         document
           .getElementById(antonymsArray[i])
-        }
-        modalListener()
+      }
+      modalListener()
     })
     .catch((err) => {
       console.error(err);
@@ -372,7 +372,7 @@ function getRhymes() {
 
       var rhymeContainer = document.createElement('div');
       if (rhymesArray.length > 0) {
-      rhymeContainer.setAttribute('class', 'box rhyme-container')
+        rhymeContainer.setAttribute('class', 'box rhyme-container')
       } else {
         rhymeContainer.setAttribute('class', 'rhyme-container')
 
@@ -390,8 +390,8 @@ function getRhymes() {
         // add event listener to the button with the id of the rhyme to alert the id of the rhyme
         document
           .getElementById(rhymesArray[i])
-        }
-        modalListener()
+      }
+      modalListener()
     })
     .catch((err) => {
       console.error(err);
@@ -617,8 +617,8 @@ function renderSearchHistory() {
     // only append the h4 to the div if the word is not undefined or null or empty
     if (searchHistory[i].word !== undefined || searchHistory[i].word !== null || searchHistory[i].word !== '') {
 
-    dropDownItemEl.appendChild(dropDownh4El);
-    dropDownMenuEl.appendChild(dropDownItemEl);
+      dropDownItemEl.appendChild(dropDownh4El);
+      dropDownMenuEl.appendChild(dropDownItemEl);
     }
     // event listener for the dropdown menu items that will put the word in the inputBox
     dropDownh4El.addEventListener("click", function (event) {
@@ -645,9 +645,27 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   resultsContainer.classList.remove("hidden");
   document.getElementById("body").classList.remove("on-load");
 
-  document.getElementById("synonym-column").innerHTML = "Synonyms";
-  document.getElementById("rhyme-column").innerHTML = "Rhymes";
-  document.getElementById("antonym-column").innerHTML = "Antonyms";
+  document.getElementById("synonym-column").innerHTML = "";
+  document.getElementById("rhyme-column").innerHTML = "";
+  document.getElementById("antonym-column").innerHTML = "";
+
+
+  var synonymHeading = document.createElement("h2");
+  var rhymeHeading = document.createElement("h2");
+  var antonymHeading = document.createElement("h2");
+
+  synonymHeading.textContent = "Synonyms";
+  rhymeHeading.textContent = "Rhymes";
+  antonymHeading.textContent = "Antonyms";
+
+  synonymHeading.classList.add("column-heading");
+  rhymeHeading.classList.add("column-heading");
+  antonymHeading.classList.add("column-heading");
+
+  document.getElementById("synonym-column").appendChild(synonymHeading);
+  document.getElementById("rhyme-column").appendChild(rhymeHeading);
+  document.getElementById("antonym-column").appendChild(antonymHeading);
+
   document.getElementById("wordInFocus").innerHTML = "";
   document.getElementById("mainWord").innerHTML = "";
   document.getElementById("mainPro").innerHTML = "";
@@ -695,7 +713,7 @@ getSearchHistory();
 renderChart();
 renderSearchHistory();
 
-document.getElementById('delete-button').addEventListener('click', function(event){
+document.getElementById('delete-button').addEventListener('click', function (event) {
   event.preventDefault()
   var resultsContainer = document.getElementById("results-container");
   resultsContainer.classList.add("hidden");

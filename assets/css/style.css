@@ -40,6 +40,10 @@
   cursor: pointer;
 }
 
+.column-heading {
+  font-weight: bold;
+}
+
 .hidden {
   display: none;
 }
