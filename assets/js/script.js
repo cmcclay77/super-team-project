@@ -185,7 +185,7 @@ function modalListener() {
         document.getElementById("modalContent").addEventListener("click", () => {
           closeModal($target);
 
-          document.getElementById("inputBox").value = $trigger.innerHTML;
+          document.getElementById("inputBox").value = word1;
           // clear the innerHTML of synonym-column, rhyme-column and antonym-column wordInFocus mainWord mainPro mainSyl mainFreq
           document.getElementById("synonym-column").innerHTML = "";
           document.getElementById("rhyme-column").innerHTML = "";
@@ -196,7 +196,11 @@ function modalListener() {
           document.getElementById("mainSyl").innerHTML = "";
           document.getElementById("mainFreq").innerHTML = "";
           document.getElementById("definitionMain").innerHTML = "";
-          submitSearch();
+          // wait 1 second and then click the searchButton
+          setTimeout(function () {
+          document.getElementById("searchButton").click();
+          }, 500);
+
         });
 
 
