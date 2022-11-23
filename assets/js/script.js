@@ -5,12 +5,10 @@
 // the synonyms of the word are gotten from datamuse api and shown in the element named synonym-column
 // the antonyms of the word are gotten from datamuse api and shown in the element named antonym-column
 // the rhymes of the word are gotten from datamuse api and shown in the element named rhymes-column
-// the hominophones of the word are gotten from datamuse api and shown in the element named homophones-column
 
 // varibles showing the urls you will need for the datamuse api
 var datamuseAPI0 = "https://api.datamuse.com/words?rel_syn="; //synonyms
 var datamuseAPI1 = "https://api.datamuse.com/words?rel_rhy="; //rhymes
-var datamuseAPI2 = "https://api.datamuse.com/words?rel_hom="; //homophones
 var datamuseAPI3 = "https://api.datamuse.com/words?rel_ant="; //antonyms
 
 // varible holding the word you want to search for
@@ -19,7 +17,6 @@ var word = "";
 // varible showing you how to search for the word
 var datamuseUrl0 = datamuseAPI0 + word;
 var datamuseUrl1 = datamuseAPI1 + word;
-var datamuseUrl2 = datamuseAPI2 + word;
 var datamuseUrl3 = datamuseAPI3 + word;
 
 const options = {
@@ -398,52 +395,6 @@ function getRhymes() {
     });
 }
 
-// //function to get the homophones of the word
-// function getHomophones() {
-//   fetch(datamuseUrl2)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       var homophones = data;
-//       var homophonesList = "";
-//       for (var i = 0; i < homophones.length; i++) {
-//         homophonesList += homophones[i].word + ", ";
-//       }
-//       console.log(homophonesList);
-
-//       // create a variable to hold the array of 5 homophones and add the homophones to it
-//       var homophonesArray = [];
-//       try {
-//         for (var i = 0; i < 5; i++) {
-//           homophonesArray.push(homophones[i].word);
-//           console.log(homophones[i].word);
-//           console.log(homophonesArray);
-//         }
-//       } catch (error) {
-//         console.log("No homophones found");
-//         document.getElementById("homophones-column").innerHTML =
-//           "Less than 5 homophones found";
-//       }
-//       // document.getElementById("homophones-column").innerHTML = homophonesArray;
-//       // for each homophone in the array create a button and add it to the homophones column with the id of the homophone
-//       for (var i = 0; i < homophonesArray.length; i++) {
-//         var button = document.createElement("button");
-//         button.innerHTML = homophonesArray[i];
-//         button.id = homophonesArray[i];
-//         button.className = "js-modal-trigger";
-//         // add attribute data-target to the button with value of modal-js-example
-//         button.setAttribute("data-target", "modal-js-example");
-//         document.getElementById("homophones-column").appendChild(button);
-//         // add event listener to the button with the id of the homophone to alert the id of the homophone
-//         document
-//           .getElementById(homophonesArray[i])
-//           modalListener()
-//       }
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// }
-
 //function to get the definition of the word
 function getDefinition() {
   fetch(wordsUrl0, options)
@@ -610,15 +561,13 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   // the urls are updated to include the word
   datamuseUrl0 = datamuseAPI0 + word;
   datamuseUrl1 = datamuseAPI1 + word;
-  datamuseUrl2 = datamuseAPI2 + word;
   datamuseUrl3 = datamuseAPI3 + word;
   wordsUrl0 = wordsAPI + word;
 
-  // the functions to get the synonyms, antonyms, rhymes, homophones and definition of the word are called
+  // the functions to get the synonyms, antonyms, rhymes and definition of the word are called
   getSynonyms();
   getAntonyms();
   getRhymes();
-  // getHomophones();
   getDefinition();
   getPronunciation();
   getSyllables();
@@ -630,7 +579,6 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   document.getElementById("synonym-column").style.display = "block";
   document.getElementById("antonym-column").style.display = "block";
   document.getElementById("rhyme-column").style.display = "block";
-  // document.getElementById("homophones-column").style.display = "block";
   document.getElementById("definitionMain").style.display = "block";
 } else {
 document.getElementById("inputBox").placeholder = "Please enter a word"
