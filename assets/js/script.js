@@ -196,6 +196,7 @@ function modalListener() {
           document.getElementById("mainSyl").innerHTML = "";
           document.getElementById("mainFreq").innerHTML = "";
           document.getElementById("definitionMain").innerHTML = "";
+          submitSearch();
         });
 
 
@@ -512,10 +513,7 @@ function clearSearchHistory() {
   localStorage.removeItem('search-history');
   renderSearchHistory();
 }
-
-// the search button is clicked or form submitted
-document.getElementById('submit-form').addEventListener("submit", function (event) {
-  event.preventDefault()
+function submitSearch() {
   if (inputBox.value !== "") {
   var resultsContainer = document.getElementById("results-container");
   resultsContainer.classList.remove("hidden");
@@ -524,7 +522,6 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   document.getElementById("synonym-column").innerHTML = "";
   document.getElementById("rhyme-column").innerHTML = "";
   document.getElementById("antonym-column").innerHTML = "";
-
 
   var synonymHeading = document.createElement("h2");
   var rhymeHeading = document.createElement("h2");
@@ -582,7 +579,14 @@ document.getElementById('submit-form').addEventListener("submit", function (even
   document.getElementById("definitionMain").style.display = "block";
 } else {
 document.getElementById("inputBox").placeholder = "Please enter a word"
-}});
+}}
+
+// the search button is clicked or form submitted
+document.getElementById('submit-form').addEventListener("submit", function (event) {
+  event.preventDefault()
+submitSearch();
+
+});
 
 getSearchHistory();
 renderSearchHistory();
