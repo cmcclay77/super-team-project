@@ -261,7 +261,7 @@ function getSynonyms() {
       // for each synonym in the array create a button and add it to the synonyms column with the id of the synonym
       var synonymContainer = document.createElement('div');
       if (synonymsArray.length > 0) {
-        synonymContainer.setAttribute('class', 'box synonym-container')
+        synonymContainer.setAttribute('class', 'box synonym-container scroll')
       } else {
         synonymContainer.setAttribute('class', 'synonym-container')
       }
@@ -316,7 +316,7 @@ function getAntonyms() {
       // for each antonym in the array create a button and add it to the antonyms column with the id of the antonym
       var antonymContainer = document.createElement('div');
       if (antonymsArray.length > 0) {
-        antonymContainer.setAttribute('class', 'box antonym-container')
+        antonymContainer.setAttribute('class', 'box antonym-container scroll')
       } else {
         antonymContainer.setAttribute('class', 'antonym-container')
 
@@ -372,7 +372,7 @@ function getRhymes() {
 
       var rhymeContainer = document.createElement('div');
       if (rhymesArray.length > 0) {
-        rhymeContainer.setAttribute('class', 'box rhyme-container')
+        rhymeContainer.setAttribute('class', 'box rhyme-container scroll')
       } else {
         rhymeContainer.setAttribute('class', 'rhyme-container')
 
