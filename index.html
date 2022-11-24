@@ -13,15 +13,15 @@
 </head>
 
 <body id="body" class="on-load">
+
   <header>
     <nav class="navbar is-large" role="navigation" aria-label="main navigation">
       <div class="navbar-brand is-large">
         <h1 class="navbar-item title is-1">Word Search</h1>
-
-
       </div>
     </nav>
   </header>
+
   <section id="search-form">
     <div>
       <div class="notification is-primary"> <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -49,13 +49,11 @@
                     </span>
                   </button>
                 </div>
-                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                <div class="dropdown-menu scroll2" id="dropdown-menu4" role="menu">
                   <div class="dropdown-content">
                     <div class="dropdown-item">
                       <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
                     </div>
-
-                    
                   </div>
                 </div>
               </div>
@@ -67,20 +65,21 @@
     </div>
     </div>
   </section>
+
   <section id="results-container" class="hidden">
     <div class="column is-full is-primary">
       <div class="columns ">
-        <div class="column is-one-quarter">
+
+        <div class="column is-one-half">
           <article class="panel is-primary">
             <article class="message is-primary">
               <div class="message-header">
                 <p id="mainWord">Word in focus</p>
                 <button id="delete-button" class="delete" aria-label="delete"></button>
               </div>
-              <div class="content is-normal p-3 scroll">
+              <div id="focus-container" class="content is-normal p-3 scroll">
                 <h2 id="wordInFocus">Word in focus</h2>
                 <div id="definitionMain">
-
                 </div>
                 <ul>
                   <li id="mainPro"></li>
@@ -91,61 +90,49 @@
             </article>
           </article>
         </div>
+
         <div class="column is-primary">
-
-
           <div class="columns">
-
             <div class="column" id="synonym-column">
-              
             </div>
-
             <div class="column" id="rhyme-column">
-              
             </div>
-
-            <!-- <div class="column" id="homophone-column">
-              Sound-a-like
-            </div> -->
-
             <div class="column" id="antonym-column">
-              
             </div>
-            
-
           </div>
         </div>
+
       </div>
     </div>
   </section>
+
   <div id="modal-js-example" class="modal">
     <div class="modal-background"></div>
-  
     <div class="modal-content">
       <div class="modal-card">
         <header class="modal-card-head">
           <h1 class="modal-card-title" id=modalContent> Modal title</h1>
           <button class="delete" aria-label="close"></button>
         </header>
-        <section class="modal-card-body">
-    
-        <p id="modalPro"></p>
-        <p id="modalSyl"></p>
-        <p id="modalFreq"></p>
-        <p id="modalDef"></p>
-    
-      </section>
-      <footer class="modal-card-foot">
 
-      </footer>
+        <section class="modal-card-body">
+          <p id="modalPro"></p>
+          <p id="modalSyl"></p>
+          <p id="modalFreq"></p>
+          <p id="modalDef"></p>
+        </section>
+
+        <footer class="modal-card-foot">
+        </footer>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
     </div>
-  
-    <button class="modal-close is-large" aria-label="close"></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-    crossorigin="anonymous"></script>
-  <script src="./assets/js/script.js"></script>
 </body>
 
 </html>
