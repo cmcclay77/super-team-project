@@ -19,6 +19,8 @@ var datamuseUrl0 = datamuseAPI0 + word;
 var datamuseUrl1 = datamuseAPI1 + word;
 var datamuseUrl3 = datamuseAPI3 + word;
 
+var resultsContainer = document.getElementById("results-container");
+
 const options = {
   method: "GET",
   headers: {
@@ -106,8 +108,14 @@ function modalListener() {
 
         console.log($trigger.innerHTML);
         // change the innerHTML of modalContent to the innerHTML of the button but make first letter uppercase
-        document.getElementById("modalContent").innerHTML = $trigger.innerHTML.charAt(0).toUpperCase() + $trigger.innerHTML.slice(1);
+        var modalContent = document.getElementById("modalContent")
+        modalContent.innerHTML = $trigger.innerHTML.charAt(0).toUpperCase() + $trigger.innerHTML.slice(1);
+        modalContent.classList.add('tooltip')
+        var tooltipEl = document.createElement('span')
+        modalContent.appendChild(tooltipEl)
+        tooltipEl.classList.add('tooltiptext')
         var word1 = $trigger.innerHTML
+        tooltipEl.textContent = 'Click on the word to start a new search!'
         const options = {
           method: "GET",
           headers: {
@@ -190,7 +198,7 @@ function modalListener() {
           document.getElementById("synonym-column").innerHTML = "";
           document.getElementById("rhyme-column").innerHTML = "";
           document.getElementById("antonym-column").innerHTML = "";
-          document.getElementById("wordInFocus").innerHTML = "";
+          // document.getElementById("wordInFocus").innerHTML = "";
           document.getElementById("mainWord").innerHTML = "";
           document.getElementById("mainPro").innerHTML = "";
           document.getElementById("mainSyl").innerHTML = "";
@@ -245,14 +253,11 @@ function getSynonyms() {
       for (var i = 0; i < synonyms.length; i++) {
         synonymsList += synonyms[i].word + ", ";
       }
-      console.log(synonymsList);
       var synonymsArray = [];
       try {
         for (var i = 0; i < synonyms.length; i++) {
           // create a variable to hold the array of 5 synonyms and add the synonyms to it
           synonymsArray.push(synonyms[i].word);
-          console.log(synonyms[i].word);
-          console.log(synonymsArray);
         }
       } catch (error) {
         console.log("No synonyms found");
@@ -262,10 +267,15 @@ function getSynonyms() {
       // document.getElementById("synonym-column").innerHTML = synonymsArray;
       // for each synonym in the array create a button and add it to the synonyms column with the id of the synonym
       var synonymContainer = document.createElement('div');
-      if (synonymsArray.length > 0) {
+      if (synonymsArray.length > 12) {
         synonymContainer.setAttribute('class', 'box synonym-container scroll')
+      } else if (synonymsArray.length === 0) {
+        synonymContainer.setAttribute('class', 'box synonym-container')
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = "No synonyms found."
+        synonymContainer.appendChild(h3El)
       } else {
-        synonymContainer.setAttribute('class', 'synonym-container')
+        synonymContainer.setAttribute('class', 'box synonym-container')
       }
 
       document.getElementById("synonym-column").appendChild(synonymContainer)
@@ -299,7 +309,6 @@ function getAntonyms() {
       for (var i = 0; i < antonyms.length; i++) {
         antonymsList += antonyms[i].word + ", ";
       }
-      console.log(antonymsList);
       // create a variable to hold the array of 5 antonyms and add the antonyms to it
       var antonymsArray = [];
       try {
@@ -317,12 +326,17 @@ function getAntonyms() {
       // document.getElementById("antonym-column").innerHTML = antonymsArray;
       // for each antonym in the array create a button and add it to the antonyms column with the id of the antonym
       var antonymContainer = document.createElement('div');
-      if (antonymsArray.length > 0) {
+      if (antonymsArray.length > 12) {
         antonymContainer.setAttribute('class', 'box antonym-container scroll')
+      } else if (antonymsArray.length === 0) {
+        antonymContainer.setAttribute('class', 'box antonym-container')
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = "No antonyms found."
+        antonymContainer.appendChild(h3El)
       } else {
-        antonymContainer.setAttribute('class', 'antonym-container')
-
+        antonymContainer.setAttribute('class', 'box antonym-container')
       }
+
       document.getElementById("antonym-column").appendChild(antonymContainer)
 
       for (var i = 0; i < antonymsArray.length; i++) {
@@ -354,15 +368,11 @@ function getRhymes() {
       for (var i = 0; i < rhymes.length; i++) {
         rhymesList += rhymes[i].word + ", ";
       }
-      console.log(rhymesList);
-
       // create a variable to hold the array of 5 rhymes and add the rhymes to it
       var rhymesArray = [];
       try {
         for (var i = 0; i < rhymes.length; i++) {
           rhymesArray.push(rhymes[i].word);
-          console.log(rhymes[i].word);
-          console.log(rhymesArray);
         }
       } catch (error) {
         console.log("No rhymes found");
@@ -373,12 +383,17 @@ function getRhymes() {
       // for each rhyme in the array create a button and add it to the rhymes column with the id of the rhyme
 
       var rhymeContainer = document.createElement('div');
-      if (rhymesArray.length > 0) {
+      if (rhymesArray.length > 12) {
         rhymeContainer.setAttribute('class', 'box rhyme-container scroll')
+      } else if (rhymesArray.length === 0) {
+        rhymeContainer.setAttribute('class', 'box rhyme-container')
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = "No rhymes found."
+        rhymeContainer.appendChild(h3El)
       } else {
-        rhymeContainer.setAttribute('class', 'rhyme-container')
-
+        rhymeContainer.setAttribute('class', 'box rhyme-container')
       }
+
       document.getElementById("rhyme-column").appendChild(rhymeContainer)
 
       for (var i = 0; i < rhymesArray.length; i++) {
@@ -405,20 +420,42 @@ function getDefinition() {
   fetch(wordsUrl0, options)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.results)
-      for (var i = 0; i < data.results.length; i++) {
-        var definition = data.results[i].definition;
-        var definitionEl = document.createElement('p')
-        // document.getElementById("definitionMain").innerHTML = definition;
-        definitionEl.innerHTML = definition + ';';
-        console.log(definitionEl.innerHTML)
-        document.getElementById("definitionMain").appendChild(definitionEl)
+      if (data.results !== undefined) {
+        for (var i = 0; i < data.results.length; i++) {
+          document.getElementById('search-form').classList.add('search-form-after')
+          document.getElementById('search-form').classList.remove('search-form-before')
+
+          resultsContainer.classList.remove("hidden");
+          document.getElementById("body").classList.remove("on-load");
+
+          var definition = data.results[i].definition;
+          var definitionEl = document.createElement('p')
+          // document.getElementById("definitionMain").innerHTML = definition;
+          definitionEl.innerHTML = i + 1 + '. ' + definition + ';';
+          document.getElementById("definitionMain").appendChild(definitionEl)
+        }
+      } else {
+        document.getElementById('search-form').classList.add('search-form-before')
+        document.getElementById('search-form').classList.remove('search-form-after')
+
+        resultsContainer.classList.add("hidden");
+        document.getElementById("body").classList.add("on-load");
+
+      }
+      if (data.results.length < 7) {
+        document.getElementById('focus-container').classList.remove('scroll')
+      } else {
+        document.getElementById('focus-container').classList.add('scroll')
       }
     })
     .catch((err) => {
       console.error(err);
-      document.getElementById("definitionMain").innerHTML =
-        "No definition found for this word. Please try another word.";
+      // document.getElementById("definitionMain").innerHTML =
+      //   "No definition found for this word. Please try another word.";
+      resultsContainer.classList.add("hidden");
+      document.getElementById("body").classList.add("on-load");
+      document.getElementById('search-form').classList.add('search-form-before')
+      document.getElementById('search-form').classList.remove('search-form-after')
     });
 }
 
@@ -449,7 +486,6 @@ function saveWord() {
   console.log("saveWord was called");
   var userWord = inputBox.value;
   if (userWord !== undefined || userWord !== '') {
-    console.log(userWord)
     var userCount = 1;
     var storedWord = {};
 
@@ -460,19 +496,18 @@ function saveWord() {
       for (var i = 0; i < searchHistory.length; i++) {
         if (searchHistory[i].word === userWord) {
           userCount = searchHistory[i].count + 1
-          console.log(userCount)
           storedWord = { word: userWord, count: userCount }
           searchHistory.splice(i, 1);
           searchHistory.unshift(storedWord)
+          if (searchHistory.length > 100) {
+            searchHistory.length = 100;
+          }
           setSearchHistory();
           return;
         }
       }
-      console.log(userCount)
       storedWord = { word: userWord, count: userCount }
-      console.log(storedWord)
       searchHistory.unshift(storedWord)
-      console.log(searchHistory)
       setSearchHistory();
     }
   }
@@ -520,9 +555,6 @@ function clearSearchHistory() {
 }
 function submitSearch() {
   if (inputBox.value !== "") {
-    var resultsContainer = document.getElementById("results-container");
-    resultsContainer.classList.remove("hidden");
-    document.getElementById("body").classList.remove("on-load");
 
     document.getElementById("synonym-column").innerHTML = "";
     document.getElementById("rhyme-column").innerHTML = "";
@@ -544,7 +576,7 @@ function submitSearch() {
     document.getElementById("rhyme-column").appendChild(rhymeHeading);
     document.getElementById("antonym-column").appendChild(antonymHeading);
 
-    document.getElementById("wordInFocus").innerHTML = "";
+    // document.getElementById("wordInFocus").innerHTML = "";
     document.getElementById("mainWord").innerHTML = "";
     document.getElementById("mainPro").innerHTML = "";
     document.getElementById("mainSyl").innerHTML = "";
@@ -554,11 +586,10 @@ function submitSearch() {
     var word = inputBox.value;
 
     // saves the search history for each unique search
-    saveWord();
 
     // the word is shown in the element named mainWord and wordInFocus
     mainWord.innerHTML = word;
-    wordInFocus.innerHTML = word;
+    // wordInFocus.innerHTML = word;
 
     // the urls are updated to include the word
     datamuseUrl0 = datamuseAPI0 + word;
@@ -571,6 +602,7 @@ function submitSearch() {
     getAntonyms();
     getRhymes();
     getDefinition();
+    saveWord();
     getPronunciation();
     getSyllables();
     getFrequency();
@@ -583,7 +615,7 @@ function submitSearch() {
     document.getElementById("rhyme-column").style.display = "block";
     document.getElementById("definitionMain").style.display = "block";
   } else {
-    document.getElementById("inputBox").placeholder = "Please enter a word"
+    document.getElementById("inputBox").placeholder = "No results found"
   }
 }
 
@@ -607,13 +639,13 @@ if (searchHistory.length < 9) {
 
 document.getElementById('delete-button').addEventListener('click', function (event) {
   event.preventDefault()
+  document.getElementById('search-form').classList.add('search-form-before')
+  document.getElementById('search-form').classList.remove('search-form-after')
   document.getElementById('dropdown-menu4').classList.remove('scroll')
-  if (searchHistory.length > 15) {
+  if (searchHistory.length > 9) {
     document.getElementById('dropdown-menu4').classList.add('scroll2')
   }
   var resultsContainer = document.getElementById("results-container");
   resultsContainer.classList.add("hidden");
   document.getElementById("body").classList.add("on-load");
-
 })
-
