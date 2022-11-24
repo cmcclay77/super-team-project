@@ -33,7 +33,7 @@
   border: 1px solid lightseagreen;
 }
 
-.dropdown-item:hover {
+.dropdown-item-fix:hover {
   background-color: lightseagreen;
   color: aliceblue;
   transition-duration: 400ms;
@@ -51,7 +51,7 @@
 
 .scroll {
   overflow-y: scroll;
-  height: 60.7vh;
+  height: 57vh;
 }
 
 .hidden {
@@ -64,4 +64,22 @@
   align-items: center;
   height: 100vh;
   flex-direction: column;
+}
+
+.dropdown-content-fix {
+  border-radius: 0;
+  box-shadow: 0;
+  padding: 0
+}
+
+.dropdown-item-fix {
+  background-color: aliceblue;
+  font-weight: 400;
+  color: black;
+  border: 0px;
+  font-size: 1em;
+  line-height: 1.5;
+  padding: 0 10px;
+  position: relative;
+  border-width: 0px;
 }

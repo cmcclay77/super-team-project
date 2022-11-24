@@ -489,10 +489,10 @@ function renderSearchHistory() {
   dropDownMenuEl.innerHTML = "";
   for (var i = 0; i < searchHistory.length; i++) {
     var dropDownItemEl = document.createElement("div");
-    dropDownItemEl.classList.add("dropdown-content");
+    dropDownItemEl.classList.add("dropdown-content-fix");
     var dropDownh4El = document.createElement("h4");
-    dropDownh4El.classList.add("dropdown-item");
-    dropDownh4El.setAttribute("type", "button");
+    dropDownh4El.classList.add("dropdown-item-fix");
+    // dropDownh4El.setAttribute("type", "button");
     dropDownh4El.setAttribute("data-word", searchHistory[i].word);
     dropDownh4El.textContent = searchHistory[i].word;
     // only append the h4 to the div if the word is not undefined or null or empty
