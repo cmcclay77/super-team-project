@@ -198,7 +198,7 @@ function modalListener() {
           document.getElementById("definitionMain").innerHTML = "";
           // wait 1 second and then click the searchButton
           setTimeout(function () {
-          document.getElementById("searchButton").click();
+            document.getElementById("searchButton").click();
           }, 500);
 
         });
@@ -506,6 +506,7 @@ function renderSearchHistory() {
       event.preventDefault();
       var word = event.target.getAttribute("data-word");
       inputBox.value = word;
+      submitSearch();
     }); // end of event listener
   }
 }
@@ -519,86 +520,100 @@ function clearSearchHistory() {
 }
 function submitSearch() {
   if (inputBox.value !== "") {
-  var resultsContainer = document.getElementById("results-container");
-  resultsContainer.classList.remove("hidden");
-  document.getElementById("body").classList.remove("on-load");
+    var resultsContainer = document.getElementById("results-container");
+    resultsContainer.classList.remove("hidden");
+    document.getElementById("body").classList.remove("on-load");
 
-  document.getElementById("synonym-column").innerHTML = "";
-  document.getElementById("rhyme-column").innerHTML = "";
-  document.getElementById("antonym-column").innerHTML = "";
+    document.getElementById("synonym-column").innerHTML = "";
+    document.getElementById("rhyme-column").innerHTML = "";
+    document.getElementById("antonym-column").innerHTML = "";
 
-  var synonymHeading = document.createElement("h2");
-  var rhymeHeading = document.createElement("h2");
-  var antonymHeading = document.createElement("h2");
+    var synonymHeading = document.createElement("h2");
+    var rhymeHeading = document.createElement("h2");
+    var antonymHeading = document.createElement("h2");
 
-  synonymHeading.textContent = "Synonyms";
-  rhymeHeading.textContent = "Rhymes";
-  antonymHeading.textContent = "Antonyms";
+    synonymHeading.textContent = "Synonyms";
+    rhymeHeading.textContent = "Rhymes";
+    antonymHeading.textContent = "Antonyms";
 
-  synonymHeading.classList.add("column-heading");
-  rhymeHeading.classList.add("column-heading");
-  antonymHeading.classList.add("column-heading");
+    synonymHeading.classList.add("column-heading");
+    rhymeHeading.classList.add("column-heading");
+    antonymHeading.classList.add("column-heading");
 
-  document.getElementById("synonym-column").appendChild(synonymHeading);
-  document.getElementById("rhyme-column").appendChild(rhymeHeading);
-  document.getElementById("antonym-column").appendChild(antonymHeading);
+    document.getElementById("synonym-column").appendChild(synonymHeading);
+    document.getElementById("rhyme-column").appendChild(rhymeHeading);
+    document.getElementById("antonym-column").appendChild(antonymHeading);
 
-  document.getElementById("wordInFocus").innerHTML = "";
-  document.getElementById("mainWord").innerHTML = "";
-  document.getElementById("mainPro").innerHTML = "";
-  document.getElementById("mainSyl").innerHTML = "";
-  document.getElementById("mainFreq").innerHTML = "";
-  document.getElementById("definitionMain").innerHTML = "";
-  // the word in the input box is stored in the variable word
-  var word = inputBox.value;
+    document.getElementById("wordInFocus").innerHTML = "";
+    document.getElementById("mainWord").innerHTML = "";
+    document.getElementById("mainPro").innerHTML = "";
+    document.getElementById("mainSyl").innerHTML = "";
+    document.getElementById("mainFreq").innerHTML = "";
+    document.getElementById("definitionMain").innerHTML = "";
+    // the word in the input box is stored in the variable word
+    var word = inputBox.value;
 
-  // saves the search history for each unique search
-  saveWord();
+    // saves the search history for each unique search
+    saveWord();
 
-  // the word is shown in the element named mainWord and wordInFocus
-  mainWord.innerHTML = word;
-  wordInFocus.innerHTML = word;
+    // the word is shown in the element named mainWord and wordInFocus
+    mainWord.innerHTML = word;
+    wordInFocus.innerHTML = word;
 
-  // the urls are updated to include the word
-  datamuseUrl0 = datamuseAPI0 + word;
-  datamuseUrl1 = datamuseAPI1 + word;
-  datamuseUrl3 = datamuseAPI3 + word;
-  wordsUrl0 = wordsAPI + word;
+    // the urls are updated to include the word
+    datamuseUrl0 = datamuseAPI0 + word;
+    datamuseUrl1 = datamuseAPI1 + word;
+    datamuseUrl3 = datamuseAPI3 + word;
+    wordsUrl0 = wordsAPI + word;
 
-  // the functions to get the synonyms, antonyms, rhymes and definition of the word are called
-  getSynonyms();
-  getAntonyms();
-  getRhymes();
-  getDefinition();
-  getPronunciation();
-  getSyllables();
-  getFrequency();
+    // the functions to get the synonyms, antonyms, rhymes and definition of the word are called
+    getSynonyms();
+    getAntonyms();
+    getRhymes();
+    getDefinition();
+    getPronunciation();
+    getSyllables();
+    getFrequency();
 
-  // the input box is cleared
-  inputBox.value = "";
+    // the input box is cleared
+    inputBox.value = "";
 
-  document.getElementById("synonym-column").style.display = "block";
-  document.getElementById("antonym-column").style.display = "block";
-  document.getElementById("rhyme-column").style.display = "block";
-  document.getElementById("definitionMain").style.display = "block";
-} else {
-document.getElementById("inputBox").placeholder = "Please enter a word"
-}}
+    document.getElementById("synonym-column").style.display = "block";
+    document.getElementById("antonym-column").style.display = "block";
+    document.getElementById("rhyme-column").style.display = "block";
+    document.getElementById("definitionMain").style.display = "block";
+  } else {
+    document.getElementById("inputBox").placeholder = "Please enter a word"
+  }
+}
 
 // the search button is clicked or form submitted
 document.getElementById('submit-form').addEventListener("submit", function (event) {
-  event.preventDefault()
-submitSearch();
-
+  event.preventDefault();
+  document.getElementById('dropdown-menu4').classList.remove('scroll2')
+  if (searchHistory.length > 15) {
+    document.getElementById('dropdown-menu4').classList.add('scroll')
+  }
+  submitSearch();
+  renderSearchHistory()
 });
 
 getSearchHistory();
 renderSearchHistory();
 
+if (searchHistory.length < 9) {
+  document.getElementById('dropdown-menu4').classList.remove('scroll2')
+}
+
 document.getElementById('delete-button').addEventListener('click', function (event) {
   event.preventDefault()
+  document.getElementById('dropdown-menu4').classList.remove('scroll')
+  if (searchHistory.length > 15) {
+    document.getElementById('dropdown-menu4').classList.add('scroll2')
+  }
   var resultsContainer = document.getElementById("results-container");
   resultsContainer.classList.add("hidden");
   document.getElementById("body").classList.add("on-load");
 
 })
+

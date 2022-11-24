@@ -54,6 +54,11 @@
   height: 57vh;
 }
 
+.scroll2 {
+  overflow-y: scroll;
+  height: 34vh;
+}
+
 .hidden {
   display: none;
 }
