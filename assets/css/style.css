@@ -45,7 +45,7 @@
   font-size: 1.3em;
   background-color: teal;
   color: white;
-  padding: 5.9px 0px 5.9px 4%;
+  padding: 5.9px 0px 5.9px 2%;
   border-radius: 3px 3px 0px 0px;
 }
 
@@ -87,4 +87,59 @@
   padding: 0 10px;
   position: relative;
   border-width: 0px;
+}
+
+.search-form-before {
+  width: 50%;
+}
+
+.search-form-after {
+  width: 100%;
+}
+
+.control.has-icons-right .input {
+  padding: 5.9px 5px 5.9px 2%;
+}
+
+.message-header {
+  padding: .4em 1em;
+}
+
+#mainWord {
+  font-size: 1.5em;
+  /* padding: 5.9px 5px 5.9px 2%; */
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: fit-content;
+  background-color: lightgray;
+  color: #505050;
+  text-align: center;
+  padding: 5px 20px;
+  position: absolute;
+  font-size: .6em;
+  top: 105%;
+  box-shadow: 5px 5px 5px 5px darkgray;
+}
+
+.tooltip .tooltiptext::after {
+  position: relative;
+  width: fit-content;
+  font-weight: 400;
+  bottom: 100%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+  background-color: whitesmoke;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
