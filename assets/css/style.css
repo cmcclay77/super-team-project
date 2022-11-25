@@ -49,9 +49,13 @@
   border-radius: 3px 3px 0px 0px;
 }
 
+#focus-container {
+  height: 57vh;
+}
+
 .scroll {
   overflow-y: scroll;
-  height: 58vh;
+  height: 57vh;
 }
 
 .scroll2 {

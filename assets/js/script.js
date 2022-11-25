@@ -109,6 +109,7 @@ function modalListener() {
         console.log($trigger.innerHTML);
         // change the innerHTML of modalContent to the innerHTML of the button but make first letter uppercase
         var modalContent = document.getElementById("modalContent")
+        inputBox.value = modalContent
         modalContent.innerHTML = $trigger.innerHTML.charAt(0).toUpperCase() + $trigger.innerHTML.slice(1);
         modalContent.classList.add('tooltip')
         var tooltipEl = document.createElement('span')
@@ -176,15 +177,32 @@ function modalListener() {
 
         // function to get the definition of the word and add it to the modalContent
         function getDefinition1() {
+          document.getElementById('modalDefBox').innerHTML = ''
+          var defTitleEl = document.createElement('p')
+          defTitleEl.textContent = 'Definition: '
+          document.getElementById('modalDefBox').appendChild(defTitleEl);
           fetch(word1Url0, options)
             .then((response) => response.json())
             .then((data) => {
-              var definition = data.results[0].definition;
-              document.getElementById("modalDef").innerHTML = " Definition: " + definition;
+              console.log(data)
+              console.log(data.results.length)
+              if (data.results !== undefined) {
+                for (i = 0; i < data.results.length; i++) {
+                  var definition = data.results[i].definition;
+                  var modDefBox = document.getElementById('modalDefBox');
+                  var modDefEl = document.createElement('p')        
+                  modDefBox.appendChild(modDefEl)
+                  modDefEl.textContent = i + 1 + '. ' + definition + ';';
+                }
+              } else {
+                var noDefEl = document.createElement('p')
+                document.getElementById('modalDefBox').appendChild(noDefEl)                
+                modDefEl.textContent = 'No definition found';
+              }
             })
             .catch((err) => {
               console.error(err);
-              document.getElementById("modalDef").innerHTML = " Definition: No definition found";
+              modDefBox.appendChild(modDefEl);
             });
         }
         getDefinition1();
