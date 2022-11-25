@@ -208,10 +208,7 @@ function modalListener() {
           setTimeout(function () {
             document.getElementById("searchButton").click();
           }, 500);
-
         });
-
-
 
       });
     }
@@ -314,9 +311,6 @@ function getAntonyms() {
       try {
         for (var i = 0; i < antonyms.length; i++) {
           antonymsArray.push(antonyms[i].word);
-          console.log(antonyms[i].word);
-          console.log('---------------------');
-          console.log(antonymsArray);
         }
       } catch (error) {
         console.log("No antonyms found");
@@ -433,6 +427,10 @@ function getDefinition() {
           // document.getElementById("definitionMain").innerHTML = definition;
           definitionEl.innerHTML = i + 1 + '. ' + definition + ';';
           document.getElementById("definitionMain").appendChild(definitionEl)
+          if (searchHistory.length > 100) {
+            searchHistory.length = 100;
+            setSearchHistory();
+          }
         }
       } else {
         document.getElementById('search-form').classList.add('search-form-before')
@@ -441,8 +439,14 @@ function getDefinition() {
         resultsContainer.classList.add("hidden");
         document.getElementById("body").classList.add("on-load");
 
+        searchHistory.shift()
+        if (searchHistory.length > 100) {
+          searchHistory.length = 100
+        }
+        setSearchHistory()
+        renderSearchHistory()
       }
-      if (data.results.length < 7) {
+      if (data.results.length < 11) {
         document.getElementById('focus-container').classList.remove('scroll')
       } else {
         document.getElementById('focus-container').classList.add('scroll')
@@ -499,9 +503,6 @@ function saveWord() {
           storedWord = { word: userWord, count: userCount }
           searchHistory.splice(i, 1);
           searchHistory.unshift(storedWord)
-          if (searchHistory.length > 100) {
-            searchHistory.length = 100;
-          }
           setSearchHistory();
           return;
         }
@@ -608,7 +609,6 @@ function submitSearch() {
     getFrequency();
 
     // the input box is cleared
-    inputBox.value = "";
 
     document.getElementById("synonym-column").style.display = "block";
     document.getElementById("antonym-column").style.display = "block";
@@ -617,6 +617,7 @@ function submitSearch() {
   } else {
     document.getElementById("inputBox").placeholder = "No results found"
   }
+  inputBox.value = "";
 }
 
 // the search button is clicked or form submitted
