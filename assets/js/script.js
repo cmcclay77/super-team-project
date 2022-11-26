@@ -1,26 +1,25 @@
-var body = document.getElementById("body");
+// the input box is named inputBox
+// the search button is named searchButton
+// the contents of the input box are shown in the element named mainWord and wordInFocus
+// the definition of the word is gotten from words api and shown in the element named definitionMain
+// the synonyms of the word are gotten from datamuse api and shown in the element named synonym-column
+// the antonyms of the word are gotten from datamuse api and shown in the element named antonym-column
+// the rhymes of the word are gotten from datamuse api and shown in the element named rhymes-column
 
-var inputBox = document.getElementById('input-box');
-var searchButton = document.getElementById('search-button');
-var submitForm = document.getElementById('submit-form');
+// varibles showing the urls you will need for the datamuse api
+var datamuseAPI0 = "https://api.datamuse.com/words?rel_syn="; //synonyms
+var datamuseAPI1 = "https://api.datamuse.com/words?rel_rhy="; //rhymes
+var datamuseAPI3 = "https://api.datamuse.com/words?rel_ant="; //antonyms
+
+// varible holding the word you want to search for
+var word = "";
+
+// varible showing you how to search for the word
+var datamuseUrl0 = datamuseAPI0 + word;
+var datamuseUrl1 = datamuseAPI1 + word;
+var datamuseUrl3 = datamuseAPI3 + word;
 
 var resultsContainer = document.getElementById("results-container");
-var searchResultsContainer = document.getElementById("search-results");
-
-var synonymColumn = document.getElementById('synonym-column');
-var rhymeColumn = document.getElementById('rhyme-column');
-var antoonymColumn = document.getElementById('antonym-column');
-
-var synonymContainer = document.getElementById('synonym-container');
-var rhymeContainer = document.getElementById('rhyme-container');
-var antonymContainer = document.getElementById('antonym-container');
-
-var mainWord = document.getElementById('main-word');
-var mainPronunciationContainer = document.getElementById('main-pronunciation-container');
-var mainDefinition = document.getElementById('definition-main');
-var mainDefinitionsContainer = document.getElementById('main-definitions-container');
-
-var word;
 
 const options = {
   method: "GET",
@@ -29,95 +28,447 @@ const options = {
     "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
   },
 };
+// varibles showing the urls you will need for the words api
+var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
 
-const freeDictionaryAPI = 'https://api.dictionaryapi.dev/api/v2/entries/en/'; //dictionary
-const datamuseAPISyn = 'https://api.datamuse.com/words?rel_syn='; //synonyms
-const datamuseAPIRhy = 'https://api.datamuse.com/words?rel_rhy='; //rhymes
-const datamuseAPIAnt = 'https://api.datamuse.com/words?rel_ant='; //antonyms
+var wordsUrl0 = wordsAPI + word;
 
-var dictionaryURL = freeDictionaryAPI + word;
-var synonymURL = datamuseAPISyn + word;
-var rhymeURL = datamuseAPIRhy + word;
-var antonymURL = datamuseAPIAnt + word;
-
-var synonymList = [];
-var rhymeList = [];
-var antonymList = [];
-var searchHistory = [];
-
-var dropDownMenuEl = document.querySelector(".dropdown-menu");
-
-var modalTitleTextEl = document.getElementById('modal-title-text');
-var modalWord;
-var modalPronunciationContainer = document.getElementById('modal-pronunciation-container');
-var modalDefinition = document.getElementById('definition-modal');
-var modalDefinitionsContainer = document.getElementById('modal-definitions-container');
-var modalDiv = document.getElementById('modal-js-example');
-var modal = document.querySelector('modal');
-var modalBackground = document.querySelector('.modal-background');
-var modalClose1 = document.getElementById('modal-close-1');
-var modalClose2 = document.getElementById('modal-close-2');
-
-function getModalDefinition() {
-  modalWord = inputBox.value;
-  dictionaryURL = freeDictionaryAPI + modalWord;
-  fetch(dictionaryURL, options)
+// function to get the pronunciation of the word and show it in mainPro
+function getPronunciation() {
+  fetch(wordsUrl0, options)
     .then((response) => response.json())
     .then((data) => {
-      if (data !== undefined) {
-        if (data.length !== undefined) {
-          modalTitleTextEl.textContent = modalWord[0].toUpperCase() + modalWord.slice(1).toLowerCase();
-          var modProEl = document.createElement('p');
-          modProEl.textContent = data[0].phonetic;
-          modProEl.classList.add('pronunciation-text')
-          modalPronunciationContainer.appendChild(modProEl);
-          for (var i = 0; i < data.length; i++) {
-            for (var x = 0; x < data[i].meanings.length; x++) {
-              for (var y = 0; y < data[i].meanings[x].definitions.length; y++) {
-                var modDefEl = document.createElement('p');
-                modDefEl.textContent = data[i].meanings[x].definitions[y].definition + ';'
-                modalDefinitionsContainer.appendChild(modDefEl);
-              }
-            }
-          }
-        } else {
-          inputBox.value = '';
-          inputBox.setAttribute('placeholder', 'no results found');
-          setTimeout(function () {
-            inputBox.setAttribute('placeholder', 'type to search');
-          }, 3000);
-          return;
-        }
+      var pronunciation = data.pronunciation.all;
+      document.getElementById("mainPro").innerHTML = 'Pronounciation: ' + pronunciation;
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("mainPro").innerHTML = "No pronunciation found";
+    });
+}
+
+// function to get the syllables of the word and show it in mainSyl
+function getSyllables() {
+  fetch(wordsUrl0, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var syllables = data.syllables.count;
+      document.getElementById("mainSyl").innerHTML = 'Syllables: ' + syllables;
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("mainSyl").innerHTML = "No syllables found";
+    });
+}
+
+// function to get the frequency of the word and show it in mainFreq
+function getFrequency() {
+  fetch(wordsUrl0, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var frequency = data.frequency;
+      if (frequency === undefined) {
+        document.getElementById("mainFreq").innerHTML = "No frequency found";
       } else {
-        console.log('No results found. Please try again.')
-        return;
+        document.getElementById("mainFreq").innerHTML = 'Frequency: ' + frequency;
       }
     })
     .catch((err) => {
       console.error(err);
-      inputBox.setAttribute('placeholder', 'no results found')
+      document.getElementById("mainFreq").innerHTML = "No frequency found";
     });
 }
 
-function renderSearchHistory() {
-  dropDownMenuEl.innerHTML = "";
-  if (searchHistory.length !== 0) {
-    for (var i = 0; i < searchHistory.length; i++) {
-      var dropDownContentEl = document.createElement("div");
-      dropDownContentEl.classList.add("dropdown-item");
-      dropDownContentEl.classList.add("dropdown-content-fix");
-      var dropDownItemEl = document.createElement("h4");
-      dropDownItemEl.classList.add("dropdown-item-fix");
-      dropDownItemEl.setAttribute("data-word", searchHistory[i]);
-      dropDownItemEl.textContent = searchHistory[i];
-      dropDownMenuEl.appendChild(dropDownContentEl);
-      dropDownContentEl.appendChild(dropDownItemEl);
-      searchHistory[i]
+
+function modalListener() {
+  // document.addEventListener("DOMContentLoaded", () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add("is-active");
+  }
+
+  function closeModal($el) {
+    $el.classList.remove("is-active");
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll(".modal") || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal and console.log the innerHTML of the button
+  (document.querySelectorAll(".js-modal-trigger") || []).forEach(
+    ($trigger) => {
+      const modal = $trigger.dataset.target;
+      const $target = document.getElementById(modal);
+
+      $trigger.addEventListener("click", () => {
+        openModal($target);
+
+        console.log($trigger.innerHTML);
+        // change the innerHTML of modalContent to the innerHTML of the button but make first letter uppercase
+        var modalContent = document.getElementById("modalContent")
+        modalContent.innerHTML = $trigger.innerHTML.charAt(0).toUpperCase() + $trigger.innerHTML.slice(1);
+        modalContent.classList.add('tooltip')
+        var tooltipEl = document.createElement('span')
+        modalContent.appendChild(tooltipEl)
+        tooltipEl.classList.add('tooltiptext')
+        var word1 = $trigger.innerHTML
+        tooltipEl.textContent = 'Click on the word to start a new search!'
+        const options = {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": "2d56f060f5msh38af9a8aa84bc68p1b4603jsn2583833b279c",
+            "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
+          },
+        };
+        // varibles showing the urls you will need for the words api
+        var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
+
+        var word1Url0 = wordsAPI + word1;
+        // function to get the pronunciation of the word and add it to the modalContent
+        function getPronunciation1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var pronunciation = data.pronunciation.all;
+              document.getElementById("modalPro").innerHTML = " Pronunciation: " + pronunciation;
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalPro").innerHTML = " Pronunciation: No pronunciation found";
+            });
+        }
+        getPronunciation1();
+        // function to get the syllables of the word and add it to the modalContent
+        function getSyllables1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var syllables = data.syllables.count;
+              document.getElementById("modalSyl").innerHTML = " Syllables: " + syllables;
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalSyl").innerHTML = " Syllables: No syllables found";
+            });
+        }
+        getSyllables1();
+        // function to get the frequency of the word and add it to the modalContent
+        function getFrequency1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var frequency = data.frequency;
+              if (frequency === undefined) {
+                document.getElementById("modalFreq").innerHTML = " Frequency: No frequency found";
+              } else {
+                document.getElementById("modalFreq").innerHTML = " Frequency: " + frequency;
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalContent").innerHTML = " Frequency: No frequency found";
+            });
+        }
+        getFrequency1();
+
+        // function to get the definition of the word and add it to the modalContent
+        function getDefinition1() {
+          fetch(word1Url0, options)
+            .then((response) => response.json())
+            .then((data) => {
+              var definition = data.results[0].definition;
+              document.getElementById("modalDef").innerHTML = " Definition: " + definition;
+            })
+            .catch((err) => {
+              console.error(err);
+              document.getElementById("modalDef").innerHTML = " Definition: No definition found";
+            });
+        }
+        getDefinition1();
+
+        // event listener to close the modal when the modalContent is clicked and put the innerHTML of the modalContent into the inputBox
+        document.getElementById("modalContent").addEventListener("click", () => {
+          closeModal($target);
+
+          document.getElementById("inputBox").value = word1;
+          // clear the innerHTML of synonym-column, rhyme-column and antonym-column wordInFocus mainWord mainPro mainSyl mainFreq
+          document.getElementById("synonym-column").innerHTML = "";
+          document.getElementById("rhyme-column").innerHTML = "";
+          document.getElementById("antonym-column").innerHTML = "";
+          // document.getElementById("wordInFocus").innerHTML = "";
+          document.getElementById("mainWord").innerHTML = "";
+          document.getElementById("mainPro").innerHTML = "";
+          document.getElementById("mainSyl").innerHTML = "";
+          document.getElementById("mainFreq").innerHTML = "";
+          document.getElementById("definitionMain").innerHTML = "";
+          // wait 1 second and then click the searchButton
+          setTimeout(function () {
+            document.getElementById("searchButton").click();
+          }, 500);
+        });
+
+      });
     }
-  };
+  );
+
+  // Add a click event on various child elements to close the parent modal
+  (
+    document.querySelectorAll(
+      ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
+    ) || []
+  ).forEach(($close) => {
+    const $target = $close.closest(".modal");
+
+    $close.addEventListener("click", () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener("keydown", (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) {
+      // Escape key
+      closeAllModals();
+    }
+  });
+}
+//   );
+// }
+
+//function to get 5 synonyms of the word
+function getSynonyms() {
+  fetch(datamuseUrl0)
+    .then((response) => response.json())
+    .then((data) => {
+      var synonyms = data;
+      var synonymsList = "";
+      for (var i = 0; i < synonyms.length; i++) {
+        synonymsList += synonyms[i].word + ", ";
+      }
+      var synonymsArray = [];
+      try {
+        for (var i = 0; i < synonyms.length; i++) {
+          // create a variable to hold the array of 5 synonyms and add the synonyms to it
+          synonymsArray.push(synonyms[i].word);
+        }
+      } catch (error) {
+        console.log("No synonyms found");
+        document.getElementById("synonym-column").innerHTML =
+          "Less than 5 synonyms found";
+      }
+      // document.getElementById("synonym-column").innerHTML = synonymsArray;
+      // for each synonym in the array create a button and add it to the synonyms column with the id of the synonym
+      var synonymContainer = document.createElement('div');
+      if (synonymsArray.length > 12) {
+        synonymContainer.setAttribute('class', 'box synonym-container scroll')
+      } else if (synonymsArray.length === 0) {
+        synonymContainer.setAttribute('class', 'box synonym-container')
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = "No synonyms found."
+        synonymContainer.appendChild(h3El)
+      } else {
+        synonymContainer.setAttribute('class', 'box synonym-container')
+      }
+
+      document.getElementById("synonym-column").appendChild(synonymContainer)
+      for (var i = 0; i < synonymsArray.length; i++) {
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = synonymsArray[i];
+        h3El.id = synonymsArray[i];
+        h3El.className = "js-modal-trigger";
+        // add attribute data-target to the button with value of modal-js-example
+        h3El.setAttribute("data-target", "modal-js-example");
+        synonymContainer.appendChild(h3El);
+        // add event listener to the button with the id of the synonym to alert the id of the synonym
+        document
+          .getElementById(synonymsArray[i])
+
+      }
+      modalListener()
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
+//function to get the antonyms of the word
+function getAntonyms() {
+  fetch(datamuseUrl3)
+    .then((response) => response.json())
+    .then((data) => {
+      var antonyms = data;
+      var antonymsList = "";
+      for (var i = 0; i < antonyms.length; i++) {
+        antonymsList += antonyms[i].word + ", ";
+      }
+      // create a variable to hold the array of 5 antonyms and add the antonyms to it
+      var antonymsArray = [];
+      try {
+        for (var i = 0; i < antonyms.length; i++) {
+          antonymsArray.push(antonyms[i].word);
+        }
+      } catch (error) {
+        console.log("No antonyms found");
+        document.getElementById("antonym-column").innerHTML =
+          "Less than 5 antonyms found";
+      }
+      // document.getElementById("antonym-column").innerHTML = antonymsArray;
+      // for each antonym in the array create a button and add it to the antonyms column with the id of the antonym
+      var antonymContainer = document.createElement('div');
+      if (antonymsArray.length > 12) {
+        antonymContainer.setAttribute('class', 'box antonym-container scroll')
+      } else if (antonymsArray.length === 0) {
+        antonymContainer.setAttribute('class', 'box antonym-container')
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = "No antonyms found."
+        antonymContainer.appendChild(h3El)
+      } else {
+        antonymContainer.setAttribute('class', 'box antonym-container')
+      }
+
+      document.getElementById("antonym-column").appendChild(antonymContainer)
+
+      for (var i = 0; i < antonymsArray.length; i++) {
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = antonymsArray[i];
+        h3El.id = antonymsArray[i];
+        h3El.className = "js-modal-trigger";
+        // add attribute data-target to the button with value of modal-js-example
+        h3El.setAttribute("data-target", "modal-js-example");
+        antonymContainer.appendChild(h3El);
+        // add event listener to the button with the id of the antonym to alert the id of the antonym
+        document
+          .getElementById(antonymsArray[i])
+      }
+      modalListener()
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+//function to get the rhymes of the word
+function getRhymes() {
+  fetch(datamuseUrl1)
+    .then((response) => response.json())
+    .then((data) => {
+      var rhymes = data;
+      var rhymesList = "";
+      for (var i = 0; i < rhymes.length; i++) {
+        rhymesList += rhymes[i].word + ", ";
+      }
+      // create a variable to hold the array of 5 rhymes and add the rhymes to it
+      var rhymesArray = [];
+      try {
+        for (var i = 0; i < rhymes.length; i++) {
+          rhymesArray.push(rhymes[i].word);
+        }
+      } catch (error) {
+        console.log("No rhymes found");
+        document.getElementById("rhymes-column").innerHTML =
+          "Less than 5 rhymes found";
+      }
+      // document.getElementById("rhymes-column").innerHTML = rhymesArray;
+      // for each rhyme in the array create a button and add it to the rhymes column with the id of the rhyme
+
+      var rhymeContainer = document.createElement('div');
+      if (rhymesArray.length > 12) {
+        rhymeContainer.setAttribute('class', 'box rhyme-container scroll')
+      } else if (rhymesArray.length === 0) {
+        rhymeContainer.setAttribute('class', 'box rhyme-container')
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = "No rhymes found."
+        rhymeContainer.appendChild(h3El)
+      } else {
+        rhymeContainer.setAttribute('class', 'box rhyme-container')
+      }
+
+      document.getElementById("rhyme-column").appendChild(rhymeContainer)
+
+      for (var i = 0; i < rhymesArray.length; i++) {
+        var h3El = document.createElement("h3");
+        h3El.innerHTML = rhymesArray[i];
+        h3El.id = rhymesArray[i];
+        h3El.className = "js-modal-trigger";
+        // add attribute data-target to the button with value of modal-js-example
+        h3El.setAttribute("data-target", "modal-js-example");
+        rhymeContainer.appendChild(h3El);
+        // add event listener to the button with the id of the rhyme to alert the id of the rhyme
+        document
+          .getElementById(rhymesArray[i])
+      }
+      modalListener()
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+//function to get the definition of the word
+function getDefinition() {
+  fetch(wordsUrl0, options)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.results !== undefined) {
+        for (var i = 0; i < data.results.length; i++) {
+          document.getElementById('search-form').classList.add('search-form-after')
+          document.getElementById('search-form').classList.remove('search-form-before')
+
+          resultsContainer.classList.remove("hidden");
+          document.getElementById("body").classList.remove("on-load");
+
+          var definition = data.results[i].definition;
+          var definitionEl = document.createElement('p')
+          // document.getElementById("definitionMain").innerHTML = definition;
+          definitionEl.innerHTML = i + 1 + '. ' + definition + ';';
+          document.getElementById("definitionMain").appendChild(definitionEl)
+          if (searchHistory.length > 100) {
+            searchHistory.length = 100;
+            setSearchHistory();
+          }
+        }
+      } else {
+        document.getElementById('search-form').classList.add('search-form-before')
+        document.getElementById('search-form').classList.remove('search-form-after')
+
+        resultsContainer.classList.add("hidden");
+        document.getElementById("body").classList.add("on-load");
+
+        searchHistory.shift()
+        if (searchHistory.length > 100) {
+          searchHistory.length = 100
+        }
+        setSearchHistory()
+        renderSearchHistory()
+      }
+      if (data.results.length < 11) {
+        document.getElementById('focus-container').classList.remove('scroll')
+      } else {
+        document.getElementById('focus-container').classList.add('scroll')
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      // document.getElementById("definitionMain").innerHTML =
+      //   "No definition found for this word. Please try another word.";
+      resultsContainer.classList.add("hidden");
+      document.getElementById("body").classList.add("on-load");
+      document.getElementById('search-form').classList.add('search-form-before')
+      document.getElementById('search-form').classList.remove('search-form-after')
+    });
+}
+
+// variable to hold an array of the search history
+var searchHistory = [];
+
+// function to get the search history from local storage
 function getSearchHistory() {
+  console.log("getSearchHistory was called");
   try {
     var storedSearches = JSON.parse(localStorage.getItem('search-history'));
     if (storedSearches !== null) {
@@ -127,233 +478,175 @@ function getSearchHistory() {
     console.log("No search history found");
   }
 }
-
+// function to save the search history to local storage
 function setSearchHistory() {
+  console.log("setSearchHistory was called");
   localStorage.setItem('search-history', JSON.stringify(searchHistory));
-  renderSearchHistory();
   return;
 }
 
+// function to save a word to the search history
 function saveWord() {
-  var userWord = inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
-  inputBox.value = '';
+  console.log("saveWord was called");
+  var userWord = inputBox.value;
   if (userWord !== undefined || userWord !== '') {
-    if (searchHistory.indexOf(userWord) > -1) {
-      searchHistory.splice(searchHistory.indexOf(userWord), 1);
-      searchHistory.unshift(userWord);
+    var userCount = 1;
+    var storedWord = {};
+
+    if (searchHistory.length === 0) {
+      storedWord = { word: userWord, count: userCount }
+      searchHistory.unshift(storedWord)
     } else {
-      searchHistory.unshift(userWord);
-    }
-    setSearchHistory();
-  }
-  if (searchHistory.length > 100) {
-    searchHistory.length = 100;
-  }
-}
-
-function getAntonyms() {
-  antonymContainer.innerHTML = '';
-  word = inputBox.value;
-  antonymURL = datamuseAPIAnt + word;
-  fetch(antonymURL)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.length !== 0) {
-        antonymList = []
-        for (var i = 0; i < data.length; i++) {
-          antonymList.push(data[i].word);
-          var newAntEl = document.createElement('p');
-          newAntEl.textContent = data[i].word;
-          newAntEl.setAttribute('id', data[i].word)
-          newAntEl.classList.add('js-modal-trigger');
-          newAntEl.setAttribute('data-target', 'modal-js-example');
-          antonymContainer.appendChild(newAntEl);
-        }
-      } else {
-        var newAntEl = document.createElement('p');
-        newAntEl.textContent = 'No results found. Please try again.';
-        antonymContainer.appendChild(newAntEl);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  saveWord();
-}
-
-function getRhymes() {
-  rhymeContainer.innerHTML = '';
-  word = inputBox.value;
-  rhymeURL = datamuseAPIRhy + word;
-  fetch(rhymeURL)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.length !== 0) {
-        rhymeList = []
-        for (var i = 0; i < data.length; i++) {
-          rhymeList.push(data[i].word);
-          var newRhyEl = document.createElement('p');
-          newRhyEl.textContent = data[i].word;
-          newRhyEl.setAttribute('id', data[i].word);
-          newRhyEl.classList.add('js-modal-trigger');
-          newRhyEl.setAttribute('data-target', 'modal-js-example');
-          rhymeContainer.appendChild(newRhyEl);
-        }
-      } else {
-        var newRhyEl = document.createElement('p');
-        newRhyEl.textContent = 'No results found. Please try again.';
-        rhymeContainer.appendChild(newRhyEl);
-      }
-      getAntonyms();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function getSynonyms() {
-  synonymContainer.innerHTML = '';
-  word = inputBox.value;
-  synonymURL = datamuseAPISyn + word;
-  fetch(synonymURL)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.length !== 0) {
-        synonymList = []
-        for (var i = 0; i < data.length; i++) {
-          synonymList.push(data[i].word);
-          var newSynEl = document.createElement('p');
-          newSynEl.textContent = data[i].word;
-          newSynEl.setAttribute('id', data[i].word)
-          newSynEl.classList.add('js-modal-trigger');
-          newSynEl.setAttribute('data-target', 'modal-js-example');
-          synonymContainer.appendChild(newSynEl);
-        }
-      } else {
-        var newSynEl = document.createElement('p');
-        newSynEl.textContent = 'No results found. Please try again.';
-        synonymContainer.appendChild(newSynEl);
-      }
-      getRhymes();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function getMainDefinition() {
-  word = inputBox.value;
-  dictionaryURL = freeDictionaryAPI + word;
-  fetch(dictionaryURL, options)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      if (data !== undefined) {
-        if (data.length !== undefined) {
-          resultsContainer.classList.remove("hidden");
-          body.classList.remove('on-load');
-          mainWord.textContent = inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
-          mainPronunciationContainer.innerText = '';
-          mainDefinitionsContainer.innerHTML = '';
-          var newProEl = document.createElement('p');
-          newProEl.textContent = data[0].phonetic;
-          newProEl.classList.add('pronunciation-text')
-          // var newToolTipText = document.createElement('span');
-          // newToolTipText.textContent('Click to hear pronunciation')
-          // newToolTipText.classList.add('tooltip-text')
-          mainPronunciationContainer.appendChild(newProEl);
-
-          for (var i = 0; i < data.length; i++) {
-            for (var x = 0; x < data[i].meanings.length; x++) {
-              for (var y = 0; y < data[i].meanings[x].definitions.length; y++) {
-                var newDefEl = document.createElement('p');
-                newDefEl.textContent = data[i].meanings[x].definitions[y].definition + ';'
-                mainDefinitionsContainer.appendChild(newDefEl);
-              }
-            }
-          }
-          getSynonyms();
-        } else {
-          inputBox.value = '';
-          inputBox.setAttribute('placeholder', 'no results found');
-          setTimeout(function () {
-            inputBox.setAttribute('placeholder', 'type to search');
-          }, 3000);
+      for (var i = 0; i < searchHistory.length; i++) {
+        if (searchHistory[i].word === userWord) {
+          userCount = searchHistory[i].count + 1
+          storedWord = { word: userWord, count: userCount }
+          searchHistory.splice(i, 1);
+          searchHistory.unshift(storedWord)
+          setSearchHistory();
           return;
         }
-      } else {
-        console.log('No results found. Please try again.')
-        return;
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      inputBox.setAttribute('placeholder', 'no results found')
-    });
+      storedWord = { word: userWord, count: userCount }
+      searchHistory.unshift(storedWord)
+      setSearchHistory();
+    }
+  }
 }
 
+// function to render the search history to the dropdown menu
+// each word in the search history will be an h4 that will be added to a div with class of dropdown-item
+// the div with class of dropdown-item will be added to the div with class of dropdown-menu
+function renderSearchHistory() {
+  console.log("renderSearchHistory was called");
+  var dropDownItemEl = document.createElement("div");
+  dropDownItemEl.classList.add("dropdown-item");
+  var dropDownMenuEl = document.querySelector(".dropdown-menu");
+  dropDownMenuEl.innerHTML = "";
+  for (var i = 0; i < searchHistory.length; i++) {
+    var dropDownItemEl = document.createElement("div");
+    dropDownItemEl.classList.add("dropdown-content-fix");
+    var dropDownh4El = document.createElement("h4");
+    dropDownh4El.classList.add("dropdown-item-fix");
+    // dropDownh4El.setAttribute("type", "button");
+    dropDownh4El.setAttribute("data-word", searchHistory[i].word);
+    dropDownh4El.textContent = searchHistory[i].word;
+    // only append the h4 to the div if the word is not undefined or null or empty
+    if (searchHistory[i].word !== undefined || searchHistory[i].word !== null || searchHistory[i].word !== '') {
+
+      dropDownItemEl.appendChild(dropDownh4El);
+      dropDownMenuEl.appendChild(dropDownItemEl);
+    }
+    // event listener for the dropdown menu items that will put the word in the inputBox
+    dropDownh4El.addEventListener("click", function (event) {
+      event.preventDefault();
+      var word = event.target.getAttribute("data-word");
+      inputBox.value = word;
+      submitSearch();
+    }); // end of event listener
+  }
+}
+
+// function to clear the search history
+function clearSearchHistory() {
+  console.log("clearSearchHistory was called");
+  searchHistory = [];
+  localStorage.removeItem('search-history');
+  renderSearchHistory();
+}
 function submitSearch() {
-  getMainDefinition();
+  if (inputBox.value !== "") {
+
+    document.getElementById("synonym-column").innerHTML = "";
+    document.getElementById("rhyme-column").innerHTML = "";
+    document.getElementById("antonym-column").innerHTML = "";
+
+    var synonymHeading = document.createElement("h2");
+    var rhymeHeading = document.createElement("h2");
+    var antonymHeading = document.createElement("h2");
+
+    synonymHeading.textContent = "Synonyms";
+    rhymeHeading.textContent = "Rhymes";
+    antonymHeading.textContent = "Antonyms";
+
+    synonymHeading.classList.add("column-heading");
+    rhymeHeading.classList.add("column-heading");
+    antonymHeading.classList.add("column-heading");
+
+    document.getElementById("synonym-column").appendChild(synonymHeading);
+    document.getElementById("rhyme-column").appendChild(rhymeHeading);
+    document.getElementById("antonym-column").appendChild(antonymHeading);
+
+    // document.getElementById("wordInFocus").innerHTML = "";
+    document.getElementById("mainWord").innerHTML = "";
+    document.getElementById("mainPro").innerHTML = "";
+    document.getElementById("mainSyl").innerHTML = "";
+    document.getElementById("mainFreq").innerHTML = "";
+    document.getElementById("definitionMain").innerHTML = "";
+    // the word in the input box is stored in the variable word
+    var word = inputBox.value;
+
+    // saves the search history for each unique search
+
+    // the word is shown in the element named mainWord and wordInFocus
+    mainWord.innerHTML = word;
+    // wordInFocus.innerHTML = word;
+
+    // the urls are updated to include the word
+    datamuseUrl0 = datamuseAPI0 + word;
+    datamuseUrl1 = datamuseAPI1 + word;
+    datamuseUrl3 = datamuseAPI3 + word;
+    wordsUrl0 = wordsAPI + word;
+
+    // the functions to get the synonyms, antonyms, rhymes and definition of the word are called
+    getSynonyms();
+    getAntonyms();
+    getRhymes();
+    getDefinition();
+    saveWord();
+    getPronunciation();
+    getSyllables();
+    getFrequency();
+
+    // the input box is cleared
+
+    document.getElementById("synonym-column").style.display = "block";
+    document.getElementById("antonym-column").style.display = "block";
+    document.getElementById("rhyme-column").style.display = "block";
+    document.getElementById("definitionMain").style.display = "block";
+  } else {
+    document.getElementById("inputBox").placeholder = "No results found"
+  }
+  inputBox.value = "";
 }
 
-submitForm.addEventListener('submit', function (event) {
+// the search button is clicked or form submitted
+document.getElementById('submit-form').addEventListener("submit", function (event) {
   event.preventDefault();
-  submitSearch();
-},);
-
-document.getElementById('delete-button').addEventListener('click', function (event) {
-  event.preventDefault()
-  inputBox.setAttribute('placeholder', 'type to search')
-  resultsContainer.classList.add("hidden");
-  body.classList.add("on-load");
-})
-
-dropDownMenuEl.addEventListener("click", function (event) {
-  event.preventDefault();
-  var dataWord = event.target.getAttribute("data-word");
-  inputBox.value = dataWord;
-  resultsContainer.classList.remove("hidden");
-  body.classList.remove('on-load');
-  submitSearch();
-});
-
-searchResultsContainer.addEventListener("click", function (event) {
-  event.preventDefault();
-  modalPronunciationContainer.innerHTML = '';
-  modalDefinitionsContainer.innerHTML = '';
-  if (event.target.getAttribute('class') === 'js-modal-trigger') {
-    modalDiv.classList.add('is-active');
-    var targetWord = event.target.getAttribute("id");
-    inputBox.value = targetWord;
-    getModalDefinition();
+  document.getElementById('dropdown-menu4').classList.remove('scroll2')
+  if (searchHistory.length > 15) {
+    document.getElementById('dropdown-menu4').classList.add('scroll')
   }
+  submitSearch();
+  renderSearchHistory()
 });
-
-document.addEventListener('click', function (event) {
-  if (event.target === modalBackground || event.target === modalClose1 || event.target === modalClose2) {
-    modalDiv.classList.remove('is-active');
-    modalPronunciationContainer.innerHTML = '';
-    modalDefinitionsContainer.innerHTML = '';
-  }
-})
-
-modalTitleTextEl.addEventListener('click', function (event) {
-  inputBox.value = modalTitleTextEl.textContent;
-  modalDiv.classList.remove('is-active');
-  getMainDefinition();
-})
-
-mainPronunciationContainer.addEventListener('click', function (event) {
-  var textToSpeech = new SpeechSynthesisUtterance();
-  textToSpeech.text = word;
-  window.speechSynthesis.speak(textToSpeech)
-})
-
-modalPronunciationContainer.addEventListener('click', function (event) {
-  var modTextToSpeech = new SpeechSynthesisUtterance();
-  modTextToSpeech.text = modalWord;
-  window.speechSynthesis.speak(modTextToSpeech)
-})
 
 getSearchHistory();
 renderSearchHistory();
+
+if (searchHistory.length < 9) {
+  document.getElementById('dropdown-menu4').classList.remove('scroll2')
+}
+
+document.getElementById('delete-button').addEventListener('click', function (event) {
+  event.preventDefault()
+  document.getElementById('search-form').classList.add('search-form-before')
+  document.getElementById('search-form').classList.remove('search-form-after')
+  document.getElementById('dropdown-menu4').classList.remove('scroll')
+  if (searchHistory.length > 9) {
+    document.getElementById('dropdown-menu4').classList.add('scroll2')
+  }
+  var resultsContainer = document.getElementById("results-container");
+  resultsContainer.classList.add("hidden");
+  document.getElementById("body").classList.add("on-load");
+})
