@@ -1,29 +1,40 @@
+.message-header {
+  font-size: 1.4em;
+}
+
 .content p:not(:last-child) {
   margin-bottom: 0px;
 }
 
-.js-modal-trigger {
-  font-size: 1.2em;
+.box {
+  font-size: 1.1em;
+}
+
+#search-area {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+#submit-form {
+  width: 100%;
+  margin: 1.5% auto;
+}
+
+#focus-container {
+  height: 58.5vh;
+  overflow-y: auto;
   font-weight: 500;
 }
 
-.js-modal-trigger:hover {
-  background-color: lightseagreen;
-  color: aliceblue;
-  transition-duration: 400ms;
-  cursor: pointer;
+.main-title {
+  text-decoration: underline;
 }
 
-.modal-card-title {
-  font-size: 1.5em;
+.words-container {
+  height: 58.5vh;
+  overflow-y: auto;
   font-weight: 500;
-}
-
-.modal-card-title:hover {
-  background-color: lightseagreen;
-  color: aliceblue;
-  transition-duration: 400ms;
-  cursor: pointer;
 }
 
 .dropdown-item {
@@ -40,41 +51,11 @@
   cursor: pointer;
 }
 
-.column-heading {
-  font-weight: bold;
-  font-size: 1.3em;
-  background-color: teal;
-  color: white;
-  padding: 5.9px 0px 5.9px 2%;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.scroll {
-  overflow-y: scroll;
-  height: 58vh;
-}
-
-.scroll2 {
-  overflow-y: scroll;
-  height: 34vh;
-}
-
-.hidden {
-  display: none;
-}
-
-.on-load {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
-}
-
 .dropdown-content-fix {
   border-radius: 0;
   box-shadow: 0;
-  padding: 0
+  padding: 0;
+  border: 0;
 }
 
 .dropdown-item-fix {
@@ -89,25 +70,59 @@
   border-width: 0px;
 }
 
-.search-form-before {
-  width: 50%;
+.dropdown-menu {
+  overflow-y: auto;
 }
 
-.search-form-after {
-  width: 100%;
+.dropdown-length1 {
+  max-height: 34vh;
 }
 
-.control.has-icons-right .input {
-  padding: 5.9px 5px 5.9px 2%;
+.dropdown-length2 {
+  max-height: 67vh;
 }
 
-.message-header {
-  padding: .4em 1em;
+.pronunciation-text:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
 }
 
-#mainWord {
+.js-modal-trigger:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
+}
+
+.on-load {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  display: none;
+}
+
+.modal-card-title {
+  text-decoration: underline;
   font-size: 1.5em;
-  /* padding: 5.9px 5px 5.9px 2%; */
+  font-weight: 500;
+}
+
+.modal-card-title:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
 }
 
 .tooltip {
@@ -115,7 +130,7 @@
   display: inline-block;
 }
 
-.tooltip .tooltiptext {
+.tooltip .tooltip-text {
   visibility: hidden;
   width: fit-content;
   background-color: lightgray;
@@ -128,7 +143,7 @@
   box-shadow: 5px 5px 5px 5px darkgray;
 }
 
-.tooltip .tooltiptext::after {
+.tooltip .tooltip-text::after {
   position: relative;
   width: fit-content;
   font-weight: 400;
@@ -140,6 +155,6 @@
   background-color: whitesmoke;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip:hover .tooltip-text {
   visibility: visible;
 }
