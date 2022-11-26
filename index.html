@@ -27,17 +27,20 @@
       <div class="notification is-primary">
         <div class="control has-icons-left has-icons-right">
           <div id="search-area" class="container is-centered is-primary">
+            <div class="tooltip">
+            <span class="tooltip-text">Click on hear the pronunciation.</span>
             <form class="field has-addons" id="submit-form">
-
+              
               <div class="control is-expanded">
                 <input id="input-box" class="input" type="text" placeholder="type to search">
               </div>
-
+              
               <div class="control">
                 <button id="search-button" class="button is-primary is-light">Search</button>
               </div>
-
+              
             </form>
+          </div>
 
             <div class="dropdown is-hoverable">
 
@@ -80,10 +83,12 @@
 
               <div id="focus-container" class="content is-normal p-3">
 
-                <div id="main-pronunciation">
-                  <p>
-                    <span class="main-title">Pronunciation:</span>
+                <div>
+                  <p class="tooltip">
+                    
+                    <span class="main-title" id="main-pronunciation"><strong>Pronunciation: </strong></span>
                     <span class="tooltip-text">Click on hear the pronunciation.</span>
+                   
                   </p>
                   <div id="main-pronunciation-container">
                   </div>
@@ -91,7 +96,9 @@
                 </div>
 
                 <div id="definition-main">
-                  <p class='main-title'>Definition(s):</p>
+                  <div id="main-frequency-container"></div>
+                  <div id="main-syllables-container"></div>
+                  <p class=''><strong>Definition(s): </strong></p>
                   <div id="main-definitions-container"></div>
                 </div>
 
@@ -136,23 +143,21 @@
             <span id="modal-title-text">Modal Title</span>
             <span class="tooltip-text">Click on the word to start a new search.</span>
           </h1>
-          <button id="modal-close-1" class="modal-close" class="delete" aria-label="close"></button>
-        
         </header>
 
         <section class="modal-card-body">
 
-          <div id="modal-pronunciation">
-            <p>
-              <span class="modal-title">Pronunciation:</span>
+          <div>
+            <p class="tooltip">
+              <span class="modal-title"  id="modal-pronunciation"><strong>Pronunciation: </strong></span>
               <span class="tooltip-text">Click to hear the pronunciation.</span>
             </p>
-            <div id="modal-pronunciation-container">
-            </div>
+            <div id="modal-pronunciation-container"></div>
+            <div id="modal-frequency-container"></div>
+            <div id ="modal-syllables-container"></div>
           </div>
-
           <div id="definition-modal">
-            <p class='modal-title'>Definition(s):</p>
+            <p class='modal-title'><strong>Definition(s): </strong></p>
             <div id="modal-definitions-container"></div>
           </div>
 

@@ -30,6 +30,9 @@ const options = {
   },
 };
 
+var wordsAPI = "https://wordsapiv1.p.rapidapi.com/words/";
+var wordsAPIUrl = wordsAPI + word;
+
 const freeDictionaryAPI = 'https://api.dictionaryapi.dev/api/v2/entries/en/'; //dictionary
 const datamuseAPISyn = 'https://api.datamuse.com/words?rel_syn='; //synonyms
 const datamuseAPIRhy = 'https://api.datamuse.com/words?rel_rhy='; //rhymes
@@ -50,6 +53,9 @@ var dropDownMenuEl = document.querySelector(".dropdown-menu");
 var modalTitleTextEl = document.getElementById('modal-title-text');
 var modalWord;
 var modalPronunciationContainer = document.getElementById('modal-pronunciation-container');
+var modalSyllablesContainer = document.getElementById('modal-syllables-container');
+var modalFrequencyContainer = document.getElementById('modal-frequency-container');
+
 var modalDefinition = document.getElementById('definition-modal');
 var modalDefinitionsContainer = document.getElementById('modal-definitions-container');
 var modalDiv = document.getElementById('modal-js-example');
@@ -57,6 +63,41 @@ var modal = document.querySelector('modal');
 var modalBackground = document.querySelector('.modal-background');
 var modalClose1 = document.getElementById('modal-close-1');
 var modalClose2 = document.getElementById('modal-close-2');
+
+function getFrequency() {
+  fetch(wordsAPIUrl, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var frequency = data.frequency;
+      if (frequency === undefined) {
+        document.getElementById("main-frequency-container").innerHTML = "No frequency found";
+      } else {
+        // underline 'Frequency' in main word container
+        document.getElementById("main-frequency-container").innerHTML = '<u> <strong>Frequency:</strong></u> ' + frequency;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("main-frequency-container").innerHTML = "No frequency found";
+    });
+}
+
+function getSyllables() {
+  fetch(wordsAPIUrl, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var syllables = data.syllables.count;
+      if (syllables === undefined) {
+        document.getElementById("main-syllables-container").innerHTML = "No syllables found";
+      } else {
+      document.getElementById("main-syllables-container").innerHTML = '<u> <strong>Syllables:</strong></u> ' + syllables;
+    }
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("main-syllables-container").innerHTML = "No syllables found";
+    });
+}
 
 function getModalDefinition() {
   modalWord = inputBox.value;
@@ -98,6 +139,55 @@ function getModalDefinition() {
       inputBox.setAttribute('placeholder', 'no results found')
     });
 }
+
+function getModalSyllables() {
+  modalWord = inputBox.value;
+  wordsAPIUrl = wordsAPI + modalWord;
+  fetch(wordsAPIUrl, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var syllables = data.syllables.count;
+      var modSylEl = document.createElement('p');
+      modSylEl.textContent = syllables;
+      modSylEl.classList.add('syllables-text')
+      modalSyllablesContainer.appendChild(modSylEl);
+      if (syllables === undefined) {
+        document.getElementById("modal-syllables-container").innerHTML = "No syllables found";
+      } else {
+      document.getElementById("modal-syllables-container").innerHTML = ' <strong>Syllables:</strong> ' + syllables;
+    }
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("modal-syllables-container").innerHTML = "No syllables found";
+    });
+}
+
+function getModalFrequency() {
+  modalWord = inputBox.value;
+  wordsAPIUrl = wordsAPI + modalWord;
+  fetch(wordsAPIUrl, options)
+    .then((response) => response.json())
+    .then((data) => {
+      var frequency = data.frequency;
+      var modFreqEl = document.createElement('p');
+      modFreqEl.textContent = frequency;
+      modFreqEl.classList.add('frequency-text')
+      modalFrequencyContainer.appendChild(modFreqEl);
+
+      if (frequency === undefined) {
+        document.getElementById("modal-frequency-container").innerHTML = "No frequency found";
+      } else {
+        // underline 'Frequency' in main word container
+        document.getElementById("modal-frequency-container").innerHTML = ' <strong>Frequency:</strong> ' + frequency;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("modal-frequency-container").innerHTML = "No frequency found";
+    });
+}
+
 
 function renderSearchHistory() {
   dropDownMenuEl.innerHTML = "";
@@ -294,6 +384,9 @@ function getMainDefinition() {
 
 function submitSearch() {
   getMainDefinition();
+  getFrequency();
+  getSyllables();
+
 }
 
 submitForm.addEventListener('submit', function (event) {
@@ -321,11 +414,16 @@ searchResultsContainer.addEventListener("click", function (event) {
   event.preventDefault();
   modalPronunciationContainer.innerHTML = '';
   modalDefinitionsContainer.innerHTML = '';
+  modalSyllablesContainer.innerHTML = '';
+  modalFrequencyContainer.innerHTML = '';
   if (event.target.getAttribute('class') === 'js-modal-trigger') {
     modalDiv.classList.add('is-active');
     var targetWord = event.target.getAttribute("id");
     inputBox.value = targetWord;
     getModalDefinition();
+    getModalFrequency();
+    getModalSyllables();
+
   }
 });
 
@@ -333,6 +431,8 @@ document.addEventListener('click', function (event) {
   if (event.target === modalBackground || event.target === modalClose1 || event.target === modalClose2) {
     modalDiv.classList.remove('is-active');
     modalPronunciationContainer.innerHTML = '';
+    modalSyllablesContainer.innerHTML = '';
+    modalFrequencyContainer.innerHTML = '';
     modalDefinitionsContainer.innerHTML = '';
   }
 })
@@ -357,3 +457,4 @@ modalPronunciationContainer.addEventListener('click', function (event) {
 
 getSearchHistory();
 renderSearchHistory();
+
