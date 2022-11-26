@@ -82,12 +82,12 @@
   max-height: 67vh;
 }
 
-.pronunciation-text:hover {
+/* .pronunciation-text:hover {
   background-color: lightseagreen;
   color: aliceblue;
   transition-duration: 400ms;
   cursor: pointer;
-}
+} */
 
 .js-modal-trigger:hover {
   background-color: lightseagreen;
@@ -133,8 +133,8 @@
 .tooltip .tooltip-text {
   visibility: hidden;
   width: fit-content;
-  background-color: lightgray;
-  color: #505050;
+  background-color: lightgray !important;
+  color: #505050 !important;
   text-align: center;
   padding: 5px 20px;
   position: absolute;
@@ -158,3 +158,30 @@
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }
+
+#main-pronunciation {
+  font-size: 1.2em;
+  font-weight: 500;
+ cursor: pointer;
+
+} 
+#main-pronunciation:hover {
+    background-color: lightseagreen;
+    color: aliceblue;
+    transition-duration: 400ms;
+    cursor: pointer;
+}
+  
+#modal-pronunciation {
+    font-size: 1.2em;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+#modal-pronunciation:hover {
+  background-color: lightseagreen !important;
+  color: aliceblue !important;
+  transition-duration: 400ms !important;
+  cursor: pointer !important;
+}
+
