@@ -164,13 +164,13 @@
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  width: fit-content;
+  width: max-content;
   background-color: lightgray !important;
   color: #505050 !important;
   text-align: center;
   padding: 5px 20px;
   position: absolute;
-  font-size: .6em;
+  font-size: 1em;
   top: 105%;
   box-shadow: 5px 5px 5px 5px darkgray;
 }
@@ -195,14 +195,21 @@
   font-size: 1.2em;
   font-weight: 500;
  cursor: pointer;
+}
 
-} 
-#main-pronunciation:hover {
+#main-pronunciation-hover:hover {
+  background-color: lightseagreen;
+  color: aliceblue;
+  transition-duration: 400ms;
+  cursor: pointer;
+}
+
+/* #main-pronunciation:hover {
     background-color: lightseagreen;
     color: aliceblue;
     transition-duration: 400ms;
     cursor: pointer;
-}
+} */
   
 #modal-pronunciation {
     font-size: 1.2em;
@@ -210,7 +217,7 @@
     cursor: pointer;
   }
 
-#modal-pronunciation:hover {
+#modal-pronunciation-hover:hover {
   background-color: lightseagreen !important;
   color: aliceblue !important;
   transition-duration: 400ms !important;
