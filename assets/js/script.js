@@ -19,6 +19,7 @@ var antonymContainer = document.getElementById('antonym-container');
 
 var mainWord = document.getElementById('main-word');
 var mainPronunciationContainer = document.getElementById('main-pronunciation-container');
+var mainPronunciationHover = document.getElementById('main-pronunciation-hover');
 var mainDefinition = document.getElementById('definition-main');
 var mainDefinitionsContainer = document.getElementById('main-definitions-container');
 
@@ -55,6 +56,7 @@ var dropDownMenuEl = document.querySelector(".dropdown-menu");
 var modalTitleTextEl = document.getElementById('modal-title-text');
 var modalWord;
 var modalPronunciationContainer = document.getElementById('modal-pronunciation-container');
+var modalPronunciationHover = document.getElementById('modal-pronunciation-hover');
 var modalSyllablesContainer = document.getElementById('modal-syllables-container');
 var modalFrequencyContainer = document.getElementById('modal-frequency-container');
 
@@ -110,8 +112,8 @@ function getModalDefinition() {
       if (data !== undefined) {
         if (data.length !== undefined) {
           modalTitleTextEl.textContent = modalWord[0].toUpperCase() + modalWord.slice(1).toLowerCase();
-          var modProEl = document.createElement('p');
-          modProEl.textContent = data[0].phonetic;
+          var modProEl = document.createElement('span');
+          modProEl.textContent = ' ' + data[0].phonetic;
           modProEl.classList.add('pronunciation-text')
           modalPronunciationContainer.appendChild(modProEl);
           for (var i = 0; i < data.length; i++) {
@@ -351,8 +353,8 @@ function getMainDefinition() {
           mainWord.textContent = inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
           mainPronunciationContainer.innerText = '';
           mainDefinitionsContainer.innerHTML = '';
-          var newProEl = document.createElement('p');
-          newProEl.textContent = data[0].phonetic;
+          var newProEl = document.createElement('span'); // changed p tag to span tag
+          newProEl.textContent = ' ' + data[0].phonetic;
           newProEl.classList.add('pronunciation-text')
           // var newToolTipText = document.createElement('span');
           // newToolTipText.textContent('Click to hear pronunciation')
@@ -458,13 +460,13 @@ modalTitleTextEl.addEventListener('click', function (event) {
   getMainDefinition();
 })
 
-mainPronunciationContainer.addEventListener('click', function (event) {
+mainPronunciationHover.addEventListener('click', function (event) {
   var textToSpeech = new SpeechSynthesisUtterance();
   textToSpeech.text = word;
   window.speechSynthesis.speak(textToSpeech)
 })
 
-modalPronunciationContainer.addEventListener('click', function (event) {
+modalPronunciationHover.addEventListener('click', function (event) {
   var modTextToSpeech = new SpeechSynthesisUtterance();
   modTextToSpeech.text = modalWord;
   window.speechSynthesis.speak(modTextToSpeech)

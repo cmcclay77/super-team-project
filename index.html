@@ -27,10 +27,10 @@
       <div class="notification is-primary">
         <div class="control has-icons-left has-icons-right">
           <div id="search-area" class="container is-centered is-primary">
-            <div id="form-width" class="tooltip">
-            <span class="tooltip-text">Click on hear the pronunciation.</span>
+            <div id="form-width"> <!-- removed class tooltip -->
+            <!-- <span class="tooltip-text">Click on hear the pronunciation.</span> -->
             <form class="field has-addons" id="submit-form">
-              
+
               <div class="control is-expanded">
                 <input id="input-box" class="input" type="text" placeholder="type to search">
               </div>
@@ -83,15 +83,14 @@
 
               <div id="focus-container" class="content is-normal p-3">
 
-                <div>
-                  <p class="tooltip">
+                <div class="tooltip">
+                  <p id="main-pronunciation-hover">
                     
-                    <span class="main-title" id="main-pronunciation"><strong>Pronunciation: </strong></span>
+                    <span class="main-title" id="main-pronunciation"><strong>Pronunciation:</strong></span>
                     <span class="tooltip-text">Click on hear the pronunciation.</span>
+                    <span id="main-pronunciation-container"></span>
                    
                   </p>
-                  <div id="main-pronunciation-container">
-                  </div>
 
                 </div>
 
@@ -148,11 +147,11 @@
         <section class="modal-card-body">
 
           <div>
-            <p class="tooltip">
+            <p id="modal-pronunciation-hover" class="tooltip">
               <span class="modal-title"  id="modal-pronunciation"><strong>Pronunciation: </strong></span>
               <span class="tooltip-text">Click to hear the pronunciation.</span>
+              <span id="modal-pronunciation-container"></span>
             </p>
-            <div id="modal-pronunciation-container"></div>
             <div id="modal-frequency-container"></div>
             <div id ="modal-syllables-container"></div>
           </div>
