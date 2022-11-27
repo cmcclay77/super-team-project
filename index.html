@@ -42,10 +42,10 @@
             </form>
           </div>
 
-            <div class="dropdown is-hoverable">
+            <div id="dropdown-container" class="dropdown is-hoverable">
 
-              <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+              <div id="search-history-container" class="dropdown-trigger">
+                <button id="search-history-button" class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
                   <span>Search History</span>
                   <span class="icon is-small">
                     <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -70,9 +70,9 @@
 
   <section id="results-container" class="hidden">
     <div class="column is-full is-primary">
-      <div class="columns">
+      <div id="column-container" class="columns">
 
-        <div class="column is-one-half">
+        <div id="focus-column" class="column is-one-half">
           <article class="panel is-primary">
             <article class="message is-primary">
 
@@ -107,19 +107,19 @@
           </article>
         </div>
 
-        <div class="column is-primary">
+        <div id="column2" class="column is-primary">
           <div id="search-results" class="columns">
 
-            <div class="column" id="synonym-column">
+            <div class="column words-column" id="synonym-column">
               <div class="message-header" id="synonym-text">Synonyms</div>
               <div id="synonym-container" class="box words-container"></div>
             </div>
 
-            <div class="column" id="rhyme-column">
+            <div class="column words-column" id="rhyme-column">
               <div class="message-header" id="rhyme-text">Rhymes</div>
               <div id="rhyme-container" class="box words-container"></div>
             </div>
-            <div class="column" id="antonym-column">
+            <div class="column words-column" id="antonym-column">
               <div class="message-header" id="antonym-text">Antonyms</div>
               <div id="antonym-container" class="box words-container"></div>
             </div>
