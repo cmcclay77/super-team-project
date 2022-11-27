@@ -4,6 +4,8 @@ var inputBox = document.getElementById('input-box');
 var searchButton = document.getElementById('search-button');
 var submitForm = document.getElementById('submit-form');
 
+var searchSection = document.getElementById("search-section");
+
 var resultsContainer = document.getElementById("results-container");
 var searchResultsContainer = document.getElementById("search-results");
 
@@ -136,8 +138,13 @@ function getModalDefinition() {
     })
     .catch((err) => {
       console.error(err);
-      inputBox.setAttribute('placeholder', 'no results found')
-    });
+      inputBox.value = '';
+      inputBox.setAttribute('placeholder', 'no results found');
+      setTimeout(function () {
+        inputBox.setAttribute('placeholder', 'type to search');
+      }, 3000);
+      return;
+});
 }
 
 function getModalSyllables() {
@@ -187,7 +194,6 @@ function getModalFrequency() {
       document.getElementById("modal-frequency-container").innerHTML = "No frequency found";
     });
 }
-
 
 function renderSearchHistory() {
   dropDownMenuEl.innerHTML = "";
@@ -362,6 +368,8 @@ function getMainDefinition() {
               }
             }
           }
+          searchSection.classList.add('noblank-screen');
+          searchSection.classList.remove('blank-screen');
           getSynonyms();
         } else {
           inputBox.value = '';
@@ -378,8 +386,13 @@ function getMainDefinition() {
     })
     .catch((err) => {
       console.error(err);
-      inputBox.setAttribute('placeholder', 'no results found')
-    });
+      inputBox.value = '';
+      inputBox.setAttribute('placeholder', 'no results found');
+      setTimeout(function () {
+        inputBox.setAttribute('placeholder', 'type to search');
+      }, 3000);
+      return;
+});
 }
 
 function submitSearch() {
@@ -399,6 +412,8 @@ document.getElementById('delete-button').addEventListener('click', function (eve
   inputBox.setAttribute('placeholder', 'type to search')
   resultsContainer.classList.add("hidden");
   body.classList.add("on-load");
+  searchSection.classList.add('blank-screen');
+  searchSection.classList.remove('noblank-screen');
 })
 
 dropDownMenuEl.addEventListener("click", function (event) {
