@@ -10,10 +10,26 @@
   font-size: 1.1em;
 }
 
+.blank-screen {
+  width: 50%;
+}
+
+.noblank-screen {
+  width: 100%;
+}
+
 #search-area {
   display: flex;
   width: 100%;
   align-items: center;
+}
+
+#input-box {
+  border-color: white;
+}
+
+#form-width {
+  width: 100%;
 }
 
 #submit-form {
@@ -31,10 +47,26 @@
   text-decoration: underline;
 }
 
+#definition-title {
+  text-decoration: underline;
+}
+
 .words-container {
   height: 58.5vh;
   overflow-y: auto;
   font-weight: 500;
+}
+
+#search-button {
+  background-color: white;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+#search-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
 }
 
 .dropdown-item {
