@@ -111,9 +111,9 @@ function getFrequency() {
     });
 }
 
-function getSyllables() {
+function getSyllables() { //syllable function
   mainSyllablesContainer.innerHTML = "";
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) //fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       var syllables = data.syllables.count;
@@ -131,10 +131,10 @@ function getSyllables() {
     });
 }
 
-function getModalDefinition() {
+function getModalDefinition() { //modal definition function
   modalWord = inputBox.value;
   wordsAPIUrl = wordsAPI + modalWord;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) // fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       if (data !== undefined) {
@@ -186,10 +186,10 @@ function getModalDefinition() {
     });
 }
 
-function getModalSyllables() {
+function getModalSyllables() { //modal syllable function
   modalWord = inputBox.value;
   wordsAPIUrl = wordsAPI + modalWord;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) //fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       var syllables = data.syllables.count;
@@ -212,10 +212,10 @@ function getModalSyllables() {
     });
 }
 
-function getModalFrequency() {
+function getModalFrequency() { //modal frequency function
   modalWord = inputBox.value;
   wordsAPIUrl = wordsAPI + modalWord;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) // fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       var frequency = data.frequency;
@@ -240,7 +240,7 @@ function getModalFrequency() {
     });
 }
 
-function renderSearchHistory() {
+function renderSearchHistory() { //rendering search history function
   dropDownMenuEl.innerHTML = "";
   if (searchHistory.length !== 0) {
     for (var i = 0; i < searchHistory.length; i++) {
@@ -258,7 +258,7 @@ function renderSearchHistory() {
   }
 }
 
-function getSearchHistory() {
+function getSearchHistory() { //obtain search history function
   try {
     var storedSearches = JSON.parse(localStorage.getItem("search-history"));
     if (storedSearches !== null) {
@@ -270,13 +270,13 @@ function getSearchHistory() {
   }
 }
 
-function setSearchHistory() {
+function setSearchHistory() { //set search history function
   localStorage.setItem("search-history", JSON.stringify(searchHistory));
   renderSearchHistory();
   return;
 }
 
-function saveWord() {
+function saveWord() { // save word function
   var userWord =
     inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
   inputBox.value = "";
@@ -294,11 +294,11 @@ function saveWord() {
   }
 }
 
-function getAntonyms() {
+function getAntonyms() { // antonyms function
   antonymContainer.innerHTML = "";
   word = inputBox.value;
   antonymURL = datamuseAPIAnt + word;
-  fetch(antonymURL)
+  fetch(antonymURL) //fetching antonyms from datamusAPI
     .then((response) => response.json())
     .then((data) => {
       if (data.length !== 0) {
@@ -324,11 +324,11 @@ function getAntonyms() {
   saveWord();
 }
 
-function getRhymes() {
+function getRhymes() { // rhymes function
   rhymeContainer.innerHTML = "";
   word = inputBox.value;
   rhymeURL = datamuseAPIRhy + word;
-  fetch(rhymeURL)
+  fetch(rhymeURL) // fetching rhymes from datamuseAPI
     .then((response) => response.json())
     .then((data) => {
       if (data.length !== 0) {
@@ -354,11 +354,11 @@ function getRhymes() {
     });
 }
 
-function getSynonyms() {
+function getSynonyms() { // synonym function
   synonymContainer.innerHTML = "";
   word = inputBox.value;
   synonymURL = datamuseAPISyn + word;
-  fetch(synonymURL)
+  fetch(synonymURL) // fetching synonym from datamuseAPI
     .then((response) => response.json())
     .then((data) => {
       if (data.length !== 0) {
@@ -384,10 +384,10 @@ function getSynonyms() {
     });
 }
 
-function getMainDefinition() {
+function getMainDefinition() { // definition for main word function
   word = inputBox.value;
   wordsAPIUrl = wordsAPI + word;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) // fetches from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       if (data.results !== undefined) {
@@ -450,7 +450,7 @@ function submitSearch() {
   getMainDefinition();
 }
 
-submitForm.addEventListener("submit", function (event) {
+submitForm.addEventListener("submit", function (event) { //submit listener for search
   event.preventDefault();
   submitSearch();
 });
