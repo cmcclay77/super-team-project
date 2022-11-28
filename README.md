@@ -10,7 +10,7 @@ Type in a word and click the search button.
 
 ## Link to Deployed Application
 
-[Deployed Application]()
+[Deployed Application](https://cmcclay77.github.io/super-team-project/)
 
 ## Screenshot
 
