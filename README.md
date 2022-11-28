@@ -2,11 +2,17 @@
 
 ## Description
 
-This is a word search application.  When searching for a word within the search bar you are given information regarding its definition, pronunciation, frequency, syllables, synonyms, rhyming words and antonyms.  The first card, When hovering over the pronunciation of the word, it gets highlighted and after clicking the word you will hear the pronunciation.  The frequency determines how often it is used.  The syllables determines how many syllables the word has. Followed by the definition of the word.  The second card containes the synonyms, which has a list of clickable words.  That will generate a modal with the same information from the first card related to the new word clicked on. The third card contains the rhyming words related to the origin word searched.  These words are also listed and clickable.   
+This is a word search application. Any Word searched will return a list of different synonyms, rhymes and antonyms.  The user will also have the pronunciation, frequency, syllables and definition of the word.  Every word listed within the synonyms, rhymes and antonyms cards are clickable and cause a modal to populate.  The modal gives the new word its definition, pronunciation, frequency and syllables.  Further, if clicked the new word is now searched.
 
 ## Usage
 
-Type in a word and click the search button.
+Step 1: type to search 
+Step 2: press enter
+Step 3: hidden content will appear with new information pertaining to the searched word
+Step 4: 4 cards will appear
+Step 5: First card will obtain its pronunciation, frequency, syllables and definition.
+Step 6: when hovering over pronunciaton it will become highlighted and clickable.
+Step 7: AFter clicking pronunciation a voice will appear pronouncing the word.
 
 ## Link to Deployed Application
 
