@@ -20,6 +20,8 @@ var antonymContainer = document.getElementById('antonym-container');
 var mainWord = document.getElementById('main-word');
 var mainPronunciationContainer = document.getElementById('main-pronunciation-container');
 var mainPronunciationHover = document.getElementById('main-pronunciation-hover');
+var mainFrequencyContainer = document.getElementById("main-frequency-container")
+var mainSyllablesContainer = document.getElementById("main-syllables-container")
 var mainDefinition = document.getElementById('definition-main');
 var mainDefinitionsContainer = document.getElementById('main-definitions-container');
 
@@ -69,15 +71,16 @@ var modalClose1 = document.getElementById('modal-close-1');
 var modalClose2 = document.getElementById('modal-close-2');
 
 function getFrequency() {
+  mainFrequencyContainer.innerHTML = ''
   fetch(wordsAPIUrl, options)
     .then((response) => response.json())
     .then((data) => {
       var frequency = data.frequency;
       if (frequency === undefined) {
-        document.getElementById("main-frequency-container").innerHTML = "No frequency found";
+        mainFrequencyContainer.innerHTML = "No frequency found";
       } else {
         // underline 'Frequency' in main word container
-        document.getElementById("main-frequency-container").innerHTML = '<u> <strong>Frequency:</strong></u> ' + frequency;
+        mainFrequencyContainer.innerHTML = '<u> <strong>Frequency:</strong></u> ' + frequency;
       }
     })
     .catch((err) => {
@@ -87,15 +90,16 @@ function getFrequency() {
 }
 
 function getSyllables() {
+  mainSyllablesContainer.innerHTML = ''
   fetch(wordsAPIUrl, options)
     .then((response) => response.json())
     .then((data) => {
       var syllables = data.syllables.count;
       if (syllables === undefined) {
-        document.getElementById("main-syllables-container").innerHTML = "No syllables found";
+        mainSyllablesContainer.innerHTML = "No syllables found";
       } else {
-      document.getElementById("main-syllables-container").innerHTML = '<u> <strong>Syllables:</strong></u> ' + syllables;
-    }
+        mainSyllablesContainer.innerHTML = '<u> <strong>Syllables:</strong></u> ' + syllables;
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -105,35 +109,43 @@ function getSyllables() {
 
 function getModalDefinition() {
   modalWord = inputBox.value;
-  dictionaryURL = freeDictionaryAPI + modalWord;
-  fetch(dictionaryURL, options)
+  wordsAPIUrl = wordsAPI + modalWord;
+  fetch(wordsAPIUrl, options)
     .then((response) => response.json())
     .then((data) => {
       if (data !== undefined) {
-        if (data.length !== undefined) {
-          modalTitleTextEl.textContent = modalWord[0].toUpperCase() + modalWord.slice(1).toLowerCase();
+        modalTitleTextEl.textContent = modalWord[0].toUpperCase() + modalWord.slice(1).toLowerCase();
+
+        if (data.pronunciation !== undefined) {
           var modProEl = document.createElement('span');
-          modProEl.textContent = ' ' + data[0].phonetic;
+          modProEl.textContent = ' ' + data.pronunciation.all;
           modProEl.classList.add('pronunciation-text')
           modalPronunciationContainer.appendChild(modProEl);
-          for (var i = 0; i < data.length; i++) {
-            for (var x = 0; x < data[i].meanings.length; x++) {
-              for (var y = 0; y < data[i].meanings[x].definitions.length; y++) {
-                var modDefEl = document.createElement('p');
-                modDefEl.textContent = data[i].meanings[x].definitions[y].definition + ';'
-                modalDefinitionsContainer.appendChild(modDefEl);
-              }
-            }
+        } else {
+          var modProEl = document.createElement('span');
+          modProEl.textContent = 'No pronunciation found';
+          modProEl.classList.add('pronunciation-text')
+          modalPronunciationContainer.appendChild(modProEl);
+        }
+
+        if (data.results !== undefined) {
+          for (var i = 0; i < data.results.length; i++) {
+            var modDefEl = document.createElement('p');
+            modDefEl.textContent = i + 1 + '. ' + data.results[i].definition + ';'
+            modalDefinitionsContainer.appendChild(modDefEl);
           }
         } else {
-          inputBox.value = '';
-          inputBox.setAttribute('placeholder', 'no results found');
-          setTimeout(function () {
-            inputBox.setAttribute('placeholder', 'type to search');
-          }, 3000);
-          return;
+          var modDefEl = document.createElement('p');
+          modDefEl.textContent = 'No pronunciation found'
+          modalDefinitionsContainer.appendChild(modDefEl);
         }
+
       } else {
+        inputBox.value = '';
+        inputBox.setAttribute('placeholder', 'no results found');
+        setTimeout(function () {
+          inputBox.setAttribute('placeholder', 'type to search');
+        }, 3000);
         console.log('No results found. Please try again.')
         return;
       }
@@ -146,7 +158,7 @@ function getModalDefinition() {
         inputBox.setAttribute('placeholder', 'type to search');
       }, 3000);
       return;
-});
+    });
 }
 
 function getModalSyllables() {
@@ -163,8 +175,8 @@ function getModalSyllables() {
       if (syllables === undefined) {
         document.getElementById("modal-syllables-container").innerHTML = "No syllables found";
       } else {
-      document.getElementById("modal-syllables-container").innerHTML = ' <strong>Syllables:</strong> ' + syllables;
-    }
+        document.getElementById("modal-syllables-container").innerHTML = ' <strong>Syllables:</strong> ' + syllables;
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -341,48 +353,49 @@ function getSynonyms() {
 
 function getMainDefinition() {
   word = inputBox.value;
-  dictionaryURL = freeDictionaryAPI + word;
-  fetch(dictionaryURL, options)
+  wordsAPIUrl = wordsAPI + word;
+  fetch(wordsAPIUrl, options)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
-      if (data !== undefined) {
-        if (data.length !== undefined) {
-          resultsContainer.classList.remove("hidden");
-          body.classList.remove('on-load');
-          mainWord.textContent = inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
-          mainPronunciationContainer.innerText = '';
-          mainDefinitionsContainer.innerHTML = '';
-          var newProEl = document.createElement('span'); // changed p tag to span tag
-          newProEl.textContent = ' ' + data[0].phonetic;
-          newProEl.classList.add('pronunciation-text')
-          // var newToolTipText = document.createElement('span');
-          // newToolTipText.textContent('Click to hear pronunciation')
-          // newToolTipText.classList.add('tooltip-text')
-          mainPronunciationContainer.appendChild(newProEl);
+      if (data.results !== undefined) {
+        resultsContainer.classList.remove("hidden");
+        body.classList.remove('on-load');
+        mainWord.textContent = inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
 
-          for (var i = 0; i < data.length; i++) {
-            for (var x = 0; x < data[i].meanings.length; x++) {
-              for (var y = 0; y < data[i].meanings[x].definitions.length; y++) {
-                var newDefEl = document.createElement('p');
-                newDefEl.textContent = data[i].meanings[x].definitions[y].definition + ';'
-                mainDefinitionsContainer.appendChild(newDefEl);
-              }
-            }
-          }
-          searchSection.classList.add('noblank-screen');
-          searchSection.classList.remove('blank-screen');
-          getSynonyms();
-        } else {
-          inputBox.value = '';
-          inputBox.setAttribute('placeholder', 'no results found');
-          setTimeout(function () {
-            inputBox.setAttribute('placeholder', 'type to search');
-          }, 3000);
-          return;
+        mainPronunciationContainer.innerText = '';
+        mainDefinitionsContainer.innerHTML = '';
+        var newProEl = document.createElement('span'); // changed p tag to span tag
+        newProEl.textContent = ' ' + data.pronunciation.all;
+        newProEl.classList.add('pronunciation-text')
+        mainPronunciationContainer.appendChild(newProEl);
+
+        // var newToolTipText = document.createElement('span');
+        // newToolTipText.textContent('Click to hear pronunciation')
+        // newToolTipText.classList.add('tooltip-text')
+
+        for (var i = 0; i < data.results.length; i++) {
+          var newDefEl = document.createElement('p');
+          newDefEl.textContent = i + 1 + '. ' + data.results[i].definition + ';'
+          mainDefinitionsContainer.appendChild(newDefEl);
+          // for (var x = 0; x < data[i].meanings.length; x++) {
+          //   for (var y = 0; y < data[i].meanings[x].definitions.length; y++) {
+          //     var newDefEl = document.createElement('p');
+          //     newDefEl.textContent = data[i].meanings[x].definitions[y].definition + ';'
+          //     mainDefinitionsContainer.appendChild(newDefEl);
         }
+        searchSection.classList.add('noblank-screen');
+        searchSection.classList.remove('blank-screen');
+        getSynonyms();
+        getFrequency()
+        getSyllables()
       } else {
+        inputBox.value = '';
+        inputBox.setAttribute('placeholder', 'no results found');
+        setTimeout(function () {
+          inputBox.setAttribute('placeholder', 'type to search');
+        }, 3000);
         console.log('No results found. Please try again.')
+        inputBox.focus()
         return;
       }
     })
@@ -394,14 +407,11 @@ function getMainDefinition() {
         inputBox.setAttribute('placeholder', 'type to search');
       }, 3000);
       return;
-});
+    });
 }
 
 function submitSearch() {
   getMainDefinition();
-  getFrequency();
-  getSyllables();
-
 }
 
 submitForm.addEventListener('submit', function (event) {
