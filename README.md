@@ -6,13 +6,7 @@ This is a word search application. Any Word searched will return a list of diffe
 
 ## Usage
 
-Step 1: type to search 
-Step 2: press enter
-Step 3: hidden content will appear with new information pertaining to the searched word
-Step 4: 4 cards will appear
-Step 5: First card will obtain its pronunciation, frequency, syllables and definition.
-Step 6: when hovering over pronunciaton it will become highlighted and clickable.
-Step 7: AFter clicking pronunciation a voice will appear pronouncing the word.
+Anyone from someone who is writing an essay to someone who is writing song lyrics can use this application.  This application creates a dashboard of information about the searched word and its alternate vocabulary.    
 
 ## Link to Deployed Application
 
