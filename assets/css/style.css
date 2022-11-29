@@ -211,6 +211,12 @@
   transition-duration: 400ms !important;
   cursor: pointer !important;
 }
+
+.speaker-img {
+  height: 1em;
+  width: 1em;
+}
+
 /* the following code are all media queries to adjust sizes to fit different screen sizes */
 @media screen and (max-width:1030px) {
   .blank-screen {
