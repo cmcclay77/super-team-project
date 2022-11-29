@@ -1,95 +1,96 @@
+/* adjusts size of header texts */
 .message-header {
   font-size: 1.4em;
 }
-
+/* removes margin spacing below p elements from bulma */
 .content p:not(:last-child) {
   margin-bottom: 0px;
 }
-
+/* changes the font size of text in bulma css styling */
 .box {
   font-size: 1.1em;
 }
-
+/* adjust size of search bar width when no words are searched */
 .blank-screen {
   width: 50%;
 }
-
+/* adjusts size of search bar after words are searched */
 .noblank-screen {
   width: 100%;
 }
-
+/* adjust the styling in the search area to allow sizing of search bar to fill container */
 #search-area {
   display: flex;
   width: 100%;
   align-items: center;
 }
-
+/* changes border color of input box to white */
 #input-box {
   border-color: white;
 }
-
+/* allows form to strech all the way across the width of the container */
 #form-width {
   width: 100%;
 }
-
+/* width of form to stretch across the container and margin changing to allow better spacing */
 #submit-form {
   width: 100%;
   margin: 1.5% auto;
 }
-
+/* container that has the word in focus and the results of the serach, adjust height, scroll bar */
 #focus-container {
   height: 58.5vh;
   overflow-y: auto;
   font-weight: 500;
 }
-
+/* underlines title of search word */
 .main-title {
   text-decoration: underline;
 }
-
+/* underlines the title of definition */
 #definition-title {
   text-decoration: underline;
 }
-
+/* sets size and scroll effect of the 3 columns */
 .words-container {
   height: 58.5vh;
   overflow-y: auto;
   font-weight: 500;
 }
-
+/* styling for the search button */
 #search-button {
   background-color: white;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
-
+/* magnifying glass icon size and fills container */
 #search-button img {
   width: 20px;
   height: 20px;
   object-fit: cover;
 }
-
+/* styling for dropdown menu */
 .dropdown-item {
   font-size: 1.2em;
   font-weight: 500;
   background-color: aliceblue;
   border: 1px solid lightseagreen;
 }
-
+/* when word is hovered over, it changes style to show it can be clicked */
 .dropdown-item-fix:hover {
   background-color: lightseagreen;
   color: aliceblue;
   transition-duration: 400ms;
   cursor: pointer;
 }
-
+/* overrides bulma css styling for dropdown menu */
 .dropdown-content-fix {
   border-radius: 0;
   box-shadow: 0;
   padding: 0;
   border: 0;
 }
-
+/* overrides bulma css styling for words in dropdown menu */
 .dropdown-item-fix {
   background-color: aliceblue;
   font-weight: 400;
@@ -101,33 +102,27 @@
   position: relative;
   border-width: 0px;
 }
-
+/* offsets dropdown menu and sets scroll bar if length is beyond max length */
 .dropdown-menu {
   overflow-y: auto;
+  left: -40px;
 }
-
+/* height of dropdown menu when before any search results */
 .dropdown-length1 {
   max-height: 34vh;
 }
-
+/* height of dropdown menu when after search results */
 .dropdown-length2 {
   max-height: 67vh;
 }
-
-/* .pronunciation-text:hover {
-  background-color: lightseagreen;
-  color: aliceblue;
-  transition-duration: 400ms;
-  cursor: pointer;
-} */
-
+/* hover over search results to show word can be click on and search */
 .js-modal-trigger:hover {
   background-color: lightseagreen;
   color: aliceblue;
   transition-duration: 400ms;
   cursor: pointer;
 }
-
+/* styling for when the site is loaded for clean simple look */
 .on-load {
   display: flex;
   justify-content: center;
@@ -135,33 +130,33 @@
   height: 100vh;
   flex-direction: column;
 }
-
+/* hides results container before searches are made, removed for search results */
 .hidden {
   display: none;
 }
-
+/* hides modal before clicked */
 .modal {
   display: none;
 }
-
+/* sets style for the title for the modal */
 .modal-card-title {
   text-decoration: underline;
   font-size: 1.5em;
   font-weight: 500;
 }
-
+/* styling for heading to show it can be clicked to search */
 .modal-card-title:hover {
   background-color: lightseagreen;
   color: aliceblue;
   transition-duration: 400ms;
   cursor: pointer;
 }
-
+/* styling for tooltip that shows up when you hover over word */
 .tooltip {
   position: relative;
   display: inline-block;
 }
-
+/* styling for the specific text that will show up in the tooltip */
 .tooltip .tooltip-text {
   visibility: hidden;
   width: max-content;
@@ -174,7 +169,7 @@
   top: 105%;
   box-shadow: 5px 5px 5px 5px darkgray;
 }
-
+/* pseudo element after the tooltip for styling */
 .tooltip .tooltip-text::after {
   position: relative;
   width: fit-content;
@@ -186,44 +181,37 @@
   border-color: black transparent transparent transparent;
   background-color: whitesmoke;
 }
-
+/* hides tooltip */
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }
-
+/* styling for pronunication text */
 #main-pronunciation {
   font-size: 1.2em;
   font-weight: 500;
   cursor: pointer;
 }
-
+/* hover effect to show pronunciation is clickable */
 #main-pronunciation-hover:hover {
   background-color: lightseagreen;
   color: aliceblue;
   transition-duration: 400ms;
   cursor: pointer;
 }
-
-/* #main-pronunciation:hover {
-    background-color: lightseagreen;
-    color: aliceblue;
-    transition-duration: 400ms;
-    cursor: pointer;
-} */
-
+/* styling for pronunciation text in modal */
 #modal-pronunciation {
   font-size: 1.2em;
   font-weight: 500;
   cursor: pointer;
 }
-
+/* hover effect to show pronunciation is clickable */
 #modal-pronunciation-hover:hover {
   background-color: lightseagreen !important;
   color: aliceblue !important;
   transition-duration: 400ms !important;
   cursor: pointer !important;
 }
-
+/* the following code are all media queries to adjust sizes to fit different screen sizes */
 @media screen and (max-width:1030px) {
   .blank-screen {
     width: 75%;
@@ -318,5 +306,19 @@
 
   #column2 {
     width: 100%;
+  }
+
+  .dropdown-menu {
+   left: 0px;
+  }
+
+  .dropdown-length2 {
+    max-height: 50vh;
+  }
+}
+
+@media screen and (max-height:475px) {
+  .dropdown-length2 {
+    max-height: 40vh;
   }
 }
