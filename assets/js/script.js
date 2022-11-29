@@ -91,10 +91,11 @@ function getFrequency() {
       document.getElementById("main-frequency-container").innerHTML = "No frequency found";
     });
 }
+
 // function to pull syllables from wordsapi, nearly identical to frequency but with syllables instead
 function getSyllables() {
   mainSyllablesContainer.innerHTML = "";
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) //fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       var syllables = data.syllables.count;
@@ -109,14 +110,16 @@ function getSyllables() {
       document.getElementById("main-syllables-container").innerHTML = "No syllables found";
     });
 }
+
 // function to search words api for definition and pronunciation of word
 function getModalDefinition() {
   // enter the modal word into the input box, set up the fetch url, and then search through the data
   // for pronunciation and definitions, if no info, then show on screen, if data found, show on screen, for loop used for multpiple definitions
   // if no definition found, the user will get a subtle message inside the input box letting them know, the message disappears after 3 seconds
+
   modalWord = inputBox.value;
   wordsAPIUrl = wordsAPI + modalWord;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) // fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       if (data !== undefined) {
@@ -166,6 +169,7 @@ function getModalDefinition() {
       return;
     });
 }
+
 // function to get the syllables to show in the modal, basically the same funciton as the getSyllables function
 function getModalSyllables() {
   // enters word into input box and sets up url for words api
@@ -173,6 +177,7 @@ function getModalSyllables() {
   wordsAPIUrl = wordsAPI + modalWord;
   // fetch api to serach for syllables, very similar to the getMainSyllables function
   fetch(wordsAPIUrl, options)
+
     .then((response) => response.json())
     .then((data) => {
       var syllables = data.syllables.count;
@@ -191,11 +196,13 @@ function getModalSyllables() {
       document.getElementById("modal-syllables-container").innerHTML = "No syllables found";
     });
 }
+
 // function to get freqnecy to show in the modal, basically the same funciton as the getFrequency function
 function getModalFrequency() {
+
   modalWord = inputBox.value;
   wordsAPIUrl = wordsAPI + modalWord;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) // fetching from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       var frequency = data.frequency;
@@ -216,9 +223,11 @@ function getModalFrequency() {
       document.getElementById("modal-frequency-container").innerHTML = "No frequency found";
     });
 }
+
 // function to set up the pulldown menu of the most recent searches
 function renderSearchHistory() {
   // clear list, before repopulating
+
   dropDownMenuEl.innerHTML = "";
   // only populate list if the length isn't 0
   if (searchHistory.length !== 0) {
@@ -238,8 +247,10 @@ function renderSearchHistory() {
     }
   }
 }
+
 // retrieve the search history from local storage and save as array
 function getSearchHistory() {
+
   try {
     var storedSearches = JSON.parse(localStorage.getItem("search-history"));
     if (storedSearches !== null) {
@@ -249,16 +260,20 @@ function getSearchHistory() {
     console.log("No search history found");
   }
 }
+
 // after search history array is updated, function called to save to local storage
 function setSearchHistory() {
+
   localStorage.setItem("search-history", JSON.stringify(searchHistory));
   renderSearchHistory();
   return;
 }
+
 // save word to array, before saving to local storage
 function saveWord() {
   // capitalize first letter and clear all inputbox
   var userWord = inputBox.value[0].toUpperCase() + inputBox.value.slice(1).toLowerCase();
+
   inputBox.value = "";
   // the word is determined to be a word when this function is called, but this is a double check to make sure word contains letters
   if (userWord !== undefined || userWord !== "") {
@@ -275,6 +290,7 @@ function saveWord() {
     searchHistory.length = 100;
   }
 }
+
 // these next 3 functions are nearly identical
 // get antonyms from datamuse
 function getAntonyms() {
@@ -284,6 +300,7 @@ function getAntonyms() {
   antonymURL = datamuseAPIAnt + word;
   // fetch api
   fetch(antonymURL)
+
     .then((response) => response.json())
     .then((data) => {
       // if there is data, clear the previous list
@@ -311,12 +328,14 @@ function getAntonyms() {
     });
   saveWord();
 }
+
 // nearly identical to get antonyms function
 function getRhymes() {
+
   rhymeContainer.innerHTML = "";
   word = inputBox.value;
   rhymeURL = datamuseAPIRhy + word;
-  fetch(rhymeURL)
+  fetch(rhymeURL) // fetching rhymes from datamuseAPI
     .then((response) => response.json())
     .then((data) => {
       if (data.length !== 0) {
@@ -341,12 +360,14 @@ function getRhymes() {
       console.error(err);
     });
 }
+
 // nearly identical to antonyms and rhymes functions
 function getSynonyms() {
+
   synonymContainer.innerHTML = "";
   word = inputBox.value;
   synonymURL = datamuseAPISyn + word;
-  fetch(synonymURL)
+  fetch(synonymURL) // fetching synonym from datamuseAPI
     .then((response) => response.json())
     .then((data) => {
       if (data.length !== 0) {
@@ -371,12 +392,14 @@ function getSynonyms() {
       console.error(err);
     });
 }
+
 // function to get the definition of the search word, and pronunciation, also, stops other functions from running if word doesn't have a definition
 function getMainDefinition() {
   // saves input box value as word, set up fetch url, and perform fetch
+
   word = inputBox.value;
   wordsAPIUrl = wordsAPI + word;
-  fetch(wordsAPIUrl, options)
+  fetch(wordsAPIUrl, options) // fetches from wordsAPI
     .then((response) => response.json())
     .then((data) => {
       // if data, search through it for relevant info
@@ -438,8 +461,10 @@ function getMainDefinition() {
 function submitSearch() {
   getMainDefinition();
 }
+
 // event listener for form submission or clicking on search button
 submitForm.addEventListener("submit", function (event) {
+
   event.preventDefault();
   submitSearch();
 });
